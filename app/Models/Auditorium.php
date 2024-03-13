@@ -9,5 +9,6 @@ class Auditorium extends Model
 {
     public $table = 'auditorium';
     protected $fillable = ['name', 'seat_no'];
+    public $timestamps = false;
     use HasFactory;
 }

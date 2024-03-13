@@ -26,6 +26,9 @@ class MovieController extends Controller
             'language' => 'required|string|max:50',
             'production_studio' => 'required|string|max:255',
         ]);
+        if($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+        }
         Movie::create([
             'title' => $request -> title,
             'director' => $request -> director,

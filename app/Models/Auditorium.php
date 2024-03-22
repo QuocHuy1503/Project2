@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Auditorium extends Model
 {
-    public $table = 'auditorium';
+    public $table = 'auditoriums';
     protected $fillable = ['name', 'seat_no'];
-    public $timestamps = false;
     use HasFactory;
 }

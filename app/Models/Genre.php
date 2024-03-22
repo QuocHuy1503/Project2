@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-    protected $fillable = ['name'];
-    public $timestamps = false;
-    public $table = 'Genre'; 
+    use HasFactory;
+
+    protected $fillable = ['name, description, status, created_at, updated_at'];
+    public $table = 'genres';
     public function movieGenre(){
         return $this -> hasMany(MovieGenre::class);
     }
-    use HasFactory;
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EmployeeRole extends Model
 {
+    public $table = 'employee_roles';
     protected $fillable = ['employee_id', 'role_id'];
     public $timestamps = false;
     public function employee(){

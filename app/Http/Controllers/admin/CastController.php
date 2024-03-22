@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Cast;
+use App\Models\TempImage;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+use Nette\Utils\Image;
+
+class CastController extends Controller
+{
+    public function index(Request $request)
+    {
+        $casts = Cast::latest();
+        if (!empty($request->get('keyword'))){
+            $casts = $casts->where('name', 'like', '%'.$request->get('keyword').'%' );
+        }
+        $casts = $casts->paginate(10);
+        return view('admin.cast_manager.index', [
+            'casts' => $casts,
+        ]);
+    }
+
+    public function create()
+    {
+        return view('admin.cast_manager.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'slug' => 'required|unique:casts'
+        ]);
+        if ($validator->passes()){
+            $cast = new Cast();
+            $cast->name = $request->name;
+            $cast->slug = $request->slug;
+            $cast->status = $request->status;
+            $cast->save();
+
+            // Save Image Here
+            if (!empty($request->image_id)) {
+                $tempImage = TempImage::find($request->image_id);
+                $extArray = explode('.', $tempImage->name);
+                $ext = last($extArray);
+
+                $newImageName = $cast->id.'.'.$ext;
+                $sPath = public_path().'/temp/cast'.$tempImage->name;
+                $dPath = public_path().'/uploads/cast/'.$newImageName;
+                File::copy($sPath, $dPath);
+
+                // Generate Image Thumbnail
+                $dPath = public_path().'uploads/cast/thumb/'.$newImageName;
+                $img = Image::make($sPath);
+                $img->resize(450, 600);
+                $img->save($dPath);
+
+                $cast->image = $newImageName;
+                $cast->save();
+            }
+
+            $request->session()->flash('success', 'Cast added successfully');
+            return response()->json([
+                'status' => true,
+                'message' => 'Cast added successfully'
+            ]);
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+    }
+
+    public function edit($castId, Request $request)
+    {
+        $cast = Cast::find($castId);
+        if (empty($cast)){
+            $request->session()->flash('error', 'Cast not found');
+            return redirect()->route('cast.index');
+        }
+        $data['cast'] = $cast;
+        return view('admin.cast_manager.edit', $data);
+    }
+
+    public function update($castId, Request $request)
+    {
+        $cast = Cast::find($castId);
+        if (empty($cast)){
+            $request->session()->flash('error', 'Cast not found');
+
+            return response()->json([
+                'status' => false,
+                'notFound' => true,
+                'message' => 'Cast not found'
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'slug' => 'required',
+        ]);
+        if ($validator->passes()){
+            $cast->name = $request->name;
+            $cast->slug = $request->slug;
+            $cast->status = $request->status;
+            $cast->save();
+
+            $request->session()->flash('success', 'Cast updated successfully');
+            return response()->json([
+                'status' => true,
+                'message' => 'Cast updated successfully'
+            ]);
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+    }
+
+    public function destroy($castId, Request $request)
+    {
+        $cast = Cast::find($castId);
+        if (empty($cast)){
+            $request->session()->flash('error', 'Cast not found');
+            return response()->json([
+                'status' => true,
+                'message' => 'Cast not found'
+            ]);
+        }
+
+        $cast->delete();
+        $request->session()->flash('success', 'Cast deleted successfully');
+        return response()->json([
+            'status' => true,
+            'message' => 'Cast deleted successfully'
+        ]);
+    }
+}

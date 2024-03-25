@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Cast;
 use App\Models\TempImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
-use Nette\Utils\Image;
+use Intervention\Image\Facades\Image;
 
 class CastController extends Controller
 {
@@ -42,26 +43,27 @@ class CastController extends Controller
             $cast->status = $request->status;
             $cast->save();
 
-            // Save Image Here
+//             Save Image Here
             if (!empty($request->image_id)) {
                 $tempImage = TempImage::find($request->image_id);
                 $extArray = explode('.', $tempImage->name);
                 $ext = last($extArray);
 
                 $newImageName = $cast->id.'.'.$ext;
-                $sPath = public_path().'/temp/cast'.$tempImage->name;
+                $sPath = public_path().'/temp/cast/'.$tempImage->name;
                 $dPath = public_path().'/uploads/cast/'.$newImageName;
                 File::copy($sPath, $dPath);
 
                 // Generate Image Thumbnail
-                $dPath = public_path().'uploads/cast/thumb/'.$newImageName;
-                $img = Image::make($sPath);
-                $img->resize(450, 600);
-                $img->save($dPath);
+//                $dPath = public_path().'/uploads/cast/thumb/'.$newImageName;
+//                $img = Image::make($sPath);
+//                $img->resize(450, 600);
+//                $img->save($dPath);
 
                 $cast->image = $newImageName;
                 $cast->save();
             }
+
 
             $request->session()->flash('success', 'Cast added successfully');
             return response()->json([
@@ -103,13 +105,39 @@ class CastController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'slug' => 'required',
+            'slug' => 'required|unique:casts,slug,'.$cast->id.',id',
         ]);
         if ($validator->passes()){
             $cast->name = $request->name;
             $cast->slug = $request->slug;
             $cast->status = $request->status;
             $cast->save();
+            $oldImage = $cast->image;
+
+            //             Save Image Here
+            if (!empty($request->image_id)) {
+                $tempImage = TempImage::find($request->image_id);
+                $extArray = explode('.', $tempImage->name);
+                $ext = last($extArray);
+
+                $newImageName = $cast->id.'-'.time().'.'.$ext;
+                $sPath = public_path().'/temp/cast/'.$tempImage->name;
+                $dPath = public_path().'/uploads/cast/'.$newImageName;
+                File::copy($sPath, $dPath);
+
+                // Generate Image Thumbnail
+//                $dPath = public_path().'/uploads/cast/thumb/'.$newImageName;
+//                $img = Image::make($sPath);
+//                $img->resize(450, 600);
+//                $img->save($dPath);
+
+                $cast->image = $newImageName;
+                $cast->save();
+
+                // DELETE old image here
+                File::delete(public_path().'/temp/cast/'.$oldImage);
+                File::delete(public_path().'/uploads/cast/'.$oldImage);
+            }
 
             $request->session()->flash('success', 'Cast updated successfully');
             return response()->json([
@@ -136,6 +164,8 @@ class CastController extends Controller
             ]);
         }
 
+        File::delete(public_path().'/temp/cast/'.$cast->image);
+        File::delete(public_path().'/uploads/cast/'.$cast->image);
         $cast->delete();
         $request->session()->flash('success', 'Cast deleted successfully');
         return response()->json([

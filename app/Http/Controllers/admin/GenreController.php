@@ -38,7 +38,6 @@ class GenreController extends Controller
             $genre->description = $request->description;
             $genre->status = $request->status;
             $genre->save();
-
             $request->session()->flash('success', 'Genre added successfully');
             return response()->json([
                 'status' => true,

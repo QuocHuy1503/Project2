@@ -59,7 +59,7 @@
                                     <td>{{$cast->id}}</td>
                                     <td>{{$cast->name}}</td>
                                     <td>{{$cast->slug}}</td>
-                                    <td>{{$cast->slug}}</td>
+                                    <td><img width="90" height="90" src="uploads/cast/'{{ asset( '$cast->image') }}" alt=""></td>
                                     <td>
                                         @if($cast->status == 1)
                                             <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">

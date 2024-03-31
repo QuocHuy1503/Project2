@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Screening extends Model
 {
-    protected $fillable = ['movie_id', 'screening_start'];
+    protected $fillable = ['movie_id','auditorium_id', 'screening_start','screening_end'];
     public function movie(){
         return $this -> belongsTo(Movie::class);
+    }
+    public function auditorium(){
+        return $this -> belongsTo(Auditorium::class);
     }
     public function seat_reservation(){
         return $this -> hasMany(SeatReserved::class);

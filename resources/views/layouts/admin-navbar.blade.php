@@ -91,12 +91,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="subcategory.html" class="nav-link">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Sub Category</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a href="{{route('genre.index')}}" class="nav-link {{ request()->routeIs('genre.index') ? 'active' : '' }}">
                             <svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -117,20 +111,45 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="orders.html" class="nav-link">
-                            <i class="nav-icon fas fa-shopping-bag"></i>
+                        <a href="{{route('screening.index')}}" class="nav-link {{ request()->routeIs('screening.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas bi-person-rolodex"></i>
+                            <p>Screenings</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('auditorium.index')}}" class="nav-link {{ request()->routeIs('auditorium.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas bi-person-rolodex"></i>
+                            <p>Auditoriums</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('order.index')}}" class="nav-link {{ request()->routeIs('order.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-shopping-bag" aria-hidden="true"></i>
                             <p>Orders</p>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a href="discount.html" class="nav-link">
+                        <a href="{{route('age.index')}}" class="nav-link {{ request()->routeIs('age.index') ? 'active' : '' }}">
                             <i class="nav-icon  fa fa-birthday-cake" aria-hidden="true"></i>
-                            <p>Age</p>
+                            <p>Ages</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="users.html" class="nav-link">
-                            <i class="nav-icon  fas fa-users"></i>
+                        <a href="{{route('seat.index')}}" class="nav-link {{ request()->routeIs('seat.index') ? 'active' : '' }}">
+                            <i class="m-1 nav-icon bi bi-person-wheelchair" aria-hidden="true"></i>
+                            <p>Seats</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('reservationType.index')}}" class="nav-link {{ request()->routeIs('reservationType.index') ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-list-ul" aria-hidden="true"></i>
+                            <p>Reservation Types </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('customerAdmin.index')}}" class="nav-link {{ request()->routeIs('customerAdmin.index') ? 'active' : '' }}">
+                            <i class="m-1 nav-icon fas fa-users"></i>
                             <p>Customers</p>
                         </a>
                     </li>

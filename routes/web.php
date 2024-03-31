@@ -1,17 +1,25 @@
 <?php
 
 
-use App\Http\Controllers\admin\AdminLoginController;
-use App\Http\Controllers\admin\CastController;
-use App\Http\Controllers\admin\CustomerController;
-use App\Http\Controllers\admin\HomeController;
-use App\Http\Controllers\admin\TempImagesController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\admin\GenreController;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Middleware\CheckLoginCustomer;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MovieController;
+use App\Http\Middleware\CheckLoginCustomer;
+use App\Http\Controllers\admin\ScreeningController;
+
+use App\Http\Controllers\admin\CastController;
+use App\Http\Controllers\admin\HomeController;
+
+use App\Http\Controllers\admin\GenreController;
+use App\Http\Controllers\admin\CustomerController;
+use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\admin\AgeController;
+use App\Http\Controllers\admin\AuditoriumController;
+use App\Http\Controllers\admin\ReservationTypeController;
+use App\Http\Controllers\admin\SeatController;
+use App\Http\Controllers\admin\TempImagesController;
+use App\Http\Controllers\admin\OrderController;
+use App\Models\Reservation;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +80,109 @@ Route::group(['prefix' => 'admin'], function (){
             Route::delete('/{genre}', [GenreController::class, 'destroy'])->name('genre.destroy');
         });
 
+        // ADMIN SCREENING ROUTE 
+        Route::prefix('/screening')->group(function () {
+
+            Route::get('/', [ScreeningController::class, 'index'])->name('screening.index');
+            //show create form
+            Route::get('/create', [ScreeningController::class, 'create'])->name('screening.create');
+            Route::post('/create', [ScreeningController::class, 'store'])->name('screening.store');
+            
+            //show edit form
+            Route::get('/{screening}/edit', [ScreeningController::class, 'edit'])->name('screening.edit');
+            Route::put('/{screening}', [ScreeningController::class, 'update'])->name('screening.update');
+            Route::delete('/{screening}', [ScreeningController::class, 'destroy'])->name('screening.destroy');
+        });
+
+
+        // ADMIN SEAT ROUTE
+
+        Route::prefix('/seat')->group(function () {
+
+            Route::get('/', [SeatController::class, 'index'])->name('seat.index');
+            //show create form
+            Route::get('/create', [SeatController::class, 'create'])->name('seat.create');
+            Route::post('/create', [SeatController::class, 'store'])->name('seat.store');
+            
+            //show edit form
+            Route::get('/{seat}/edit', [SeatController::class, 'edit'])->name('seat.edit');
+            Route::put('/{seat}', [SeatController::class, 'update'])->name('seat.update');
+            Route::delete('/{seat}', [SeatController::class, 'destroy'])->name('seat.destroy');
+        });
+        
+        // Reservation Type Admin Controller Route
+        Route::prefix('/reservationType')->group(function () {
+
+            Route::get('/', [ReservationTypeController::class, 'index'])->name('reservationType.index');
+            //show create form
+            Route::get('/create', [ReservationTypeController::class, 'create'])->name('reservationType.create');
+            Route::post('/create', [ReservationTypeController::class, 'store'])->name('reservationType.store');
+            
+            //show edit form
+            Route::get('/{reservationType}/edit', [ReservationTypeController::class, 'edit'])->name('reservationType.edit');
+            Route::put('/{reservationType}', [ReservationTypeController::class, 'update'])->name('reservationType.update');
+            Route::delete('/{reservationType}', [ReservationTypeController::class, 'destroy'])->name('reservationType.destroy');
+        });
+        
+
+        // ADMIN ORDER MANAGER
+        Route::prefix('/order')->group(function () {
+
+            Route::get('/', [OrderController::class, 'index'])->name('order.index');
+            //show create form
+            Route::get('/create', [OrderController::class, 'create'])->name('order.create');
+            Route::post('/create', [OrderController::class, 'store'])->name('order.store');
+            
+            //show edit form
+            Route::get('/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
+            Route::put('/{order}', [OrderController::class, 'update'])->name('order.update');
+            Route::delete('/{order}', [OrderController::class, 'destroy'])->name('order.destroy');
+        });
+
+
+        //  CUSTOMER ADMIN ROUTE 
+        Route::prefix('/customer')->group(function () {
+
+            Route::get('/', [CustomerController::class, 'indexAdmin'])->name('customerAdmin.index');
+            //show create form
+            Route::get('/create', [CustomerController::class, 'create'])->name('customer.create');
+            Route::post('/create', [CustomerController::class, 'store'])->name('customer.store');
+            
+            //show edit form
+            Route::get('/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+            Route::put('/{customer}', [CustomerController::class, 'update'])->name('customer.update');
+            Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+        });
+
+        // ADMIN AUDITORIUM ROUTE
+        Route::prefix('/auditorium')->group(function () {
+
+            Route::get('/', [AuditoriumController::class, 'index'])->name('auditorium.index');
+            //show create form
+            Route::get('/create', [AuditoriumController::class, 'create'])->name('auditorium.create');
+            Route::post('/create', [AuditoriumController::class, 'store'])->name('auditorium.store');
+
+            //show edit form
+            Route::get('/{auditorium}/edit', [AuditoriumController::class, 'edit'])->name('auditorium.edit');
+            Route::put('/{auditorium}', [AuditoriumController::class, 'update'])->name('auditorium.update');
+            Route::delete('/{auditorium}', [AuditoriumController::class, 'destroy'])->name('auditorium.destroy');
+        });
+
+        // ADMIN AGE ROUTE
+        Route::prefix('/age')->group(function () {
+
+            Route::get('/', [AgeController::class, 'index'])->name('age.index');
+            //show create form
+            Route::get('/create', [AgeController::class, 'create'])->name('age.create');
+            Route::post('/create', [AgeController::class, 'store'])->name('age.store');
+
+            //show edit form
+            Route::get('/{auditorium}/edit', [AgeController::class, 'edit'])->name('age.edit');
+            Route::put('/{auditorium}', [AgeController::class, 'update'])->name('age.update');
+            Route::delete('/{auditorium}', [AgeController::class, 'destroy'])->name('age.destroy');
+        });
+
+
         // MOVIE ROUTE
         Route::prefix('/movie')->group(function () {
 
@@ -85,6 +196,8 @@ Route::group(['prefix' => 'admin'], function (){
             Route::put('/{movie}', [MovieController::class, 'update'])->name('movie.update');
             Route::delete('/{movie}', [MovieController::class, 'destroy'])->name('movie.destroy');
         });
+
+
 
         // CAST ROUTE
         Route::prefix('/cast')->group(function () {
@@ -109,6 +222,8 @@ Route::group(['prefix' => 'admin'], function (){
                    'slug' => $slug
                ]);
             })->name('getSlug');
+
+
         });
     });
 });

@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seat extends Model
 {
-    protected $fillable = ['number_of_row', 'number'];
+    protected $fillable = ['number_of_row', 'number_of_col','auditorium_id'];
+    public $timestamp = false;
     public function auditorium(){
         return $this -> belongsTo(auditorium::class);
     }
- 
     use HasFactory;
 }

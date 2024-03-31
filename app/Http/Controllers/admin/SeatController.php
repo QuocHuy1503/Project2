@@ -15,7 +15,7 @@ class SeatController extends Controller
         if (!empty($seats->get('number_of_row'))){
             $seats = $seats->where('number_of_row', 'like', '%'.$request->get('number_of_row').'%' );
         }
-        $seats = $seats -> paginate(10);
+        $seats = $seats-> orderBy('id','desc') -> paginate(10);
         return view('admin.seat_manager.index', ['seats' => $seats]);
     }
     public function create()
@@ -27,18 +27,23 @@ class SeatController extends Controller
 
     public function store(Request $request)
     {
-    
+        $seat = new Seat();
         $validator = Validator::make($request->all(), [
            'number_of_row' => 'required',
-           'auditorium_id' => 'required',
-           'number' => 'required'
+           'number_of_col' => 'required',
+           'auditorium_id' => 'required'
         ]);
         if ($validator->passes()){
-            $seat = new Seat();
-            $seat-> auditorium_id = $request->auditorium_id;
-            $seat-> number_of_row = $request->number_of_row;
-            $seat-> number = $request->number;
-            $seat->save();
+            for ($i = 1; $i <= $request->number_of_row; $i++) {
+                for ($j = 1; $j <= $request->number_of_col; $j++) {
+                    $seat = new Seat;
+                    $seat->number_of_row = $i;
+                    $seat->number_of_col = $j;
+                    $seat->auditorium_id = $request->auditorium_id;
+                    $seat->status = 1;
+                    $seat->save(); 
+                }
+            }
             $request->session()->flash('success', 'Seat added successfully');
             return response()->json([
                 'status' => true,
@@ -53,8 +58,8 @@ class SeatController extends Controller
         }
     }
     public function edit(Seat $seat){
-        $auditorium = Auditorium::all();
-        return view('admin.seat_manager.edit',['seat' => $seat , 'auditorium' => $auditorium]);
+        $auditoriums = Auditorium::all();
+        return view('admin.seat_manager.edit',['seat' => $seat , 'auditoriums' => $auditoriums]);
     }
     public function update($seatId, Request $request)
     {
@@ -69,14 +74,16 @@ class SeatController extends Controller
         }
 
        $validator = Validator::make($request->all(), [
-           'number_of_row' => 'required',
-           'auditorium_id' => 'required',
-           'number' => 'required'
+        //    'number_of_row' => 'required',
+        //    'number_of_col' => 'required',
+        //    'auditorium_id' => 'required'
+              'status' => 'required'
         ]);
         if ($validator->passes()){
-            $seat-> auditorium_id = $request->auditorium_id;
-            $seat-> number_of_row = $request->number_of_row;
-            $seat-> number = $request->number;
+            // $seat-> number_of_row = $request->number_of_row;
+            // $seat-> number_of_col = $request->number_of_col;
+            // $seat-> auditorium_id = $request->auditorium_id;
+            $seat-> status = $request ->status;
             $seat->save();
 
             $request->session()->flash('success', 'Seat updated successfully');

@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Screening</h1>
+                    <h1>Create Seat</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('screening.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('seat.index')}}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>
@@ -17,32 +17,20 @@
     <section class="content">
         <!-- Default box -->
         <div class="container-fluid">
-            <form action="" method="post" id="screeningForm" name="screeningForm">
+            <form action="" method="post" id="seatForm" name="seatForm">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            {{-- <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="Screening Start">Screening Start</label>
-                                    <input type="datetime-local" name="screening_start" id="screening_start" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="Screening End">Screening End</label>
-                                    <input type="datetime-local" name="screening_end" id="screening_end" class="form-control">
-                                </div>
-                            </div> --}}
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="number_of_row">Number Of Row</label>
-                                    <input type="" name="number_of_row" id="number_of_row" class="form-control">
+                                    <input type="number" min="1" name="number_of_row" id="number_of_row" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="Screening End">Screening End</label>
-                                    <input type="datetime-local" name="screening_end" id="screening_end" class="form-control">
+                                    <label for="Screening End">Number Of Column</label>
+                                    <input type="number" min="1" name="number_of_col" id="number_of_col" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -55,22 +43,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label for="movie_id">Movies</label>
-                                    <select name="movie_id" id="movie_id" class="btn btn-dark bi bi-caret-down">
-                                        @foreach ($movies as $movie)
-                                        <option value="{{$movie -> id}}">{{$movie -> title}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
                     <button class="btn btn-primary" type="submit">Create</button>
-                    <a href="{{route('screening.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <a href="{{route('seat.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
         </div>
@@ -79,12 +57,12 @@
 @endsection
 @section('customJs')
     <script>
-        $("#screeningForm").submit(function (event){
+        $("#seatForm").submit(function (event){
             event.preventDefault();
             var element = $(this);
             $("button[type=submit]").prop('disabled', true)
             $.ajax({
-                url: '{{route('screening.store')}}',
+                url: '{{route('seat.store')}}',
                 type: 'post',
                 data: element.serializeArray(),
                 dataType: 'json',
@@ -92,35 +70,28 @@
                     $("button[type=submit]").prop('disabled', false)
 
                     if (response["status"] == true){
-                        window.location.href='{{route('screening.index')}}'
-                        $("#movie_id").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        window.location.href='{{route('seat.index')}}'
+                        $("#number_of_row").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        $("#number_of_col").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         $("#auditorium_id").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-                        $("#screening_start").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-                        $("#screening_end").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                     }else {
                         var errors = response['errors'];
-                        if (errors['movie_id']){
-                            $("#movie_id").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['movie_id']);
+                        if (errors['number_of_row']){
+                            $("#number_of_row").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['number_of_row']);
                         }else {
-                            $("#movie_id").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                            $("#number_of_row").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
                         
+                        if (errors['number_of_col']){
+                            $("#number_of_col").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['number_of_col']);
+                        }else {
+                            $("#number_of_col").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        }
+
                         if (errors['auditorium_id']){
                             $("#auditorium_id").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['auditorium_id']);
                         }else {
                             $("#auditorium_id").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-                        }
-
-                        if (errors['screening_start']){
-                            $("#screening_start").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['screening_start']);
-                        }else {
-                            $("#screening_start").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-                        }
-
-                        if (errors['screening_end']){
-                            $("#screening_end").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['screening_end']);
-                        }else {
-                            $("#screening_end").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
                     }
 

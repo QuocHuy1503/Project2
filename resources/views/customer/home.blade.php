@@ -51,7 +51,9 @@
                             <strong>Category</strong>
                             <a href="#" class="nav-link">Action</a>
                         </div>
-                        <a href="#" class="watch-btn nav-link">Book now</a>
+                        <div class="watch-btn">
+                            <a href="javascript:void" class="watch-btn nav-link">Watch trailer</a>
+                        </div>
                     </div>
                 </div>
         {{--            PLAY BTN--}}
@@ -286,10 +288,17 @@
             $('.play').addClass('active-popup');
         })
 
+        $(document).on('click','.watch-btn a', function (){
+            $('.play').addClass('active-popup');
+        })
+
         $(document).on('click','.close-movie', function (){
             $('.play').removeClass('active-popup');
         })
         $('.play-btn a').click(function (){
+            $('#m-video')[0].play()
+        })
+        $('.watch-btn a').click(function (){
             $('#m-video')[0].play()
         })
         $('.close-movie').click(function (){

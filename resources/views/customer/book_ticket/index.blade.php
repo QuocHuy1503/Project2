@@ -6,7 +6,7 @@
     <title>Movie Ticket Booking Website</title>
 </head>
 <body>
-<div class="book">
+<div class="book container">
     <div class="left">
         <div class="link-light cont">
             <a class="link-light bi bi-arrow-left" href="{{ route('movie') }}">Back movie home</a>
@@ -41,113 +41,15 @@
 
         <div class="date_type">
             <div class="left_card">
-                <h6 class="title">Thursday 4 May</h6>
+                <h6 class="title">Choose Date</h6>
                 <div class="card_month crd">
-                    <li>
-                        <h6>Mon</h6>
-                        <h6 class="date_point">20</h6>
-                    </li>
-                    <li>
-                        <h6>Tue</h6>
-                        <h6 class="date_point">21</h6>
-                    </li>
-                    <li>
-                        <h6>Wed</h6>
-                        <h6 class="date_point">22</h6>
-                    </li>
-                    <li>
-                        <h6>Thu</h6>
-                        <h6 class="date_point">23</h6>
-                    </li>
-                    <li>
-                        <h6>Fri</h6>
-                        <h6 class="date_point">24</h6>
-                    </li>
-                    <li>
-                        <h6>Sat</h6>
-                        <h6 class="date_point">25</h6>
-                    </li>
-                    <li>
-                        <h6>Sun</h6>
-                        <h6 class="date_point">26</h6>
-                    </li>
-                    <li>
-                        <h6>Mon</h6>
-                        <h6 class="date_point">27</h6>
-                    </li>
-                    <li>
-                        <h6>Tue</h6>
-                        <h6 class="date_point">28</h6>
-                    </li>
-                    <li>
-                        <h6>Wed</h6>
-                        <h6 class="date_point">29</h6>
-                    </li>
-                    <li>
-                        <h6>Thu</h6>
-                        <h6 class="date_point">30</h6>
-                    </li>
-                    <li>
-                        <h6>Fri</h6>
-                        <h6 class="date_point">1</h6>
-                    </li>
-                    <li>
-                        <h6>Sat</h6>
-                        <h6 class="date_point">2</h6>
-                    </li>
-                    <li>
-                        <h6>Sun</h6>
-                        <h6 class="date_point">3</h6>
-                    </li>
+                    <input type="date">
                 </div>
             </div>
             <div class="right_card">
                 <h6 class="title">Show Time</h6>
                 <div class="card_month crd">
-                    <li>
-                        <h6>2D</h6>
-                        <h6>10:00</h6>
-                    </li>
-                    <li>
-                        <h6>2D</h6>
-                        <h6>12:30</h6>
-                    </li>
-                    <li>
-                        <h6>2D</h6>
-                        <h6>14:00</h6>
-                    </li>
-                    <li>
-                        <h6>2D</h6>
-                        <h6>17:00</h6>
-                    </li>
-                    <li>
-                        <h6>2D</h6>
-                        <h6>18:00</h6>
-                    </li>
-                    <li>
-                        <h6>3D</h6>
-                        <h6>20:00</h6>
-                    </li>
-                    <li>
-                        <h6>3D</h6>
-                        <h6>10:00</h6>
-                    </li>
-                    <li>
-                        <h6>4DX</h6>
-                        <h6>21:00</h6>
-                    </li>
-                    <li>
-                        <h6>4DX</h6>
-                        <h6>22:30</h6>
-                    </li>
-                    <li>
-                        <h6>4DX</h6>
-                        <h6>12:00</h6>
-                    </li>
-                    <li>
-                        <h6>4DX</h6>
-                        <h6>12:30</h6>
-                    </li>
+                    <input type="time">
                 </div>
             </div>
         </div>
@@ -251,9 +153,29 @@
 </div>
 
 </body>
-<script src="{{asset('customer-assets/js/movie.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.js" integrity="sha512-wkHtSbhQMx77jh9oKL0AlLBd15fOMoJUowEpAzmSG5q5Pg9oF+XoMLCitFmi7AOhIVhR6T6BsaHJr6ChuXaM/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const container = document.querySelector('.container');
+    const seats = document.querySelectorAll('.row .seat:not(.occupied)');
+    const count = document.getElementById('count');
+    const movieSelect = document.getElementById('movie');
 
+    function updateSelectedCount()
+    {
+        const selectedSeats = document.querySelectorAll('.row .seat.selected');
+        const selectedSeatsCount = selectedSeats.length;
+        count.innerText = selectedSeatsCount;
+    }
+
+    container.addEventListener('click', e => {
+        if (e.target.classList.contains('seat') &&
+        !e.target.classList.contains('occupied')) {
+            e.target.classList.toggle('selected');
+        }
+
+        updateSelectedCount();
+    })
+
+</script>
 <script>
     JsBarcode("#barcode", "J18800792023");
 </script>

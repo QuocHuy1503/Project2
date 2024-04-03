@@ -11,8 +11,8 @@
         <div class="container">
             <div>
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-white nav-link" href="#">Home</a></li>
-                    <li class="breadcrumb-item text-white">Help</li>
+                    <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
+                    <li class="bi bi-slash-lg text-white">Help</li>
                 </ol>
             </div>
         </div>

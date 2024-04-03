@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Age;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class AgeController extends Controller
@@ -29,12 +29,13 @@ class AgeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-           'name' => 'required',
+            'name' => 'required',
         ]);
         if ($validator->passes()){
             $age = new Age();
             $age->name = $request->name;
             $age->save();
+
             $request->session()->flash('success', 'Age added successfully');
             return response()->json([
                 'status' => true,
@@ -43,7 +44,7 @@ class AgeController extends Controller
 
         }else{
             return response()->json([
-               'status' => false,
+                'status' => false,
                 'errors' => $validator->errors()
             ]);
         }
@@ -67,8 +68,8 @@ class AgeController extends Controller
             $request->session()->flash('error', 'Age not found');
 
             return response()->json([
-               'status' => false,
-               'notFound' => true,
+                'status' => false,
+                'notFound' => true,
                 'message' => 'Age not found'
             ]);
         }
@@ -108,8 +109,8 @@ class AgeController extends Controller
         $age->delete();
         $request->session()->flash('success', 'Age deleted successfully');
         return response()->json([
-           'status' => true,
-           'message' => 'Age deleted successfully'
+            'status' => true,
+            'message' => 'Age deleted successfully'
         ]);
     }
 }

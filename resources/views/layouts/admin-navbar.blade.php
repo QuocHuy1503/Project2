@@ -64,7 +64,7 @@
     </nav>
     <!-- /.navbar -->
 
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color: #00001c">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4 h-100" style="background-color: #00001c">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="{{asset('admin-assets/img/paradise-theatre-logo.png')}}" alt="AdminLTE Logo"
@@ -79,19 +79,33 @@
                     <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{{route('admin.dashboard')}}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" aria-current="page">
+                        <a href="{{route('admin.dashboard')}}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'bg-danger' : '' }}" aria-current="page">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link {{ request()->routeIs('') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-file-alt"></i>
-                            <p>Category</p>
+                        <a href="#" class="nav-link d-flex" aria-current="page">
+                            <i class="nav-icon fas bi-window"></i>
+                            <button class="accordion-button collapsed ml-2 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                Manage
+                            </button>
                         </a>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                                <div class="accordion-body">
+                                    <div class="navbar-nav ml-5">
+                                        <a href="" class="nav-item nav-link"></a>
+                                        <a href="" class="nav-item nav-link">Tablets</a>
+                                        <a href="" class="nav-item nav-link">Laptops</a>
+                                        <a href="" class="nav-item nav-link">Speakers</a>
+                                        <a href="" class="nav-item nav-link">Watches</a>
+                                    </div>
+                                </div>
+                            </div>
+
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('genre.index')}}" class="nav-link {{ request()->routeIs('genre.index') ? 'active' : '' }}">
+                        <a href="{{route('genre.index')}}" class="nav-link {{ request()->routeIs('genre.index') ? 'bg-danger' : '' }}">
                             <svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
@@ -99,57 +113,56 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('movie.index')}}" class="nav-link {{ request()->routeIs('movie.index') ? 'active' : '' }}">
+                        <a href="{{route('movie.index')}}" class="nav-link {{ request()->routeIs('movie.index') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fa fa-film"></i>
                             <p>Movies</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('cast.index')}}" class="nav-link {{ request()->routeIs('cast.index') ? 'active' : '' }}">
+                        <a href="{{route('cast.index')}}" class="nav-link {{ request()->routeIs('cast.index') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fas bi-person-rolodex"></i>
                             <p>Cast</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('screening.index')}}" class="nav-link {{ request()->routeIs('screening.index') ? 'active' : '' }}">
-                            <i class="nav-icon fas bi-person-rolodex"></i>
+                        <a href="{{route('screening.index')}}" class="nav-link {{ request()->routeIs('screening.index') ? 'bg-danger' : '' }}">
+                            <i class="nav-icon fas bi-tv"></i>
                             <p>Screenings</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('auditorium.index')}}" class="nav-link {{ request()->routeIs('auditorium.index') ? 'active' : '' }}">
-                            <i class="nav-icon fas bi-person-rolodex"></i>
+                        <a href="{{route('auditorium.index')}}" class="nav-link {{ request()->routeIs('auditorium.index') ? 'bg-danger' : '' }}">
+                            <i class="nav-icon fas bi-laptop"></i>
                             <p>Auditoriums</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('order.index')}}" class="nav-link {{ request()->routeIs('order.index') ? 'active' : '' }}">
+                        <a href="{{route('order.index')}}" class="nav-link {{ request()->routeIs('order.index') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fas fa-shopping-bag" aria-hidden="true"></i>
                             <p>Orders</p>
                         </a>
                     </li>
-
                     <li class="nav-item">
-                        <a href="{{route('age.index')}}" class="nav-link {{ request()->routeIs('age.index') ? 'active' : '' }}">
-                            <i class="nav-icon  fa fa-birthday-cake" aria-hidden="true"></i>
-                            <p>Ages</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{route('seat.index')}}" class="nav-link {{ request()->routeIs('seat.index') ? 'active' : '' }}">
+                        <a href="{{route('seat.index')}}" class="nav-link {{ request()->routeIs('seat.index') ? 'bg-danger' : '' }}">
                             <i class="m-1 nav-icon bi bi-person-wheelchair" aria-hidden="true"></i>
                             <p>Seats</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('reservationType.index')}}" class="nav-link {{ request()->routeIs('reservationType.index') ? 'active' : '' }}">
-                            <i class="nav-icon bi bi-list-ul" aria-hidden="true"></i>
+                        <a href="{{route('reservationType.index')}}" class="nav-link {{ request()->routeIs('reservationType.index') ? 'bg-danger' : '' }}">
+                            <i class="nav-icon fas bi-list-ul" aria-hidden="true"></i>
                             <p>Reservation Types </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('customerAdmin.index')}}" class="nav-link {{ request()->routeIs('customerAdmin.index') ? 'active' : '' }}">
-                            <i class="m-1 nav-icon fas fa-users"></i>
+                        <a href="{{ route('age.index') }}" class="nav-link {{ request()->routeIs('age.index') ? 'bg-danger' : '' }}">
+                            <i class="nav-icon  fa fa-birthday-cake" aria-hidden="true"></i>
+                            <p>Age</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('customerAdmin.index')}}" class="nav-link {{ request()->routeIs('customerAdmin.index') ? 'bg-danger' : '' }}">
+                            <i class="nav-icon  fas fa-users"></i>
                             <p>Customers</p>
                         </a>
                     </li>

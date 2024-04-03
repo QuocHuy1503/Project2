@@ -50,7 +50,7 @@ class CastController extends Controller
                 $ext = last($extArray);
 
                 $newImageName = $cast->id.'.'.$ext;
-                $sPath = public_path().'/temp/cast/'.$tempImage->name;
+                $sPath = public_path().'/temp/'.$tempImage->name;
                 $dPath = public_path().'/uploads/cast/'.$newImageName;
                 File::copy($sPath, $dPath);
 
@@ -121,7 +121,7 @@ class CastController extends Controller
                 $ext = last($extArray);
 
                 $newImageName = $cast->id.'-'.time().'.'.$ext;
-                $sPath = public_path().'/temp/cast/'.$tempImage->name;
+                $sPath = public_path().'/temp/'.$tempImage->name;
                 $dPath = public_path().'/uploads/cast/'.$newImageName;
                 File::copy($sPath, $dPath);
 
@@ -135,7 +135,7 @@ class CastController extends Controller
                 $cast->save();
 
                 // DELETE old image here
-                File::delete(public_path().'/temp/cast/'.$oldImage);
+                File::delete(public_path().'/temp/'.$oldImage);
                 File::delete(public_path().'/uploads/cast/'.$oldImage);
             }
 
@@ -164,7 +164,7 @@ class CastController extends Controller
             ]);
         }
 
-        File::delete(public_path().'/temp/cast/'.$cast->image);
+        File::delete(public_path().'/temp/'.$cast->image);
         File::delete(public_path().'/uploads/cast/'.$cast->image);
         $cast->delete();
         $request->session()->flash('success', 'Cast deleted successfully');

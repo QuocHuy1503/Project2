@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Models\Order;
-use App\Models\Customer;
-use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Customer;
+use App\Models\Order;
 use App\Requests\StoreCustomerRequest;
 use App\Requests\UpdateCustomerRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
@@ -181,9 +181,7 @@ class CustomerController extends Controller
 
         return Redirect::route('profile')->with('success', 'Your password has been changed successfully');
     }
-        
-    
-    
+
     public function indexAdmin(Request $request)
     {
         $customers = Customer::latest();
@@ -194,7 +192,7 @@ class CustomerController extends Controller
         return view('admin.customer_manager.index', ['customers' => $customers]);
     }
 
-    
+
     public function create()
     {
         return view('admin.customer_manager.create');
@@ -203,22 +201,22 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-           'email' => 'required|email',
-           'password' => [
-            'required',
-            'min:6',
-           ],
-           //'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'
-           'first_name' => 'required',
-           'last_name' => 'required',
-           'phone_number' => 'required',
-           'address' => 'required',
-           'status' => 'required'
+            'email' => 'required|email',
+            'password' => [
+                'required',
+                'min:6',
+            ],
+            //'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_number' => 'required',
+            'address' => 'required',
+            'status' => 'required'
         ]);
         if ($validator->passes()){
             $customer = new Customer();
             $customer->email  = $request->email;
-            $customer->password = $request->password;
+            $customer->password = Hash::make($request->password);
             $customer->first_name  = $request->first_name;
             $customer->last_name = $request->last_name;
             $customer->phone_number  = $request->phone_number;
@@ -233,7 +231,7 @@ class CustomerController extends Controller
 
         }else{
             return response()->json([
-               'status' => false,
+                'status' => false,
                 'errors' => $validator->errors()
             ]);
         }
@@ -256,8 +254,8 @@ class CustomerController extends Controller
             $request->session()->flash('error', 'Customer not found');
 
             return response()->json([
-               'status' => false,
-               'notFound' => true,
+                'status' => false,
+                'notFound' => true,
                 'message' => 'Customer not found'
             ]);
         }
@@ -265,36 +263,36 @@ class CustomerController extends Controller
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => [
-             'required',
-             'min:6',
+                'required',
+                'min:6',
             ],
             'first_name' => 'required',
             'last_name' => 'required',
             'phone_number' => 'required',
             'address' => 'required',
             'status' => 'required'
-         ]);
-         if ($validator->passes()){
-             $customer->email  = $request->email;
-             $customer->password = $request->password;
-             $customer->first_name  = $request->first_name;
-             $customer->last_name = $request->last_name;
-             $customer->phone_number  = $request->phone_number;
-             $customer->address = $request->address;
-             $customer->status = $request->status;
-             $customer->save();
-             $request->session()->flash('success', 'Customer updated successfully');
-             return response()->json([
-                 'status' => true,
-                 'message' => 'Customer updated successfully'
-             ]);
- 
-         }else{
-             return response()->json([
+        ]);
+        if ($validator->passes()){
+            $customer->email  = $request->email;
+            $customer->password = $request->password;
+            $customer->first_name  = $request->first_name;
+            $customer->last_name = $request->last_name;
+            $customer->phone_number  = $request->phone_number;
+            $customer->address = $request->address;
+            $customer->status = $request->status;
+            $customer->save();
+            $request->session()->flash('success', 'Customer updated successfully');
+            return response()->json([
+                'status' => true,
+                'message' => 'Customer updated successfully'
+            ]);
+
+        }else{
+            return response()->json([
                 'status' => false,
-                 'errors' => $validator->errors()
-             ]);
-         }
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     public function destroy($customerId, Request $request)
@@ -311,8 +309,8 @@ class CustomerController extends Controller
         $customer->delete();
         $request->session()->flash('success', 'Customer deleted successfully');
         return response()->json([
-           'status' => true,
-           'message' => 'Customer deleted successfully'
+            'status' => true,
+            'message' => 'Customer deleted successfully'
         ]);
     }
 }

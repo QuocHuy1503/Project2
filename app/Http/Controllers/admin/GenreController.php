@@ -15,7 +15,7 @@ class GenreController extends Controller
         if (!empty($request->get('keyword'))){
             $genres = $genres->where('name', 'like', '%'.$request->get('keyword').'%' );
         }
-        $genres = $genres->paginate(10);
+        $genres = $genres->paginate(11);
         return view('admin.genre_manager.index', [
             'genres' => $genres,
         ]);
@@ -38,6 +38,7 @@ class GenreController extends Controller
             $genre->description = $request->description;
             $genre->status = $request->status;
             $genre->save();
+
             $request->session()->flash('success', 'Genre added successfully');
             return response()->json([
                 'status' => true,

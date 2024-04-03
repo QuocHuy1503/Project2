@@ -18,213 +18,125 @@
             <div class="container">
                 <div>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a class="text-white nav-link" href="#">Home</a></li>
-                        <li class="breadcrumb-item text-white">Shop</li>
+                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
+                        <li class="bi bi-slash-lg text-white">Movie</li>
                     </ol>
                 </div>
             </div>
         </section>
 
-        <section class="section-6 pt-5">
+        <section class="section-6 pt-3">
             <div class="container">
                 <div class="row">
                     <div class="col-md-3 sidebar">
-                        <div class="sub-title text-white">
-                            <h2>Categories</h2>
+                        <div class="card-title">
+                            <button type="button" onclick="window.location.href='{{route('movie')}}'" class="btn text-white btn-outline-danger">
+                                Reset <span class="bi bi-arrow-clockwise"></span>
+                            </button>
+                        </div>
+                        <div class="sub-title mt-4 text-white">
+                            <h2>Explore by Genres</h2>
                         </div>
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="accordion accordion-flush" id="accordionExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                Electronics
-                                            </button>
-                                        </h2>
-                                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                            <div class="accordion-body">
-                                                <div class="navbar-nav">
-                                                    <a href="" class="nav-item nav-link">Mobile</a>
-                                                    <a href="" class="nav-item nav-link">Tablets</a>
-                                                    <a href="" class="nav-item nav-link">Laptops</a>
-                                                    <a href="" class="nav-item nav-link">Speakers</a>
-                                                    <a href="" class="nav-item nav-link">Watches</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div class="card w-70 text-white" style="background-color: #191c33">
+                            <div class="card-body justify-content-between">
+                                @if($genres->count() > 0)
+                                    @foreach($genres as $genre)
+                                <section>
+                                    <div class="form-check mb-2">
+{{--                                        <input {{in_array($genre->id, $genresArray) ? 'checked' : ''}} class="form-check-input genre-label" type="checkbox" name="genre[]" value="{{$genre->id}}" id="genre-{{ $genre->id }}">--}}
+                                        <a href="{{ route('movie', $genre->name) }}" class="form-check-label nav-link nav-tabs-right ">
+                                            {{$genre->name}}
+                                        </a>
                                     </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Men's Fashion
-                                            </button>
-                                        </h2>
-                                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                            <div class="accordion-body">
-                                                <div class="navbar-nav">
-                                                    <a href="" class="nav-item nav-link">Shirts</a>
-                                                    <a href="" class="nav-item nav-link">Jeans</a>
-                                                    <a href="" class="nav-item nav-link">Shoes</a>
-                                                    <a href="" class="nav-item nav-link">Watches</a>
-                                                    <a href="" class="nav-item nav-link">Perfumes</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Women's Fashion
-                                            </button>
-                                        </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                            <div class="accordion-body">
-                                                <div class="navbar-nav">
-                                                    <a href="" class="nav-item nav-link">T-Shirts</a>
-                                                    <a href="" class="nav-item nav-link">Tops</a>
-                                                    <a href="" class="nav-item nav-link">Jeans</a>
-                                                    <a href="" class="nav-item nav-link">Shoes</a>
-                                                    <a href="" class="nav-item nav-link">Watches</a>
-                                                    <a href="" class="nav-item nav-link">Perfumes</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                Applicances
-                                            </button>
-                                        </h2>
-                                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                            <div class="accordion-body">
-                                                <div class="navbar-nav">
-                                                    <a href="" class="nav-item nav-link">TV</a>
-                                                    <a href="" class="nav-item nav-link">Washing Machines</a>
-                                                    <a href="" class="nav-item nav-link">Air Conditioners</a>
-                                                    <a href="" class="nav-item nav-link">Vacuum Cleaner</a>
-                                                    <a href="" class="nav-item nav-link">Fans</a>
-                                                    <a href="" class="nav-item nav-link">Air Coolers</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                </section>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
 
                         <div class="sub-title mt-5 text-white">
-                            <h2>Genres</h2>
+                            <h2>Ages</h2>
+                        </div>
+                        <div class="card w-70 text-white" style="background-color: #191c33">
+                            <div class="card-body justify-content-between">
+                                @if($ages->count() > 0)
+                                    @foreach($ages as $age)
+                                        <section>
+                                            <div class="form-check mb-2">
+                                                <a class="nav-link link-light {{ ($ageSelected == $age->id) ? 'text-danger bi bi-arrow-right' : '' }}"
+                                                   href="{{ route('movie', $age->name) }}">
+                                                    {{$age->name}}
+                                                </a>
+                                            </div>
+                                        </section>
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
 
-                        <div class="card w-60">
+{{--                        <div class="sub-title mt-5 text-white">--}}
+{{--                            <h2>Movies by year</h2>--}}
+{{--                        </div>--}}
+{{--                        <div>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2016--}}
+{{--                            </button>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2017--}}
+{{--                            </button>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2018--}}
+{{--                            </button>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2019--}}
+{{--                            </button>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2020--}}
+{{--                            </button>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2021--}}
+{{--                            </button>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2022--}}
+{{--                            </button>--}}
+{{--                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">--}}
+{{--                                2023--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+
+                        <div class="sub-title mt-5 text-white">
+                            <h2>Prices</h2>
+                        </div>
+                        <div class="card w-70 text-white" style="background-color: #191c33">
                             <div class="card-body d-flex justify-content-between">
                                 <section>
                                     <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
                                         <label class="form-check-label" for="flexCheckDefault">
-                                            Romance
+                                            $0-$100
                                         </label>
                                     </div>
                                     <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            Sony
+                                            $100-$200
                                         </label>
                                     </div>
                                     <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            Oppo
+                                            $200-$500
                                         </label>
                                     </div>
                                     <div class="form-check mb-2">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            Vivo
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Vivo
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Vivo
-                                        </label>
-                                    </div>
-                                </section>
-                                <section>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                        <label class="form-check-label" for="flexCheckDefault">
-                                            Canon
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Sony
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Oppo
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Vivo
-                                        </label>
-                                    </div>
-                                    <div class="form-check mb-2">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            Vivo
+                                            $500
                                         </label>
                                     </div>
                                 </section>
                             </div>
-                        </div>
-
-                        <div class="sub-title mt-5 text-white">
-                            <h2>Movies by year</h2>
-                        </div>
-                        <div>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2016
-                            </button>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2017
-                            </button>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2018
-                            </button>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2019
-                            </button>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2020
-                            </button>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2021
-                            </button>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2022
-                            </button>
-                            <button class="form-check-label btn m-1 text-white" style="background-color: #191c33">
-                                2023
-                            </button>
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -234,16 +146,13 @@
                                     <form action="" class="d-flex mb-0" style="width: 250px">
                                         {{--                select--}}
                                         <label for="sorting" class="w-50 d-flex align-items-center justify-content-center text-white">
-                                            Sort by
+                                            Sort by <span class="bi bi-filter-circle-fill"></span>
                                         </label>
                                         <select class="form-select rounded-5" aria-label="sorting" id="sorting" name="sorting"
                                                 onchange="this.form.submit()">
                                             <option value="default" >Default
                                             </option>
                                             <option value="newest" >Newest
-                                            </option>
-                                            <option value="bestseller">
-                                                Bestseller
                                             </option>
                                             <option value="low_to_high">
                                                 Price: Low to High
@@ -266,229 +175,57 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
+                            <div class="container-fluid p-0">
+                                <section class="section-4">
+                                    <div class="container">
+                                        <div class="row pb-3">
+                                            @if($movies->count() > 0)
+                                                @foreach($movies as $movie)
+                                                    <div class="col-md-4">
+                                                        <div class="cards h-100">
+                                                            @if(!empty($movie->image))
+                                                                <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-image h-75" alt="">
+                                                            @else
+                                                                <img src="{{ asset('admin-assets/img/default-150x150.png') }}" class="card-image h-75" alt="">
+                                                            @endif
+                                                            <div class="card-bodies d-flex flex-column">
+                                                                <h3 class="card-title">{{$movie->title}}</h3>
+                                                                <p class="card-subtitle">
+                                                                    <span>{{$movie->release_date}}</span>
+                                                                    <span class="bi bi-dot">{{$movie->duration}}</span>
+                                                                </p>
+                                                                <p class="card-subtitle">
+                                                                    <span class="text-white-50">Language: </span>
+                                                                    {{$movie->language}}
+                                                                </p>
+                                                                <p class="card-body">
+                                                                    <span class="text-white-50">Director: </span>
+                                                                    {{$movie->director}}
+                                                                </p>
+                                                                <a href="#" class="watch-btn nav-link">add to my list</a>
+                                                                <a href="{{ route('bookTickets', $movie) }}" class="watch-btn nav-link mt-2">Book now</a>
+                                                            </div>
+                                                            <div class="card-body h-100 pt-1 h-25">
+                                                                <a class="fs-4 nav-link text-white" href="">{{$movie->title}}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @else
+                                                <span class="text-white fs-4 text-center bg-danger">No Movies found</span>
+                                            @endif
                                         </div>
                                     </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
+                                </section>
+                                <div class="card-footer clearfix">
+{{--                                    {{$movies->onEachSide(3)->links()}}--}}
                                 </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="card product-card">
-                                    <div class="product-image position-relative">
-                                        <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                        <a class="whishlist" href="222"><i class="far fa-heart"></i></a>
-
-                                        <div class="product-action">
-                                            <a class="btn btn-dark" href="#">
-                                                <i class="fa fa-shopping-cart"></i> Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body text-center mt-3">
-                                        <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                        <div class="price mt-2">
-                                            <span class="h5"><strong>$100</strong></span>
-                                            <span class="h6 text-underline"><del>$120</del></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 pt-5">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination justify-content-end">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-
-
-
-
-
-
     </main>
     {{--  Products  --}}
 
@@ -504,4 +241,26 @@
     <script src="{{asset('admin-assets/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('admin-assets/js/demo.js')}}"></script>
+@endsection
+
+@section('customJs')
+    <script>
+        $(".genre-label").change(function (){
+            apply_filters();
+        });
+
+        function apply_filters(){
+            var genres = [];
+            $(".genre-label").each(function (){
+                if ($(this).is(":checked") === true){
+                    genres.push($(this).val())
+                }
+            })
+
+            console.log(genres.toString())
+            var url = '{{ url()->current() }}?'
+
+            window.location.href = url+'&genre=' +genres.toString()
+        }
+    </script>
 @endsection

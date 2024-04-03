@@ -6,17 +6,17 @@
 <div>
     <ul class="list-unstyled">
         <li class="pb-2">
-            <a href="{{route('profile')}}" class="text-decoration-none text-dark">
+            <a href="{{route('profile')}}" class="text-decoration-none text-dark {{ request()->routeIs('profile') ? 'fw-bold' : '' }}">
                 <i class="bi bi-person me-3 text-warning"></i> My account
             </a>
         </li>
         <li class="py-2">
-            <a href="{{route('orderHistory')}}" class="text-decoration-none text-dark">
+            <a href="{{route('orderHistory')}}" class="text-decoration-none text-dark {{ request()->routeIs('orderHistory') ? 'fw-bold' : '' }}">
                 <i class="bi bi-file-text me-3 text-success"></i> Orders history
             </a>
         </li>
         <li class="py-2">
-            <a href="{{route('pwd.edit')}}" class="text-decoration-none text-dark">
+            <a href="{{route('pwd.edit')}}" class="text-decoration-none text-dark {{ request()->routeIs('pwd.edit') ? 'fw-bold' : '' }}">
                 <i class="bi bi-shield-lock me-3 text-primary"></i> Change password
             </a>
         </li>

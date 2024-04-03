@@ -11,7 +11,9 @@ class Genre extends Model
 
     protected $fillable = ['name, description, status, created_at, updated_at'];
     public $table = 'genres';
-    public function movieGenre(){
-        return $this -> hasMany(MovieGenre::class);
+
+    public function movie(){
+        return $this -> hasMany(Movie::class);
     }
+
 }

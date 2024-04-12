@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Validator;
 class SeatController extends Controller
 {
     public function index(Request $request){
-        $seats = Seat::latest();
+        $seats = Seat::orderBy('number_of_col','desc')->orderBy('id','desc');
         if (!empty($seats->get('number_of_row'))){
             $seats = $seats->where('number_of_row', 'like', '%'.$request->get('number_of_row').'%' );
         }
-        $seats = $seats-> orderBy('id','desc') -> paginate(10);
+        $seats = $seats -> paginate(10);
         return view('admin.seat_manager.index', ['seats' => $seats]);
     }
     public function create()
@@ -27,34 +27,43 @@ class SeatController extends Controller
 
     public function store(Request $request)
     {
-        $seat = new Seat();
         $validator = Validator::make($request->all(), [
            'number_of_row' => 'required',
            'number_of_col' => 'required',
            'auditorium_id' => 'required'
         ]);
-        if ($validator->passes()){
-            for ($i = 1; $i <= $request->number_of_row; $i++) {
+        $id = $request->auditorium_id;
+        $auditorium = Auditorium::find($id);
+        if($request->number_of_col * $request->number_of_row != $auditorium->capacity){
+            return response()->json([
+                'status' => false,
+                 'errors' => $validator->errors()
+             ]);
+        }
+        else{
+            if ($validator->passes()){
                 for ($j = 1; $j <= $request->number_of_col; $j++) {
-                    $seat = new Seat;
-                    $seat->number_of_row = $i;
-                    $seat->number_of_col = $j;
-                    $seat->auditorium_id = $request->auditorium_id;
-                    $seat->status = 1;
-                    $seat->save(); 
+                    for ($i = 1; $i <= $request->number_of_row; $i++) {
+                        $seat = new Seat;
+                        $seat->number_of_row = $i;
+                        $seat->number_of_col = $j;
+                        $seat->auditorium_id = $request->auditorium_id;
+                        $seat->status = 1;
+                        $seat->save(); 
+                    }
                 }
-            }
-            $request->session()->flash('success', 'Seat added successfully');
-            return response()->json([
-                'status' => true,
-                'message' => 'Seat added successfully'
-            ]);
+                $request->session()->flash('success', 'Seat added successfully');
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Seat added successfully'
+                ]);
 
-        }else{
-            return response()->json([
-               'status' => false,
-                'errors' => $validator->errors()
-            ]);
+            }else{
+                return response()->json([
+                'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            }
         }
     }
     public function edit(Seat $seat){

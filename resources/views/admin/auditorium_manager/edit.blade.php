@@ -17,7 +17,7 @@
     <section class="content">
         <!-- Default box -->
         <div class="container-fluid">
-            <form action="" method="post" id="editGenreForm" name="editGenreForm">
+            <form action="" method="post" id="editAuditoriumForm" name="editAuditoriumForm">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="pb-5 pt-3">
                     <button class="btn btn-primary" type="submit">Update</button>
-                    <a href="{{route('genre.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <a href="{{route('auditorium.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
         </div>
@@ -60,7 +60,7 @@
 @endsection
 @section('customJs')
     <script>
-        $("#editGenreForm").submit(function (event){
+        $("#editAuditoriumForm").submit(function (event){
             event.preventDefault();
             var element = $(this);
             $("button[type=submit]").prop('disabled', true)
@@ -76,7 +76,7 @@
                         window.location.href='{{route('genre.index')}}';
 
                         $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-                        $("#description").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        $("#capacity").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                     }else {
                         if (response['notFound'] == true){
                             window.location.href = "{{ route('genre.index') }}";
@@ -89,10 +89,10 @@
                             $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
 
-                        if (errors['description']){
-                            $("#description").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['description']);
+                        if (errors['capacity']){
+                            $("#capacity").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['capacity']);
                         }else {
-                            $("#description").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                            $("#capacity").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
                     }
 

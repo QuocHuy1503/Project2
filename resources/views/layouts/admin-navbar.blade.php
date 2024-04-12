@@ -149,9 +149,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('reservationType.index')}}" class="nav-link {{ request()->routeIs('reservationType.index') ? 'bg-danger' : '' }}">
+                        <a href="{{route('seatType.index')}}" class="nav-link {{ request()->routeIs('seatType.index') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fas bi-list-ul" aria-hidden="true"></i>
-                            <p>Reservation Types </p>
+                            <p>Seat Types </p>
                         </a>
                     </li>
                     <li class="nav-item">

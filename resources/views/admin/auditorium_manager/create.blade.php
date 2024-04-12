@@ -4,7 +4,7 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Genre</h1>
+                    <h1>Create Auditorium</h1>
                 </div>
                 <div class="col-sm-6 text-right">
                     <a href="{{route('auditorium.index')}}" class="btn btn-primary">Back</a>
@@ -30,8 +30,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="seat_no">Number of seat</label>
-                                    <input type="number" name="seat_no" id="seat_no" class="form-control" placeholder="Number Of Seat" max="100" min="20">
+                                    <label for="capacity">Capacity</label>
+                                    <input type="number" name="capacity" id="capacity" class="form-control" placeholder="How much" max="100" min="20">
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
 
                     // Clear any previous errors (adjust selectors as needed)
                     $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-                    $("#seat_no").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html(""); // Assuming you have a field with id="seat_no"
+                    $("#capacity").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html(""); // Assuming you have a field with id="capacity"
                 } else {
                     var errors = response['errors'];
 
@@ -75,8 +75,8 @@
                     if (errors['name']) {
                     $("#name").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['name'][0]); // Added [0] to access first error message
                     }
-                    if (errors['seat_no']) {
-                    $("#seat_no").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['seat_no'][0]); // Added [0] to access first error message
+                    if (errors['capacity']) {
+                    $("#capacity").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['capacity'][0]); // Added [0] to access first error message
                     }
                 }
                 },

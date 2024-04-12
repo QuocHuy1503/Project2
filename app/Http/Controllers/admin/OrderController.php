@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Seat;
+use App\Models\Customer;
+use App\Models\Screening;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\ReservationType;
-use App\Models\Screening;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\SeatReserved;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
@@ -126,5 +131,49 @@ class OrderController extends Controller
            'status' => true,
            'message' => 'Order deleted successfully'
         ]);
+    }
+
+    public function order(){
+        $screening = Screening::all()->where('auditorium_id','=',3);
+        
+        $rows = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_row');
+        $cols = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_col');
+        $ids = Seat::distinct()->where('auditorium_id', '=',3)->pluck('id');
+        // $seats  = Seat::where('auditorium_id','=',3)->orderBy('number_of_row','asc')->orderBy('id','asc')->get();
+        // dd($rows);
+        $seats  = Seat::where('auditorium_id','=',3)->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
+        return view('Booking.index',[
+            'screening' => $screening,
+            'rows' => $rows,
+            'cols' => $cols,
+            'ids' => $ids,
+            'seats' => $seats,
+        ]);
+    }
+
+
+    public function bookingStore(Request $request){
+        // dd($request);
+        $id = Auth::guard('customer')->user()->id;
+        //lay ban ghi
+        $customer = Customer::find($id);
+        $validator = Validator::make($request->all(), [
+            'screening_id' => 'required',
+            'customer_id' => 'required',
+            'seat_id' => 'required'
+        ]);
+        $contact = $customer -> phone_number;
+        // $seat = Seat::all()->where('number_of_row','=',$request->number_of_row)->where('number_of_col','=',$request->number_of_col);
+       foreach($request->id as $seat){
+         Reservation::create([
+            'screening_id' => $request->screening_id,
+            'customer_id' => $id,
+            'status' => 2,
+            'date' => now(),
+            'seat_id' => $seat,
+            'reservation_contact' => $contact,
+         ]);
+       }
+       return redirect(route('booking'));
     }
 }

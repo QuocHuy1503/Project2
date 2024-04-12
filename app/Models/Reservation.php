@@ -9,7 +9,7 @@ class Reservation extends Model
 {
     protected $fillable = [
         'screening_id',
-        'reservation_type_id',
+        'seat_id',
         'reservation_contact',
         'date',
         'status',
@@ -22,14 +22,11 @@ class Reservation extends Model
     public function customer(){
         return $this -> belongsTo(Customer::class);
     }
-    // public function employee(){
-    //     return $this -> belongsTo(Employee::class);
-    // }
+    public function seat(){
+        return $this -> hasMany(Seat::class);
+    }
     public function seat_reservation(){
         return $this -> hasMany(SeatReserved::class);
-    }
-    public function reservation_type(){
-        return $this -> belongsTo(ReservationType::class);
     }
     use HasFactory;
 }

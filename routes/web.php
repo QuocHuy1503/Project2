@@ -15,10 +15,11 @@ use App\Http\Controllers\admin\CustomerController;
 use App\Http\Controllers\admin\AdminLoginController;
 use App\Http\Controllers\admin\AgeController;
 use App\Http\Controllers\admin\AuditoriumController;
-use App\Http\Controllers\admin\ReservationTypeController;
+use App\Http\Controllers\admin\SeatTypeController;
 use App\Http\Controllers\admin\SeatController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\admin\OrderController;
+
 use App\Models\Reservation;
 
 /*
@@ -37,11 +38,11 @@ use App\Models\Reservation;
 //});
 
 Route::get('/', function () {
-    return view('customer.home');
+    return view('customer.home',[HomeController::class,'index']);
 })->name('home');
 
 Route::get('/home', function () {
-    return view('customer.home');
+    return view('customer.home',[HomeController::class,'index']);
 })->name('home');
 
 Route::get('/movie', [MovieController::class, 'show'])->name('movie');
@@ -53,7 +54,9 @@ Route::get('/movie', [MovieController::class, 'show'])->name('movie');
 Route::get('/help', function () {
     return view('customer.help');
 })->name('help');
-
+Route::get('/contact', function () {
+    return view('customer.contact');
+})->name('contact');
 Route::group(['prefix' => 'admin'], function (){
 
    Route::group(['middleware' => 'admin.guest'], function() {
@@ -111,17 +114,17 @@ Route::group(['prefix' => 'admin'], function (){
         });
         
         // Reservation Type Admin Controller Route
-        Route::prefix('/reservationType')->group(function () {
+        Route::prefix('/seatType')->group(function () {
 
-            Route::get('/', [ReservationTypeController::class, 'index'])->name('reservationType.index');
+            Route::get('/', [SeatTypeController::class, 'index'])->name('seatType.index');
             //show create form
-            Route::get('/create', [ReservationTypeController::class, 'create'])->name('reservationType.create');
-            Route::post('/create', [ReservationTypeController::class, 'store'])->name('reservationType.store');
+            Route::get('/create', [SeatTypeController::class, 'create'])->name('seatType.create');
+            Route::post('/create', [SeatTypeController::class, 'store'])->name('seatType.store');
             
             //show edit form
-            Route::get('/{reservationType}/edit', [ReservationTypeController::class, 'edit'])->name('reservationType.edit');
-            Route::put('/{reservationType}', [ReservationTypeController::class, 'update'])->name('reservationType.update');
-            Route::delete('/{reservationType}', [ReservationTypeController::class, 'destroy'])->name('reservationType.destroy');
+            Route::get('/{seatType}/edit', [SeatTypeController::class, 'edit'])->name('seatType.edit');
+            Route::put('/{seatType}', [SeatTypeController::class, 'update'])->name('seatType.update');
+            Route::delete('/{seatType}', [SeatTypeController::class, 'destroy'])->name('seatType.destroy');
         });
         
 
@@ -238,7 +241,8 @@ Route::middleware(CheckLoginCustomer::class)->group(function () {
 
     Route::get('/change_password', [CustomerController::class, 'editPassword'])->name('pwd.edit');
     Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');
-
+    Route::get('booking',[OrderController::class,'order'])->name('booking');
+    Route::post('booking',[OrderController::class,'bookingStore']) -> name('bookingStore');
 //    Route::get('/cart', [ProductController::class, 'cart'])->name('product.cart');
 //    Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])->name('product.addToCart');
 //    Route::get('/addToCartAjax/{id}', [ProductController::class, 'addToCartAjax'])->name('product.addToCartAjax');

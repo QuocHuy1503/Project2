@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Seat;
 use App\Models\Auditorium;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,20 +20,18 @@ class AuditoriumController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'seat_no' => 'required'
-
+            'capacity' => 'required'
         ]);
          if ($validator->passes()){
              $auditoriums = new Auditorium();
              $auditoriums -> name = $request -> name;
-             $auditoriums -> seat_no = $request -> seat_no;
+             $auditoriums -> capacity = $request -> capacity;
              $auditoriums->save();
              $request->session()->flash('success', 'Auditorium added successfully');
              return response()->json([
                  'status' => true,
                  'message' => 'Auditorium added successfully'
              ]);
- 
          }else{
              return response()->json([
                 'status' => false,
@@ -45,17 +44,17 @@ class AuditoriumController extends Controller
     public function update(Request $request, Auditorium $auditoriums){
         $request -> validate([
             'name' => 'required',
-            'seat_no' => 'required'
+            'capacity' => 'required'
         ]);
         $auditoriums -> update([
             'name' => $request -> name,
-            'seat_no' => $request -> seat_no
+            'capacity' => $request -> capacity
         ]);
-        return redirect(route('auditoriums.index'));
+        return redirect(route('auditorium.index'));
     }
 
     public function edit(Auditorium $auditorium){
-        return view('auditoriums.edit', ['auditorium' => $auditorium]);
+        return view('admin.auditorium_manager.edit', ['auditorium' => $auditorium]);
     }
     public function destroy($genreId, Request $request)
     {

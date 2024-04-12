@@ -17,34 +17,79 @@
             </div>
         </div>
     </section>
-          @foreach ($seats as $seat)
-          @php
-              $rows = $seat->number_of_row;
-              $cols = $seat->number_of_col;
-              $nextSeat = 1;
-              $currentCol = 1;
-          @endphp
-      @endforeach
+      {{-- @foreach ($seats as $seat)
+        @php
+          $rows = $seat->number_of_row;
+          $cols = $seat->number_of_col;
+          $nextSeat = 1;
+       @endphp
+      @endforeach --}}
+      @php
+          $nextSeat = 1;
+          $previous = 1;
+      @endphp
 <form action="{{route('bookingStore')}}" method="POST" enctype="multipart/form-data">
 @csrf
 @method('POST')
   <div class="d-flex justify-content-around">
     <div>
+      {{-- <table>
+        @foreach ($cols as $col)
+        <tr>
+          <td>
+            @foreach ($rows as $row)
+            <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="">
+              <label class="btn btn-primary" for="btn-check-{{$nextSeat}}">{{ $row. chr($col + 64) }}</label> 
+              @php
+                 $nextSeat++;
+              @endphp
+            @endforeach
+          </td>
+          
+        </tr>   
+        @endforeach
+      </table> --}}
       <table>
-        @for ($col = 1; $col <= $cols; $col++)
-          <tr>
-            @for ($row = 1; $row <= $rows; $row++ && $nextSeat++)
-              <td>
-                <!--Div một ô vào-->
-                <!--Thêm cách truyền id vào-->
-                {{--Ở đây t ghi  --}}
-                {{-- <input type="hidden" name="seat_ids" value="{{$nextSeat}}"> --}}
-                <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$nextSeat}}">
-                <label class="btn btn-primary" for="btn-check-{{$nextSeat}}">{{ $row . chr($col + 64) }}</label>
-              </td>
-            @endfor
+        @foreach ($seats as $seat)
+        {{-- Cái này để giữ số hàng dọc đang ở --}}
+        @php
+           $currentCol = $seat->number_of_col
+        @endphp
+
+        {{-- Cái này để kiểm tra nếu hàng dọc hiện tại có lớn hơn số hàng dọc trước kia ko kiểu từ 1 lên 2 và 2 > 1. Nếu có số hàng dọc quá khứ tăng --}}
+          @if ($currentCol > $previous)
+              <tr>
+              @php
+                  $previous++;
+              @endphp
+          @endif
+
+          {{-- comment --}}
+          
+          {{-- Cái này để chọn ghế --}}
+          <td>
+            @if ($seat->status == 1)
+              <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="id[]" value="{{$seat->id}}">
+              <label class="btn btn-primary" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
+            
+            @elseif ($seat->status == 2)
+              <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="id[]" value="{{$seat->id}}">
+              <label class="btn btn-primary" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
+            @endif
+
+            @php
+              $nextSeat++;
+            @endphp
+          </td>
+          {{-- comment --}}
+
+          {{-- comment --}}
+          @if ($currentCol > $previous)
           </tr>
-        @endfor
+          @endif
+          {{-- comment --}}
+          
+        @endforeach
       </table>
     </div>
         <!--In ghế-->
@@ -54,6 +99,7 @@
         {{-- Screening --}}
         <div class="d-flex flex-column">
           @foreach ($screening as $item)
+            <input type="hidden" name="screening_id" value="{{$item ->id}}">
             <input type="hidden" name="auditorium_id" value="{{$item->auditorium_id}}">
             <input type="hidden" name="movie_id" value="{{$item->movie_id}}">
             <input type="radio" class="btn-check" name="options-screening_start" id="success-outlined-{{$item->id}}" autocomplete="off" checked>

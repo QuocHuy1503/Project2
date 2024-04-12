@@ -60,7 +60,7 @@
                                     {{-- <td>
                                         <details>
                                             <summary>Details</summary>
-                                            <p class="border border-primary rounded-2 py-2 p-2">@for ($i = 1; $i <=  $auditorium -> seat_no; $i++)
+                                            <p class="border border-primary rounded-2 py-2 p-2">@for ($i = 1; $i <=  $auditorium -> capacity; $i++)
                                                 {{$i}}  
                                                 @if ($i % 10 == 0)
                                                     <br>
@@ -69,7 +69,7 @@
                                         </details>
                                     </td> --}}
                                     <td>
-                                        {{$auditorium -> seat_no}}
+                                        {{$auditorium -> capacity}}
                                     </td>
                                     <td>
                                         <a href="{{route('auditorium.edit', $auditorium->id)}}">

@@ -33,10 +33,10 @@
                         <ul class="accordion-item">
                             <li><a class="dropdown-item">genres</a></li>
                                 <div>
-                                    @foreach(getGenres() as $genre)
+                                    {{-- @foreach(getGenres() as $genre)
                                         <li><a class="dropdown-item d-none"></a></li>
                                         <li><a class="dropdown-item" href="#">{{$genre->name}}</a></li>
-                                    @endforeach
+                                    @endforeach --}}
                                 </div>
                         </ul>
                         <ul>
@@ -109,8 +109,8 @@
                     <h3>Important Links</h3>
                     <hr class="w-25" style="background-size: 10px">
                     <ul class="nav flex-column">
-                        <li><a class="text-decoration-none link-light" href="{{ route('about') }}" title="About">About</a></li>
-                        <li><a class="text-decoration-none link-light" href="contact-us.php" title="Contact Us">Contact Us</a></li>
+                        {{-- <li><a class="text-decoration-none link-light" href="{{ route('about') }}" title="About">About</a></li> --}}
+                        <li><a class="text-decoration-none link-light" href="{{route('contact')}}" title="Contact Us">Contact Us</a></li>
                         <li><a class="text-decoration-none link-light" href="#" title="Privacy">Privacy</a></li>
                         <li><a class="text-decoration-none link-light" href="#" title="Privacy">Terms & Conditions</a></li>
                         <li><a class="text-decoration-none link-light" href="#" title="Privacy">Refund Policy</a></li>

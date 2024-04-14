@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Reservation Type</h1>
+                    <h1>Edit Seat Type</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('reservationType.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('seatType.index')}}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </div>
@@ -17,42 +17,30 @@
     <section class="content">
         <!-- Default box -->
         <div class="container-fluid">
-            <form action="" method="post" id="editReservationTypeForm" name="editReservationTypeForm">
+            <form action="" method="post" id="editSeatTypeForm" name="editSeatTypeForm">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="reservation_type">Reservation Type</label>
-                                    <input value="{{$reservationType->reservation_type}}" type="text" 
-                                    name="reservation_type" id="reservation_type" class="form-control" placeholder="Name">
+                                    <label for="name">Name</label>
+                                    <input value="{{$seatType->name}}" type="text" name="name" id="name" class="form-control" placeholder="Name">
                                     <p></p>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-1">
+                            <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="status">Status</label>
-                                    <select name="status" id="status" class="btn btn-dark bi bi-caret-down">
-                                        <option {{($reservationType->status == 1) ? 'selected' : ''}} value="1" >Active</option>
-                                        <option {{($reservationType->status == 0) ? 'selected' : ''}} value="0" >Block</option>
-                                    </select>
-                                </div> --}}
-                            </div>
-                            {{-- <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="email">Description</label>
-                                    <textarea type="text" name="description" id="description" class="form-control" placeholder="Description" rows="4">
-                                        {{$reservationType->description}}
-                                    </textarea>
+                                    <label for="price">Price</label>
+                                    <input value="{{$seatType->price}}" type="number" min="80" max="120" name="price" id="price" class="form-control" placeholder="price">
                                     <p></p>
                                 </div>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
                     <button class="btn btn-primary" type="submit">Update</button>
-                    <a href="{{route('reservationType.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <a href="{{route('seatType.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
                 </div>
             </form>
         </div>
@@ -61,12 +49,12 @@
 @endsection
 @section('customJs')
     <script>
-        $("#editReservationTypeForm").submit(function (event){
+        $("#editSeatTypeForm").submit(function (event){
             event.preventDefault();
             var element = $(this);
             $("button[type=submit]").prop('disabled', true)
             $.ajax({
-                url: '{{route('reservationType.update', $reservationType->id)}}',
+                url: '{{route('seatType.update', $seatType->id)}}',
                 type: 'put',
                 data: element.serializeArray(),
                 dataType: 'json',
@@ -74,19 +62,27 @@
                     $("button[type=submit]").prop('disabled', false)
 
                     if (response["status"] === true){
-                        window.location.href='{{route('reservationType.index')}}';
+                        window.location.href='{{route('seatType.index')}}';
 
-                        $("#reservation_type").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        $("#price").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                     }else {
                         if (response['notFound'] == true){
-                            window.location.href = "{{ route('reservationType.index') }}";
+                            window.location.href = "{{ route('seatType.index') }}";
                         }
-                            var errors = response['errors'];
-                                if (errors['name']){
-                                    $("#reservation_type").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['reservation_type']);
-                                }else {
-                                    $("#reservation_type").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-                                }
+
+                        var errors = response['errors'];
+                        if (errors['name']){
+                            $("#name").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['name']);
+                        }else {
+                            $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        }
+
+                        if (errors['price']){
+                            $("#price").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['price']);
+                        }else {
+                            $("#price").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        }
                     }
 
                 }, error: function (jqXHR, exception){

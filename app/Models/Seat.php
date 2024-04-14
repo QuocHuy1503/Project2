@@ -7,13 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Seat extends Model
 {
-    protected $fillable = ['number_of_row', 'number_of_col','auditorium_id','status'];
-    public $timestamp = false;
+    protected $fillable = [
+        'number_of_row',
+        'number_of_col',
+        'status',
+        'auditorium_id',
+        'type_id',
+    ];    public $timestamp = false;
     public function auditorium(){
         return $this -> belongsTo(auditorium::class);
     }
-    public function type(){
-        return $this -> hasMany(SeatType::class);
+    public function seatType()
+    {
+        return $this->belongsTo(SeatType::class);
     }
     use HasFactory;
 }

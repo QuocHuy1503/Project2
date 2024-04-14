@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\admin;
 
-use Illuminate\Http\Request;
 use App\Models\SeatType;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,13 +11,13 @@ class SeatTypeController extends Controller
 {
     public function index(Request $request)
     {
-        $SeatTypes = SeatType::latest();
+        $seatTypes = SeatType::latest();
         if (!empty($request->get('keyword'))){
-            $SeatTypes = $SeatTypes->where('name', 'like', '%'.$request->get('keyword').'%' );
+            $seatTypes = $seatTypes->where('name', 'like', '%'.$request->get('keyword').'%' );
         }
-        $SeatTypes = $SeatTypes->paginate(10);
+        $seatTypes = SeatType::paginate(11);        
         return view('admin.seat_type_manager.index', [
-            'seatTypes' => $SeatTypes
+            'seatTypes' => $seatTypes,
         ]);
     }
 
@@ -29,55 +29,66 @@ class SeatTypeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+           'name' => 'required',
+           'price' => 'required'
         ]);
         if ($validator->passes()){
-            $SeatTypes = new SeatType();
-            $SeatTypes->name = $request->name;
-            $SeatTypes->save();
-             $request->session()->flash('success', 'Seat Types added successfully');
+            $seatType = new SeatType();
+            $seatType->name = $request->name;
+            $seatType->price = $request->price;
+            $seatType->save();
+
+            $request->session()->flash('success', 'Seat Type added successfully');
             return response()->json([
                 'status' => true,
-                'message' => 'Seat Types added successfully'
+                'message' => 'Seat Type added successfully'
+            ]);
+
+        }else{
+            return response()->json([
+               'status' => false,
+                'errors' => $validator->errors()
             ]);
         }
     }
 
-    public function edit($SeatTypeId, Request $request)
+    public function edit($seatTypeId, Request $request)
     {
-        $SeatType = SeatType::find($SeatTypeId);
-        if (empty($SeatType)){
+        $seatType = SeatType::find($seatTypeId);
+        if (empty($seatType)){
             $request->session()->flash('error', 'Seat Type not found');
-            return redirect()->route('SeatTypes.index');
+            return redirect()->route('seatType.index');
         }
-        $data['SeatType'] = $SeatType;
+        $data['seatType'] = $seatType;
         return view('admin.seat_type_manager.edit', $data);
     }
 
-    public function update($SeatTypeId, Request $request)
+    public function update($seatTypeId, Request $request)
     {
-        $seatType = SeatType::find($SeatTypeId);
+        $seatType = SeatType::find($seatTypeId);
         if (empty($seatType)){
-            $request->session()->flash('error', 'Seat Type not found');
+            $request->session()->flash('error', 'seatType not found');
 
             return response()->json([
                'status' => false,
                'notFound' => true,
-                'message' => 'Seat Type not found'
+                'message' => 'seatType not found'
             ]);
         }
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required'
+            'name' => 'required',
+            'price' => 'required'
         ]);
         if ($validator->passes()){
             $seatType->name = $request->name;
+            $seatType->price = $request -> price;
             $seatType->save();
 
-            $request->session()->flash('success', 'Seat Type updated successfully');
+            $request->session()->flash('success', 'seatType updated successfully');
             return response()->json([
                 'status' => true,
-                'message' => 'Seat Type updated successfully'
+                'message' => 'seatType updated successfully'
             ]);
 
         }else{
@@ -91,18 +102,19 @@ class SeatTypeController extends Controller
     public function destroy($seatTypeId, Request $request)
     {
         $seatType = SeatType::find($seatTypeId);
-        if (empty($seatTypeId)){
-            $request->session()->flash('error', 'Seat Type not found');
+        if (empty($seatType)){
+            $request->session()->flash('error', 'seatType not found');
             return response()->json([
                 'status' => true,
-                'message' => 'Seat Type not found'
+                'message' => 'seatType not found'
             ]);
         }
 
         $seatType->delete();
-        $request->session()->flash('success', 'Seat Type deleted successfully');
+        $request->session()->flash('success', 'seatType deleted successfully');
         return response()->json([
            'status' => true,
-           'message' => 'Seat Type deleted successfully'
+           'message' => 'seatType deleted successfully'
         ]);
-    }}
+    }
+}

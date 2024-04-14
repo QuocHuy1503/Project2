@@ -27,6 +27,12 @@
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="price">Price</label>
+                                    <input type="number" name="price" max="120" min="80" id="price" class="form-control" placeholder="price">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,12 +63,19 @@
                         window.location.href='{{route('seatType.index')}}'
 
                         $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        $("#price").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                     }else {
                         var errors = response['errors'];
-                        if (errors['reservation_type']){
+                        if (errors['name']){
                             $("#name").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['name']);
                         }else {
                             $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+                        }
+
+                        if (errors['description']){
+                            $("#price").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['price']);
+                        }else {
+                            $("#price").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
                     }
 

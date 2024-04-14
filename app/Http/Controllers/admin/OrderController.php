@@ -153,17 +153,17 @@ class OrderController extends Controller
 
 
     public function bookingStore(Request $request){
-        // dd($request);
         $id = Auth::guard('customer')->user()->id;
-        //lay ban ghi
         $customer = Customer::find($id);
+        // 
+
+
         $validator = Validator::make($request->all(), [
             'screening_id' => 'required',
             'customer_id' => 'required',
-            'seat_id' => 'required'
+            'seat_id' => 'required' 
         ]);
         $contact = $customer -> phone_number;
-        // $seat = Seat::all()->where('number_of_row','=',$request->number_of_row)->where('number_of_col','=',$request->number_of_col);
        foreach($request->id as $seat){
          Reservation::create([
             'screening_id' => $request->screening_id,
@@ -173,6 +173,8 @@ class OrderController extends Controller
             'seat_id' => $seat,
             'reservation_contact' => $contact,
          ]);
+         $bookSeat = $seat;
+         
        }
        return redirect(route('booking'));
     }

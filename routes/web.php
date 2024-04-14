@@ -107,6 +107,9 @@ Route::group(['prefix' => 'admin'], function (){
             Route::get('/create', [SeatController::class, 'create'])->name('seat.create');
             Route::post('/create', [SeatController::class, 'store'])->name('seat.store');
             
+            Route::get('/change', [SeatController::class, 'change'])->name('seat.change');
+            Route::put('/change', [SeatController::class, 'changeStore'])->name('seat.changeStore');
+
             //show edit form
             Route::get('/{seat}/edit', [SeatController::class, 'edit'])->name('seat.edit');
             Route::put('/{seat}', [SeatController::class, 'update'])->name('seat.update');

@@ -6,6 +6,7 @@ use App\Models\Seat;
 use App\Models\Auditorium;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\SeatType;
 use Illuminate\Support\Facades\Validator;
 
 class SeatController extends Controller
@@ -20,9 +21,8 @@ class SeatController extends Controller
     }
     public function create()
     {
-        $seats = Seat::latest();
         $auditoriums = Auditorium::all();
-        return view('admin.seat_manager.create',['seats' => $seats , 'auditoriums' => $auditoriums]);
+        return view('admin.seat_manager.create',['auditoriums' => $auditoriums]);
     }
 
     public function store(Request $request)
@@ -48,6 +48,7 @@ class SeatController extends Controller
                         $seat->number_of_row = $i;
                         $seat->number_of_col = $j;
                         $seat->auditorium_id = $request->auditorium_id;
+                        $seat->type_id = 1;
                         $seat->status = 1;
                         $seat->save(); 
                     }
@@ -66,10 +67,54 @@ class SeatController extends Controller
             }
         }
     }
-    public function edit(Seat $seat){
+    public function change(Seat $seats){
         $auditoriums = Auditorium::all();
-        return view('admin.seat_manager.edit',['seat' => $seat , 'auditoriums' => $auditoriums]);
+        $types = SeatType::all();
+        return view('admin.seat_manager.change',compact('auditoriums','seats','types'));
     }
+
+    public function changeStore(Request $request){
+      
+        $validator = Validator::make($request->all(), [
+               'pointA' => 'required',
+               'pointB' => 'required',
+               'pointC' => 'required',
+               'pointD' => 'required',
+               'auditorium_id' => 'required',
+               'type_id' => 'required',
+        ]);
+        
+        if ($validator->passes()){
+            
+            $startingRow = $request -> pointA;
+            $endRow = $request -> pointB;
+            $startingCol = $request ->pointC;
+            $endCol = $request -> pointD;
+            $auditorium = $request -> auditorium_id;
+
+            $seats = Seat::where('auditorium_id', '=',$auditorium)
+            ->whereBetween('number_of_row', [$startingRow, $endRow])
+            ->whereBetween('number_of_col', [$startingCol, $endCol])
+            ->get();
+
+            foreach($seats as $seat){
+                    $seat -> type_id = $request -> type_id;
+                    $seat -> save();
+            }
+                $request->session()->flash('success', 'Seat updated successfully');
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Seat updated successfully'
+                ]);
+    
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors()
+                ]);
+            }
+    }
+
     public function update($seatId, Request $request)
     {
         $seat = Seat::find($seatId);

@@ -4,10 +4,13 @@
         <section class="content-header">
             <div class="container-fluid my-2">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-8">
                         <h1>Seats</h1>
                     </div>
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-2 text-right">
+                        <a href="{{route('seat.change')}}" class="bi bi-plus-circle btn btn-primary">Change Type</a>
+                    </div>
+                    <div class="col-sm-2 text-right">
                         <a href="{{route('seat.create')}}" class="bi bi-plus-circle btn btn-primary">New seat</a>
                     </div>
                 </div>
@@ -48,7 +51,7 @@
                                 <th scope="col">Row</th>
                                 <th scope="col">Column</th>
                                 <th scope="col">Auditorium Id</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Type</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -62,11 +65,7 @@
                                     <td>{{$seat ->number_of_row}}</td>
                                     <td>{{$seat ->number_of_col}}</td> 
                                     <td>{{$seat ->auditorium->name }}</td>
-                                    <td>
-                                        <details>
-                                            <summary>Details</summary>
-                                        </details>
-                                    </td>
+                                    <td>{{$seat->type_id}}</td>
                                     <td>
                                         @if($seat->status == 1)
                                             <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">

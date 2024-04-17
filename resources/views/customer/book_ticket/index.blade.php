@@ -1,3 +1,4 @@
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,15 +20,25 @@
             <h6>Starring</h6>
             <p>	@foreach($movieCasts as $movieCast)
                 @if($movieCast->movie_id == $movie->id)
-                        <span class="bi bi-dot"></span>
+                        <span class="bi bi-dash"></span>
                     @foreach($casts as $cast)
                         {{$cast->id == $movieCast->cast_id ? $cast->name:''}}
                         @endforeach
                         @endif
                         @endforeach
                         </p>
-            <h6>Edited by</h6>
-            <p>	Ruben</p>
+            <h6>Genre</h6>
+            <p>
+                @foreach($movieGenres as $movieGenre)
+                    @if($movieGenre->movie_id == $movie->id)
+                        <span class="bi bi-dot">
+                            @foreach($genres as $genre)
+                                <span> {{$genre->id == $movieGenre->genre_id ? $genre->name:''}}</span>
+                            @endforeach
+                        </span>
+                    @endif
+                @endforeach
+            </p>
         </div>
     </div>
     <div class="right">
@@ -54,44 +65,49 @@
             </div>
         </div>
 
-        <div class="screen" id="screen">
-            Screen
-        </div>
+        <div class="container">
+            <div class="screen" id="screen">
+                Screen
+            </div>
 
-        <!-- chairs  -->
-        <div class="chair" id="chair">
-             <div class="row">
-                <span>J</span>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <li class="seat">560</li>
-                <span>J</span>
+            <!-- chairs  -->
+            <div class="chair" id="chair">
+                <ul class="row" id="seats">
+                    <span>J</span>
+                    <li id="seats" value="10" class="seat">560</li>
+                    <li id="seats" value="10" class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="booked">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="booked">560</li>
+                    <li class="booked">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="booked">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <li class="seat">560</li>
+                    <span>J</span>
+                </ul>
+                <p class="text">
+                    You have selected <span id="count">0</span> seats for a price of $<span id="total">0</span>
+                </p>
             </div>
         </div>
 
-        <!-- Ticket  -->
 
+        <!-- Ticket  -->
         <div class="ticket" id="ticket">
             <div class="tic">
                 <div class="barcode">
@@ -138,7 +154,7 @@
         <!-- Details  -->
         <div class="details" id="det">
             <div class="details_chair">
-                <li>Avalable</li>
+                <li>Available</li>
                 <li>Booked</li>
                 <li>Selected</li>
             </div>
@@ -151,30 +167,35 @@
         </button>
     </div>
 </div>
-
+<script src="{{ asset('customer-assets/js/movie.js') }}"></script>
 </body>
+
 <script>
     const container = document.querySelector('.container');
-    const seats = document.querySelectorAll('.row .seat:not(.occupied)');
+    const seats = document.querySelectorAll('.row .seat:not(.booked)');
     const count = document.getElementById('count');
-    const movieSelect = document.getElementById('movie');
+    const total = document.getElementById('total')
+    const seatSelect = document.getElementById('seats');
+
+    let ticketPrice = seatSelect.value.string()
+    console.log( ticketPrice)
 
     function updateSelectedCount()
     {
         const selectedSeats = document.querySelectorAll('.row .seat.selected');
         const selectedSeatsCount = selectedSeats.length;
+        console.log(selectedSeatsCount)
         count.innerText = selectedSeatsCount;
     }
 
     container.addEventListener('click', e => {
         if (e.target.classList.contains('seat') &&
-        !e.target.classList.contains('occupied')) {
+        !e.target.classList.contains('booked')) {
             e.target.classList.toggle('selected');
         }
 
         updateSelectedCount();
     })
-
 </script>
 <script>
     JsBarcode("#barcode", "J18800792023");

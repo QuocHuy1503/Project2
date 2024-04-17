@@ -5,11 +5,13 @@
         <title>Home</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
-    <body style="background-color: #00001c;" data-instant-intensity="mousedown">
+    <body style="background-color: #00001c;; box-sizing: border-box" data-instant-intensity="mousedown">
     <hr class="text-white">
     <div class="container-fluid p-0">
-        <div class=" position-relative d-flex justify-content-center align-items-center">
-            <img src="{{asset('img/image-home.jpg')}}" class="w-100 object-fit-contain opacity-75" alt="home">
+        <div class="position-relative d-flex justify-content-center align-items-center" style="@media screen and (max-width: 46.1875em) {
+            flex-direction: column;
+        }">
+            <img src="{{asset('img/image-home.jpg')}}" class="w-100 img-sm object-fit-contain opacity-75" alt="home">
             <div
                 class="position-absolute text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
                 <span class="luxury-font fs-1 fade-in fade-bottom">
@@ -23,7 +25,7 @@
             </div>
         </div>
 
-        <section class="movie-banner">
+        <section class="movie-banner container-sm">
         {{--            Image--}}
             <div class="m-banner-img">
                 <img src="{{asset('customer-assets/images/banner-godzillaXkong.jpg')}}">
@@ -34,7 +36,7 @@
                 <div class="title-container">
                     <div class="title-top">
                         <div class="movie-title">
-                            <h1>Godzilla x Kong: The New Empire</h1>
+                            <h1 class="text-sm-start">Godzilla x Kong: The New Empire</h1>
                         </div>
                         <div class="more-about-movie w-50 justify-content-between">
                             <span class="quality">Full HD</span>
@@ -78,7 +80,7 @@
             </div>
         </section>
 
-        <section class="text-white mt-2">
+        <section class="text-white mt-2 ">
             <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -89,7 +91,7 @@
 
                 <div class="carousel-inner">
                     <div class="carousel-item active c-item">
-                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017484.png&w=2048&q=75" class="d-block w-100 h-100" alt="Slide 1">
+                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017484.png&w=2048&q=75" class="d-block w-100" alt="Slide 1">
                         <div class="carousel-caption">
 {{--                            <p class="mt-5 fs-3 text-uppercase">Discover the hidden world</p>--}}
 {{--                            <h1 class="display-1 fw-bolder text-capitalize">The Aurora Tours</h1>--}}
@@ -97,7 +99,7 @@
                         </div>
                     </div>
                     <div class="carousel-item c-item">
-                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017458.png&w=2048&q=75" class="d-block w-100 h-100" alt="Slide 2">
+                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017458.png&w=2048&q=75" class="d-block w-100" alt="Slide 2">
                         <div class="carousel-caption ">
 {{--                            <p class="text-uppercase fs-3 mt-5">The season has arrived</p>--}}
 {{--                            <p class="display-1 fw-bolder text-capitalize">3 available tours</p>--}}
@@ -106,7 +108,7 @@
                         </div>
                     </div>
                     <div class="carousel-item c-item">
-                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017456.png&w=2048&q=75" class="d-block w-100 h-100" alt="Slide 3">
+                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017456.png&w=2048&q=75" class="d-block w-100" alt="Slide 3">
                         <div class="carousel-caption">
 {{--                            <p class="text-uppercase fs-3 mt-5">Destination activities</p>--}}
 {{--                            <p class="display-1 fw-bolder text-capitalize">Go glacier hiking</p>--}}
@@ -115,7 +117,7 @@
                         </div>
                     </div>
                     <div class="carousel-item c-item">
-                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017453.jpg&w=2048&q=75" class="d-block w-100 h-100" alt="Slide 4">
+                        <img src="https://chieuphimquocgia.com.vn/_next/image?url=http%3A%2F%2Fapiv2.chieuphimquocgia.com.vn%2FContent%2FImages%2FBanner%2F0017453.jpg&w=2048&q=75" class="d-block w-100" alt="Slide 4">
                         <div class="carousel-caption">
                             {{--                            <p class="text-uppercase fs-3 mt-5">Destination activities</p>--}}
                             {{--                            <p class="display-1 fw-bolder text-capitalize">Go glacier hiking</p>--}}
@@ -161,11 +163,11 @@
                 <div class="content-heading text-white">
                     <h2>Trending Movies</h2>
                 </div>
-                <div class="row row-cols-4 pb-1">
+                <div class="row pb-1">
                     @if($isFeatures->count() > 0)
                         @foreach($isFeatures as $movie)
                             <div class="col">
-                                <div class="cards h-100">
+                                <div class="cards h-100 flex-sm-column">
                                     @if(!empty($movie->image))
                                         <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-image h-75 col-md-4" alt="">
                                     @else
@@ -177,7 +179,7 @@
                                             <span>{{$movie->age->name}}</span>
                                         </span>
                                         <p class="card-subtitle">
-                                            <span>{{$movie->release_date}}</span>
+                                            <span>{{\Carbon\Carbon::parse($movie->release_date)->format('d-m-Y')}}</span>
                                             <span class="bi bi-dot">{{$movie->duration}}</span>
                                         </p>
                                         <p class="card-subtitle">
@@ -211,6 +213,7 @@
                         <span class="text-white fs-4 text-center bg-danger">No Movies found</span>
                     @endif
             </div>
+            </div>
         </section>
 
         <section class="section-4 pt-5">
@@ -218,16 +221,23 @@
                 <div class="section-title text-white">
                     <h2>Latest Produsts</h2>
                 </div>
-                <div class="row pb-3 card-body">
+                <div class="row row-cols-xxl-4">
                     @if($latestMovies->count() > 0)
                         @foreach($latestMovies as $movie)
-                            <div class="col-md-3">
-                                <div class="cards h-100">
-                                    <img src="{{asset('customer-assets/images/jw4.jpg')}}" class="card-image h-75" alt="">
+                            <div class="col justify-content-center">
+                                <div class="cards h-100 flex-sm-column">
+                                    @if(!empty($movie->image))
+                                        <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-image h-75 col-md-1" alt="">
+                                    @else
+                                        <img src="{{ asset('admin-assets/img/default-150x150.png') }}" class="card-image h-75" alt="">
+                                    @endif
                                     <div class="card-bodies d-flex flex-column">
                                         <h3 class="card-title">{{$movie->title}}</h3>
+                                        <span class="language">
+                                            <span>{{$movie->age->name}}</span>
+                                        </span>
                                         <p class="card-subtitle">
-                                            <span>{{$movie->release_date}}</span>
+                                            <span>{{\Carbon\Carbon::parse($movie->release_date)->format('d-m-Y')}}</span>
                                             <span class="bi bi-dot">{{$movie->duration}}</span>
                                         </p>
                                         <p class="card-subtitle">
@@ -239,10 +249,20 @@
                                             {{$movie->director}}
                                         </p>
                                         <a href="#" class="watch-btn nav-link">add to my list</a>
-                                        <a href="#" class="watch-btn nav-link mt-2">Book now</a>
+                                        <a href="{{route('bookTickets', $movie)}}" class="watch-btn nav-link mt-2">Book now</a>
                                     </div>
                                     <div class="card-body h-100 pt-1 h-25">
-                                        <a class="fs-4 nav-link text-white" href="#">{{$movie->title}}</a>
+                                        <a class="fs-4 nav-link text-white" href="">{{$movie->title}}</a>
+                                        <a class="nav-link text-white-50" href="">@foreach($movieGenres as $movieGenre)
+                                                @if($movieGenre->movie_id == $movie->id)
+                                                    <span class="bi bi-dot">
+                                                        @foreach($genres as $genre)
+                                                            <span> {{$genre->id == $movieGenre->genre_id ? $genre->name:''}}</span>
+                                                        @endforeach
+                                                    </span>
+                                                @endif
+
+                                            @endforeach</a>
                                     </div>
                                 </div>
                             </div>

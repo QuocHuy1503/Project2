@@ -5,6 +5,8 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Reservation;
+use App\Models\SeatReserved;
 use App\Requests\StoreCustomerRequest;
 use App\Requests\UpdateCustomerRequest;
 use Illuminate\Http\Request;
@@ -117,7 +119,7 @@ class CustomerController extends Controller
         $id = Auth::guard('customer')->user()->id;
         //lay ban ghi
         $customer = Customer::find($id);
-        $orders = Order::where('customer_id', $id)->paginate(2);
+        $orders = Reservation::where('customer_id', $id)->paginate(2);
 
         return view('customer.profiles.orderHistory', [
             'customer' => $customer,

@@ -139,7 +139,7 @@ class SeatController extends Controller
             // $seat-> auditorium_id = $request->auditorium_id;
             $seat-> status = $request ->status;
             $seat->save();
-
+            // Status = 2 (la bị hỏng) , 3 là đã đặt, 1 là còn trống
             $request->session()->flash('success', 'Seat updated successfully');
             return response()->json([
                 'status' => true,

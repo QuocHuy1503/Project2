@@ -22,7 +22,7 @@ class OrderController extends Controller
         if (!empty($request->get('keyword'))){
             $orders = $orders->where('screening_id', 'like', '%'.$request->get('keyword').'%' );
         }
-        $orders = $orders->paginate(10);
+        $orders = Reservation::paginate(10);
         return view('admin.order_manager.index', [
             'orders' => $orders,
         ]);
@@ -134,19 +134,16 @@ class OrderController extends Controller
     }
 
     public function order(){
-        $screening = Screening::all()->where('auditorium_id','=',3);
+        $screening = Screening::all()->where('auditorium_id','=',1);
         
-        $rows = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_row');
-        $cols = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_col');
-        $ids = Seat::distinct()->where('auditorium_id', '=',3)->pluck('id');
+        // $rows = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_row');
+        // $cols = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_col');
+        // $ids = Seat::distinct()->where('auditorium_id', '=',3)->pluck('id');
         // $seats  = Seat::where('auditorium_id','=',3)->orderBy('number_of_row','asc')->orderBy('id','asc')->get();
         // dd($rows);
-        $seats  = Seat::where('auditorium_id','=',3)->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
+        $seats  = Seat::where('auditorium_id','=', 1 )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
         return view('Booking.index',[
             'screening' => $screening,
-            'rows' => $rows,
-            'cols' => $cols,
-            'ids' => $ids,
             'seats' => $seats,
         ]);
     }
@@ -164,17 +161,18 @@ class OrderController extends Controller
             'seat_id' => 'required' 
         ]);
         $contact = $customer -> phone_number;
-       foreach($request->id as $seat){
+       foreach($request->seat_id as $seat){
          Reservation::create([
             'screening_id' => $request->screening_id,
             'customer_id' => $id,
-            'status' => 2,
+            'status' => 1,
             'date' => now(),
             'seat_id' => $seat,
             'reservation_contact' => $contact,
          ]);
-         $bookSeat = $seat;
-         
+         $updateBookedSeat = Seat::find($seat);
+         $updateBookedSeat -> status = 2;
+         $updateBookedSeat -> save();   
        }
        return redirect(route('booking'));
     }

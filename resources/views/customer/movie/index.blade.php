@@ -26,9 +26,9 @@
         </section>
 
         <section class="section-6 pt-3">
-            <div class="container">
+            <div class="container-lg">
                 <div class="row">
-                    <div class="col-md-3 sidebar">
+                    <div class="col-lg-3 sidebar">
                         <div class="card-title">
                             <button type="button" onclick="window.location.href='{{route('movie')}}'" class="btn text-white btn-outline-danger">
                                 Reset <span class="bi bi-arrow-clockwise"></span>
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="card w-70 text-white" style="background-color: #191c33">
-                            <div class="card-body justify-content-between">
+                            <div class="card-body justify-content-between col-lg-12">
                                 @if($genres->count() > 0)
                                     @foreach($genres as $genre)
                                 <section>
@@ -65,10 +65,12 @@
                                     @foreach($ages as $age)
                                         <section>
                                             <div class="form-check mb-2">
-                                                <a class="nav-link link-light {{ ($ageSelected == $age->id) ? 'text-danger bi bi-arrow-right' : '' }}"
-                                                   href="{{ route('movie', $age->name) }}">
-                                                    {{$age->name}}
-                                                </a>
+                                                <button class="btn" style="background-color: #161934">
+                                                    <a class="nav-link link-light {{ ($ageSelected == $age->id) ? 'text-danger bi bi-arrow-right' : '' }}"
+                                                       href="{{ route('movie', $age->name) }}">
+                                                        {{$age->name}}
+                                                    </a>
+                                                </button>
                                             </div>
                                         </section>
                                     @endforeach
@@ -76,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-9">
+                    <div class="col-lg-9">
                         <div class="row pb-3">
                             <div class="col-12 pb-1">
                                 <div class="d-flex align-items-center justify-content-end mb-4">
@@ -99,14 +101,16 @@
                                 </div>
                             </div>
 
-                            <div class="d-grid gap-4" style="grid-template-columns: repeat(3, 1fr)">
-                                @if($movies->count() > 0)
-                                @foreach($movies as $movie)
-                                    <div class="p-3 rounded rounded-4 " style=" background: linear-gradient(45deg, rgba(255,255,255, .05), rgba(205,140,56,.15));">
-                                        @if(!empty($movie->image))
-                                            <div class="position-relative rounded rounded-4 overflow-hidden mb-3" style="width: auto; height: 300px;">
-                                                <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-img h-100" alt="">
-                                                <div class="position-absolute text-white top-0 p-2 border  rounded-4">
+                            <div class="container">
+                                <div class="row">
+                                    @if($movies->count() > 0)
+                                        @foreach($movies as $movie)
+                                            <div class="col-12 col-md-4">
+                                                <div class="p-3 rounded rounded-4 mb-3" style=" background: linear-gradient(45deg, rgba(255,255,255, .05), rgba(205,140,56,.15));">
+                                                    @if(!empty($movie->image))
+                                                        <div class="position-relative rounded rounded-4 overflow-hidden mb-3">
+                                                            <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-img" alt="">
+                                                            <div class="position-absolute text-white top-0 p-2 border  rounded-4">
                                                     <span class="luxury-font fs-5">
                                                         @switch($movie->age->id)
                                                             @case(1)
@@ -125,40 +129,45 @@
                                                                 </div>
                                                                 @break
                                                         @endswitch
-{{--                                                        {{ $movie->age->name }}--}}
+                                                        {{--                                                        {{ $movie->age->name }}--}}
                                                     </span>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+                                                    <h3 class="text-white mb-2">{{$movie->title}}</h3>
+                                                    <span class="language justify-content-lg-between">
+                                                        <span class="fs-6 bg-success  rounded-3">{{$movie->language}}</span>
+                                                        <span class="bg-danger rounded-3">
+                                                            <a class="bi bi-heart link-light" href="javascript:void(0);" onclick="addToWishList({{ $movie->id }})"></a>
+                                                        </span>
+                                                    </span>
+                                                    <div class="justify-content-between">
+                                                    <span class="nav-link text-white-50">
+                                                        @foreach($movieGenres as $movieGenre)
+                                                            @if($movieGenre->movie_id == $movie->id)
+                                                                <span class="bi bi-dot">
+                                                                    @foreach($genres as $genre)
+                                                                        <span> {{$genre->id == $movieGenre->genre_id ? $genre->name:''}}</span>
+                                                                    @endforeach
+                                                                </span>
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                    </div>
+                                                    <p class="screen-name"></p>
+                                                    <div class="d-flex align-items-center justify-content-sm-center justify-content-between row">
+                                                        <a href="{{ route('movie-details', $movie) }}" class="btn btn-outline-success text-white border-light-subtle col-lg-6 mx-lg-2">View Detail <span class="bi bi-exclamation-circle"></span></a>
+                                                        <a href="{{ route('bookTickets', $movie) }}" class="btn btn-outline-danger text-white border-white col-lg-5">Buy Tickets</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        @endif
 
-                                        <h3 class="text-white mb-2">{{$movie->title}}</h3>
-                                            <span class="language">
-                                                <span class="fs-6 bg-success  rounded-3">{{$movie->language}}</span>
-                                            </span>
-                                            <div class="justify-content-between">
-                                                <span class="nav-link text-white-50">
-                                                    @foreach($movieGenres as $movieGenre)
-                                                        @if($movieGenre->movie_id == $movie->id)
-                                                            <span class="bi bi-dot">
-                                                                @foreach($genres as $genre)
-                                                                    <span> {{$genre->id == $movieGenre->genre_id ? $genre->name:''}}</span>
-                                                                @endforeach
-                                                            </span>
-                                                        @endif
-                                                    @endforeach
-                                                </span>
-                                            </div>
-                                        <p class="screen-name"></p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <a href="{{ route('movie-details', $movie) }}" class="btn btn-outline-success text-white border-light-subtle">View Detail <span class="bi bi-exclamation-circle"></span></a>
-                                            <a href="{{ route('bookTickets', $movie) }}" class="btn btn-outline-danger text-white border-white">Buy Tickets</a>
-                                        </div>
-                                    </div>
-
-                                @endforeach
-                                @else
-                                    <span class="text-white fs-4 text-center bg-danger">No Movies found</span>
-                                @endif
+                                        @endforeach
+                                    @else
+                                        <span class="text-white fs-4 text-center bg-danger">No Movies found</span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
 {{--                        <div class="card-footer clearfix ">--}}
@@ -186,6 +195,8 @@
 @endsection
 
 @section('customJs')
+
+
     <script>
         $(".genre-label").change(function (){
             apply_filters();
@@ -208,6 +219,12 @@
             // Filter Genre
             if (genres.length > 0){
                 url += '&genre=' + genres.toString()
+            }
+
+            // Search
+            var keyword = $("#search").val()
+            if (keyword.length > 0){
+                url += '&search=' + keyword;
             }
 
             // Sort

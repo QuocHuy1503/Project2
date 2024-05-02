@@ -166,10 +166,11 @@
                 <div class="row pb-1">
                     @if($isFeatures->count() > 0)
                         @foreach($isFeatures as $movie)
-                            <div class="col">
+                            @csrf
+                            <div class="col col-xxl-3">
                                 <div class="cards h-100 flex-sm-column">
                                     @if(!empty($movie->image))
-                                        <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-image h-75 col-md-4" alt="">
+                                        <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-image h-75 w-100 col-xxl-3" alt="">
                                     @else
                                         <img src="{{ asset('admin-assets/img/default-150x150.png') }}" class="card-image h-75" alt="">
                                     @endif
@@ -190,12 +191,13 @@
                                             <span class="text-white-50">Director: </span>
                                             {{$movie->director}}
                                         </p>
-                                        <a href="#" class="watch-btn nav-link">add to my list</a>
+                                        <a href="javascript:void(0);" onclick="addToWishList({{ $movie->id }})" class="watch-btn nav-link whishlist">add to my list</a>
                                         <a href="{{route('bookTickets', $movie)}}" class="watch-btn nav-link mt-2">Book now</a>
                                     </div>
                                     <div class="card-body h-100 pt-1 h-25">
-                                        <a class="fs-4 nav-link text-white" href="">{{$movie->title}}</a>
-                                        <a class="nav-link text-white-50" href="">@foreach($movieGenres as $movieGenre)
+                                        <a class="fs-4 nav-link text-white" href="{{ route('movie-details', $movie) }}">{{$movie->title}}</a>
+                                        <a class="nav-link text-white-50" href="{{ route('movie-details', $movie) }}">
+                                            @foreach($movieGenres as $movieGenre)
                                                 @if($movieGenre->movie_id == $movie->id)
                                                     <span class="bi bi-dot">
                                                         @foreach($genres as $genre)
@@ -203,8 +205,8 @@
                                                         @endforeach
                                                     </span>
                                                 @endif
-
-                                            @endforeach</a>
+                                            @endforeach
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -221,13 +223,13 @@
                 <div class="section-title text-white">
                     <h2>Latest Produsts</h2>
                 </div>
-                <div class="row row-cols-xxl-4">
+                <div class="row">
                     @if($latestMovies->count() > 0)
                         @foreach($latestMovies as $movie)
-                            <div class="col justify-content-center">
-                                <div class="cards h-100 flex-sm-column">
+                            <div class="col justify-content-sm-center col-xxl-3">
+                                <div class="cards h-100 flex-md-column">
                                     @if(!empty($movie->image))
-                                        <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-image h-75 col-md-1" alt="">
+                                        <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-image h-75" alt="">
                                     @else
                                         <img src="{{ asset('admin-assets/img/default-150x150.png') }}" class="card-image h-75" alt="">
                                     @endif
@@ -248,11 +250,11 @@
                                             <span class="text-white-50">Director: </span>
                                             {{$movie->director}}
                                         </p>
-                                        <a href="#" class="watch-btn nav-link">add to my list</a>
+                                        <a href="javascript:void(0);" onclick="addToWishList({{ $movie->id }})" class="watch-btn nav-link whishlist">add to my list</a>
                                         <a href="{{route('bookTickets', $movie)}}" class="watch-btn nav-link mt-2">Book now</a>
                                     </div>
                                     <div class="card-body h-100 pt-1 h-25">
-                                        <a class="fs-4 nav-link text-white" href="">{{$movie->title}}</a>
+                                        <a class="fs-4 nav-link text-white" href="{{ route('movie-details', $movie) }}">{{$movie->title}}</a>
                                         <a class="nav-link text-white-50" href="">@foreach($movieGenres as $movieGenre)
                                                 @if($movieGenre->movie_id == $movie->id)
                                                     <span class="bi bi-dot">
@@ -289,20 +291,23 @@
     <script src="{{asset('customer-assets/js/lazyload.17.6.0.min.js')}}"></script>
     <script src="{{asset('customer-assets/js/slick.min.js')}}"></script>
     <script src="{{asset('customer-assets/js/custom.js')}}"></script>
-    <script>
-        window.onscroll = function() {myFunction()};
+@endsection
+   @section('customJs')
+       <script>
+           window.onscroll = function() {myFunction()};
 
-        var navbar = document.getElementById("navbar");
-        var sticky = navbar.offsetTop;
+           var navbar = document.getElementById("navbar");
+           var sticky = navbar.offsetTop;
 
-        function myFunction() {
-            if (window.pageYOffset >= sticky) {
-                navbar.classList.add("sticky")
-            } else {
-                navbar.classList.remove("sticky");
-            }
-        }
-    </script>
+           function myFunction() {
+               if (window.pageYOffset >= sticky) {
+                   navbar.classList.add("sticky")
+               } else {
+                   navbar.classList.remove("sticky");
+               }
+           }
+       </script>
+   @endsection
     <script>
         $(document).on('click','.play-btn a', function (){
             $('.play').addClass('active-popup');
@@ -326,5 +331,5 @@
         })
 
     </script>
-@endsection
+
 

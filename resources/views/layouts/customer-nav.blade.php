@@ -1,8 +1,45 @@
+{{--<link rel="preconnect" href="https://fonts.googleapis.com">--}}
+{{--<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+{{--<link href="https://fonts.googleapis.com/css2?family=Metrophobic&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">--}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Metrophobic&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<nav class="navbar nav-underline navbar-expand-lg bd-navbar fixed-top pt-3" style="background-color: #00001c">
-    <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap text-uppercase px-0">
+<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/getting-started/rfs/">
+<meta name="HandheldFriendly" content="True" />
+<meta name="pinterest" content="nopin" />
+
+<meta property="og:locale" content="en_AU" />
+<meta property="og:type" content="website" />
+<meta property="fb:admins" content="" />
+<meta property="fb:app_id" content="" />
+<meta property="og:site_name" content="" />
+<meta property="og:title" content="" />
+<meta property="og:description" content="" />
+<meta property="og:url" content="" />
+<meta property="og:image" content="" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="" />
+<meta property="og:image:height" content="" />
+<meta property="og:image:alt" content="" />
+
+<meta name="twitter:title" content="" />
+<meta name="twitter:site" content="" />
+<meta name="twitter:description" content="" />
+<meta name="twitter:image" content="" />
+<meta name="twitter:image:alt" content="" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<link rel="stylesheet" type="text/css" href="{{asset('customer-assets/css/slick.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('customer-assets/css/slick-theme.css')}}" />
+<link rel="stylesheet" type="text/css" href="{{asset('customer-assets/css/video-js.css')}}" />
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<body>
+<nav class="navbar nav-underline navbar-expand-lg bd-navbar fixed-top pt-2 text-center" style="background-color: #00001c; box-sizing: border-box">
+    <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap text-uppercase px-0 ">
         <a class="navbar-brand" href="/">
             <img src="{{asset('admin-assets/img/paradise-theatre-logo.png')}}" alt="brand"
                  height="40" class="rounded">
@@ -18,35 +55,46 @@
                        href="{{route('home')}}">HOME</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link link-light dropdown-toggle {{ request()->routeIs('movie') ? 'active' : '' }}" href="{{route('movie')}}"
-                       id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                    <a class="nav-link link-light  {{ request()->routeIs('movie', 'movie-details', 'bookTickets') ? 'active' : '' }}" href="{{route('movie')}}">
+                        {{--                       id="navbarDropdown" role="button" data-bs-toggle="dropdown">--}}
                         MOVIE
                     </a>
-                    <div class="dropdown-menu rounded-4" aria-labelledby="navbarDropdown">
-                        <ul>
-                            <li><a class="dropdown-item">Popular</a></li>
-                            <li><a class="dropdown-item" href="{{route('movie')}}">featured</a></li>
-                            <li><a class="dropdown-item" href="{{route('movie')}}">most popular</a></li>
-                            <li><a class="dropdown-item" href="{{route('movie')}}">new releases</a></li>
-                            <li><a class="dropdown-item" href="{{route('movie')}}">recommend</a></li>
-                        </ul>
-                        <ul class="accordion-item">
-                            <li><a class="dropdown-item">genres</a></li>
-                                <div>
-                                    {{-- @foreach(getGenres() as $genre)
-                                        <li><a class="dropdown-item d-none"></a></li>
-                                        <li><a class="dropdown-item" href="#">{{$genre->name}}</a></li>
-                                    @endforeach --}}
-                                </div>
-                        </ul>
-                        <ul>
-                            <li><a class="dropdown-item">Something else here</a></li>
-                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>
-                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>
-                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>
-                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>
-                        </ul>
-                    </div>
+                    {{--                    <div class="dropdown-menu rounded-4" aria-labelledby="navbarDropdown">--}}
+                    {{--                        <ul>--}}
+                    {{--                            <li><a class="dropdown-item">Popular</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="{{route('movie')}}">featured</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="{{route('movie')}}">most popular</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="{{route('movie')}}">new releases</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="{{route('movie')}}">recommend</a></li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <ul class="accordion-item">--}}
+                    {{--                            <li><a class="dropdown-item">genres</a></li>--}}
+                    {{--                                <div>--}}
+                    {{--                                    @foreach(getGenres() as $genre)--}}
+                    {{--                                        <li><a class="dropdown-item d-none"></a></li>--}}
+                    {{--                                        <li><a class="dropdown-item genre-label" href="{{ route('movie', $age->name) }}">{{$genre->name}}</a>--}}
+                    {{--                                            @if($genre->count() > 0)--}}
+                    {{--                                                    <section>--}}
+                    {{--                                                        <div class="form-check mb-2">--}}
+                    {{--                                                            <input class="form-check-input genre-label"--}}
+                    {{--                                                                   type="checkbox" name="genre[]" value="{{$genre->id}}" id="genre-{{ $genre->id }}">--}}
+                    {{--                                                            <span class="form-check-label nav-link nav-tabs-right ">--}}
+                    {{--                                            {{$genre->name}}--}}
+                    {{--                                        </span>--}}
+                    {{--                                                        </div>--}}
+                    {{--                                                    </section>--}}
+                    {{--                                            @endif</li>--}}
+                    {{--                                    @endforeach--}}
+                    {{--                                </div>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <ul>--}}
+                    {{--                            <li><a class="dropdown-item">Something else here</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>--}}
+                    {{--                            <li><a class="dropdown-item" href="#">Mega Menu Link</a></li>--}}
+                    {{--                        </ul>--}}
+                    {{--                    </div>--}}
                 </li>
                 <li class="nav-item">
                     <a class="nav-link link-light {{ request()->routeIs('help') ? 'active' : '' }}" href="{{route('help')}}">HELP
@@ -54,12 +102,10 @@
                 </li>
             </ul>
             <h2 class="mt-3 text-center text-white me-md-auto fw-semibold font-monospace rounded-2" style="background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);">PARADISE THEATRE</h2>
-            <form method="get" action="{{ route('movie') }}" class="d-flex search-form mb-0" role="search">
-                @csrf
+            <form method="get" action="{{ route('movie') }}" class="d-flex search-form mb-0">
                 <div class="input-group input-group-sm">
-                    <input class="form-control" name="search" type="search" placeholder="Type to search..."
-                           aria-label="Search"
-                           value="{{request()->query('search')}}">
+                    <input class="form-control" type="text" placeholder="Search for Movie..." name="search" id="search"
+                           value="{{ request()->get('search') }}">
                     <button class="btn btn-outline-secondary" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
@@ -67,7 +113,8 @@
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link link-light {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{route('profile')}}">
+                    <a class="nav-link link-light {{ request()->routeIs('profile', 'wishlist','customer.login', 'customer.register') ? 'active' : '' }}"
+                       href="{{ route('profile') }}">
                         <i class="bi bi-person"></i>
                     </a>
                 </li>
@@ -84,19 +131,18 @@
     @yield('content')
 </div>
 <footer class="bg-dark mt-5">
-    <div class="container pb-5 pt-3 backgroundEffect">
-        <div class="row">
+    <div class="container-xxl pb-5 pt-3 backgroundEffect position-relative">
+        <div class="row justify-content-sm-center col-12 text-sm-center">
             <div class="col-md-3">
-                <div class="footer-card text-white">
+                <div class="footer-card text-white ">
                     <img src="{{asset('admin-assets/img/paradise-theatre-logo.png')}}" alt="brand"
-                         height="150" class="rounded me-2">
+                         height="110" class="rounded">
                 </div>
             </div>
 
             <div class="col-md-3">
-                <div class="footer-card text-white">
+                <div class="footer-card text-white bd-lead">
                     <h3>Get In Touch</h3>
-                    <hr class="w-25">
                     <p>No dolore ipsum accusam no lorem. <br>
                         123 Street, New York, USA <br>
                         exampl@example.com <br>
@@ -107,10 +153,9 @@
             <div class="col-md-3">
                 <div class="footer-card text-white">
                     <h3>Important Links</h3>
-                    <hr class="w-25" style="background-size: 10px">
                     <ul class="nav flex-column">
-                        {{-- <li><a class="text-decoration-none link-light" href="{{ route('about') }}" title="About">About</a></li> --}}
-                        <li><a class="text-decoration-none link-light" href="{{route('contact')}}" title="Contact Us">Contact Us</a></li>
+                        <li><a class="text-decoration-none link-light" href="{{ route('about') }}" title="About">About</a></li>
+                        <li><a class="text-decoration-none link-light" href="{{ route('contact_us') }}" title="Contact Us">Contact Us</a></li>
                         <li><a class="text-decoration-none link-light" href="#" title="Privacy">Privacy</a></li>
                         <li><a class="text-decoration-none link-light" href="#" title="Privacy">Terms & Conditions</a></li>
                         <li><a class="text-decoration-none link-light" href="#" title="Privacy">Refund Policy</a></li>
@@ -118,13 +163,11 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-xxl-3">
                 <div class="footer-card text-white">
                     <h3>My Account</h3>
-                    <hr class="w-25">
                     <ul class="nav flex-column">
-                        <li><a class="text-decoration-none link-light" href="{{route('profile')}}" title="Sell">Login</a></li>
-                        <li><a class="text-decoration-none link-light" href="{{route('customer.register')}}" title="Advertise">Register</a></li>
+                        <li><a class="text-decoration-none link-light" href="{{route('profile')}}" title="Login">Login</a></li>
                         <li><a class="text-decoration-none link-light" href="#" title="Contact Us">My Orders</a></li>
                     </ul>
                 </div>
@@ -144,4 +187,76 @@
         </div>
     </div>
 </footer>
+<!-- Wishlist Modal -->
+<div class="modal fade" id="wishlistModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ asset('customer-assets/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('customer-assets/js/bootstrap.bundle.5.1.3.min.js') }}"></script>
+<script src="{{ asset('customer-assets/js/instantpages.5.1.0.min.js') }}"></script>
+<script src="{{ asset('customer-assets/js/lazyload.17.6.0.min.js') }}"></script>
+<script src="{{ asset('customer-assets/js/slick.min.js') }}"></script>
+<script src="{{ asset('customer-assets/js/custom.js') }}"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
+<script>
+    window.onscroll = function() {myFunction()};
+
+    var navbar = document.getElementById("navbar");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+        } else {
+            navbar.classList.remove("sticky");
+        }
+    }
+
+
+    function addToWishList(id) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '{{ route("customer.addToWishlist") }}',
+            type: 'post',
+            data: {id: id},
+            dataType: 'json',
+            success: function (response){
+                if (response.status == true){
+                    $("#wishlistModal .modal-body").html(response.message);
+                    $("#wishlistModal").modal('show');
+                }else {
+                    window.location.href = "{{ route('customer.login') }}";
+                    //alert(response.message);
+                }
+            }
+        })
+    }
+</script>
+
 @yield('customJs')
+</body>
+

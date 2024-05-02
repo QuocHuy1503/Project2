@@ -27,8 +27,11 @@
             <!-- Steps -->
             <div class="form-step form-step-active">
                 <h3 class="text-center text-white">Stage 1: Choose time</h3>
-                <div class="input-group">
-
+                <div class="container">
+                    <div class="row text-white">
+                        <div class="col-md">Calender</div>
+                        <div class="col-md">Choose time</div>
+                    </div>
                 </div>
 
                 <div class="w-25">

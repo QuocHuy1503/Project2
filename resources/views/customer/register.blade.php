@@ -4,132 +4,269 @@
     <head>
         <title>Register</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
+
+    <body style="background: linear-gradient(#141e30, #243b55)">
     <hr class="text-white">
-    <body style="background-color: #00001c;">
-    <div class="container h-60 mt-5 d-flex justify-content-center align-items-center slider">
-        @include('admin.message')
-        <div class="login-box ">
-            <h2>Login</h2>
-            <form>
-                @csrf
-                <div class="user-box">
-                    <input type="text" name="" required="">
-                    <label>Email</label>
+    <main>
+        <div class="pt-3 pb-3 mt-4 mb-3">
+            <div class="container">
+                <div>
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
+                        <li class="bi bi-slash-lg text-white">Register</li>
+                    </ol>
                 </div>
-                <div class="user-box">
-                    <input type="password" name="" required="">
-                    <label>Password</label>
-                </div>
-                <a href="#" class="justify-content-center align-items-center">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    Submit
-                </a>
-                    <div>
-                        Already have an account? Login <a href="{{route('customer.login')}}">here</a>
-                    </div>
-            </form>
+            </div>
         </div>
-    </div>
-{{--    <div class="container h-60 mt-5 d-flex justify-content-center align-items-center">--}}
-{{--        <form method="post" action="{{route('customer.registerProcess')}}" enctype="multipart/form-data"--}}
-{{--              class="border bg-white p-3 rounded m-0">--}}
-{{--            @csrf--}}
-{{--            <div class="my-4 text-center">--}}
-{{--                <h1 class="h1">Register</h1>--}}
-{{--            </div>--}}
+        <div class="pt-3 mt-5">
+            <div class="mt-5 container position-relative h-70 fixed">
+                <div class="login-boX">
+                    <h2 class="fs-2">Register</h2>
+                    <form action="" method="post" name="registrationForm" id="registrationForm" class="col-12">
+                        <div class="row">
+                            <div class="user-box col-md-6">
+                                <span class="">
+                                    <input type="text" class="form-control" name="first_name" id="first_name">
+                                    <p></p>
+                                    <label>First Name</label>
+                                </span>
+                            </div>
+                            <div class="user-box col-md-6">
+                                <span class="">
+                                    <input type="text" class="form-control" name="last_name" id="last_name">
+                                    <label>Last Name</label>
+                                    <p></p>
+                                </span>
+                            </div>
+                            <div class="user-box">
+                                <input type="email" class="form-control" name="email" id="email">
+                                <label>Email</label>
+                                <p></p>
+                            </div>
+{{--                            <div class="col-md-12 text-white mb-3">--}}
+{{--                                <label style="color: #03e9f4" class="fs-6 col-md-12">Birthday</label>--}}
+{{--                                <form id="birthday" name="birthday" class="">--}}
+{{--                                    <div id="birthday" name="birthday">--}}
+{{--                                        <form id="birthday" name="birthday">--}}
+{{--                                            <select class="btn bg-dark text-white text-start "  id="day"></select>--}}
+{{--                                            <select class="btn bg-dark text-white text-start w-25"  id="month"></select>--}}
+{{--                                            <select class="btn bg-dark text-white text-start"  id="year">Year:</select>--}}
+{{--                                        </form>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
+{{--                                <p></p>--}}
+{{--                            </>--}}
 
-{{--            <div class="row">--}}
-{{--                <div class="col-md-6 mb-3">--}}
-{{--                    <label for="first_name" class="form-label">First name</label>--}}
-{{--                    <input type="text" name="first_name" class="form-control" id="first_name"--}}
-{{--                           value="{{old('first_name')}}">--}}
-{{--                    @if($errors->has('first_name'))--}}
-{{--                        {{ $errors->first('first_name') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
+                            <div class="col-md-3 text-white mb-3 d-flex">
+                                <label style="color: #03e9f4" class="fs-6 col-md-12">Gender</label>
+                                <select name="gender" id="gender" class="btn btn-dark bi bi-caret-down">
+                                    <option value="1">Male</option>
+                                    <option value="0">Female</option>
+                                </select>
+                                <p></p>
+                            </div>
 
-{{--                <div class=" col-md-6 mb-3">--}}
-{{--                    <label for="last_name" class="form-label">Last name</label>--}}
-{{--                    <input type="text" name="last_name" class="form-control" id="last_name"--}}
-{{--                           value="{{old('last_name')}}">--}}
-{{--                    @if($errors->has('last_name'))--}}
-{{--                        {{ $errors->first('last_name') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class=" row">--}}
-{{--                <div class="col-md-6 mb-3">--}}
-{{--                    <label for="email" class="form-label">Email address</label>--}}
-{{--                    <input type="email" name="email" class="form-control" id="email" value="{{old('email')}}">--}}
-{{--                    @if($errors->has('email'))--}}
-{{--                        {{ $errors->first('email') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-
-{{--                <div class="col-md-6 mb-3">--}}
-{{--                    <label for="phone_number" class="form-label">Phone number</label>--}}
-{{--                    <input type="number" name="phone_number" class="form-control" id="phone_number"--}}
-{{--                           value="{{old('phone_number')}}">--}}
-{{--                    @if($errors->has('phone_number'))--}}
-{{--                        {{ $errors->first('phone_number') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class=" row">--}}
-{{--                <div class="col-md-6 mb-3">--}}
-{{--                    <label for="password" class="form-label">Password</label>--}}
-{{--                    <input type="text" name="password" class="form-control" id="password"--}}
-{{--                           value="{{old('password')}}">--}}
-{{--                    @if($errors->has('password'))--}}
-{{--                        {{ $errors->first('password') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-
-{{--                <div class="col-md-6 mb-3">--}}
-{{--                    <label for="password_2" class="form-label">Re-enter password</label>--}}
-{{--                    <input type="text" name="password_2" class="form-control" id="password_2"--}}
-{{--                           value="{{old('password_2')}}">--}}
-{{--                    @if($errors->has('password_2'))--}}
-{{--                        {{ $errors->first('password_2') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <div class="row">--}}
-{{--                <div class="col-md-12 mb-3">--}}
-{{--                    <label for="address" class="form-label">Address</label>--}}
-{{--                    <input type="text" name="address" class="form-control" id="address" value="{{old('address')}}">--}}
-{{--                    @if($errors->has('address'))--}}
-{{--                        {{ $errors->first('address') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-{{--            <input class="hidden invisible opacity-0" type="hidden"--}}
-{{--                   name="status" value="1" readonly>--}}
-
-{{--            <div class="mb-3 d-flex justify-content-center align-items-center">--}}
-{{--                <button class="btn btn-primary rounded-5 px-4">Register</button>--}}
-{{--            </div>--}}
-
-{{--            <div class="form-text d-flex justify-content-between align-items-center">--}}
-{{--                <div class="me-5">--}}
-{{--                    <a href="{{route('customer.forgotPassword')}}">Forgot password</a>--}}
-{{--                </div>--}}
-{{--                <div>--}}
-{{--                    Already have an account? Login <a href="{{route('customer.login')}}">here</a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-
-
-{{--        </form>--}}
-{{--    </div>--}}
+                            <div class="d-flex ">
+                                <div class="user-box col-lg-6">
+                                    <input type="password" class="form-control" name="password" id="password">
+                                    <label>Password</label>
+                                    <p></p>
+                                </div>
+                                <div class="user-box col-lg-6">
+                                    <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
+                                    <label>Re-enter password</label>
+                                </div>
+                            </div>
+                            <div class="user-box col-md-6">
+                                <input type="number" class="form-control" name="phone_number" id="phone_number">
+                                <label>Phone number</label>
+                            </div>
+                            <div class="user-box col-md-6">
+                                <input type="text" class="form-control" name="address" id="address">
+                                <label>Address</label>
+                            </div>
+                            <input class="hidden invisible opacity-0" type="hidden"
+                                   name="status" value="1" readonly>
+                        </div>
+                        <button class="justify-content-center border-0 bg-dark align-items-center">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            Submit
+                        </button>
+                        <div class="p-2 text-white">
+                            Already have an account? <a class="text-danger fs-4 text-decoration-none" href="{{route('customer.login')}}">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
     </body>
     <x-flash-message/>
+@endsection
+
+@section('customJs')
+    <script type="text/javascript">
+        $("#registrationForm").submit(function (event){
+          event.preventDefault();
+          $("button[type='submit']").prop('disabled', true);
+            $.ajax({
+                url: '{{ route("customer.registerProcess") }}',
+                type: 'post',
+                data: $(this).serializeArray(),
+                dataType: 'json',
+                success: function (response){
+                    $("button[type='submit']").prop('disabled', false);
+                    var errors = response.errors;
+                    if (response.status == false) {
+                        if (errors.first_name) {
+                            $("#first_name").siblings('p').addClass('invalid-feedback').html(errors.first_name);
+                            $("#first_name").addClass('is-invalid');
+                        }else {
+                            $("#first_name").siblings('p').removeClass('invalid-feedback').html('');
+                            $("#first_name").removeClass('is-invalid');
+                        }
+
+                        if (errors.last_name) {
+                            $("#last_name").siblings('p').addClass('invalid-feedback').html(errors.last_name);
+                            $("#last_name").addClass('is-invalid');
+                        }else {
+                            $("#last_name").siblings('p').removeClass('invalid-feedback').html('');
+                            $("#last_name").removeClass('is-invalid');
+                        }
+
+                        if (errors.email) {
+                            $("#email").siblings('p').addClass('invalid-feedback').html(errors.email);
+                            $("#email").addClass('is-invalid');
+                        }else {
+                            $("#email").siblings('p').removeClass('invalid-feedback').html('');
+                            $("#email").removeClass('is-invalid');
+                        }
+
+                        if (errors.password) {
+                            $("#password").siblings('p').addClass('invalid-feedback').html(errors.password);
+                            $("#password").addClass('is-invalid');
+                        }else {
+                            $("#password").siblings('p').removeClass('invalid-feedback').html('');
+                            $("#password").removeClass('is-invalid');
+                        }
+                    }else {
+                        $("#first_name").siblings('p').removeClass('invalid-feedback').html('');
+                        $("#first_name").removeClass('is-invalid');
+
+                        $("#last_name").siblings('p').removeClass('invalid-feedback').html('');
+                        $("#last_name").removeClass('is-invalid');
+
+                        $("#email").siblings('p').removeClass('invalid-feedback').html('');
+                        $("#email").removeClass('is-invalid');
+
+                        $("#password").siblings('p').removeClass('invalid-feedback').html('');
+                        $("#password").removeClass('is-invalid');
+
+                        window.location.href = "{{ route('customer.login') }}"
+                    }
+
+                },
+                error: function (jQXHR, execption){
+                    console.log('Something went wrong')
+                }
+            })
+        })
+    </script>
+
+    <script>
+        const yearSelect = document.getElementById("year");
+        const monthSelect = document.getElementById("month");
+        const daySelect = document.getElementById("day");
+
+        const months = ['January', 'February', 'March', 'April',
+            'May', 'June', 'July', 'August', 'September', 'October',
+            'November', 'December'];
+
+        //Months are always the same
+        (function populateMonths(){
+            for(let i = 0; i < months.length; i++){
+                const option = document.createElement('option');
+                option.textContent = months[i];
+                monthSelect.appendChild(option);
+            }
+            monthSelect.value = "January";
+        })();
+
+        let previousDay;
+
+        function populateDays(month){
+            //Delete all of the children of the day dropdown
+            //if they do exist
+            while(daySelect.firstChild){
+                daySelect.removeChild(daySelect.firstChild);
+            }
+            //Holds the number of days in the month
+            let dayNum;
+            //Get the current year
+            let year = yearSelect.value;
+
+            if(month === 'January' || month === 'March' ||
+                month === 'May' || month === 'July' || month === 'August'
+                || month === 'October' || month === 'December') {
+                dayNum = 31;
+            } else if(month === 'April' || month === 'June'
+                || month === 'September' || month === 'November') {
+                dayNum = 30;
+            }else{
+                //Check for a leap year
+                if(new Date(year, 1, 29).getMonth() === 1){
+                    dayNum = 29;
+                }else{
+                    dayNum = 28;
+                }
+            }
+            //Insert the correct days into the day <select>
+            for(let i = 1; i <= dayNum; i++){
+                const option = document.createElement("option");
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+            if(previousDay){
+                daySelect.value = previousDay;
+                if(daySelect.value === ""){
+                    daySelect.value = previousDay - 1;
+                }
+                if(daySelect.value === ""){
+                    daySelect.value = previousDay - 2;
+                }
+                if(daySelect.value === ""){
+                    daySelect.value = previousDay - 3;
+                }
+            }
+        }
+
+        function populateYears(){
+            //Get the current year as a number
+            let year = new Date().getFullYear();
+            //Make the previous 100 years be an option
+            for(let i = 0; i < 101; i++){
+                const option = document.createElement("option");
+                option.textContent = year - i;
+                yearSelect.appendChild(option);
+            }
+        }
+
+        populateDays(monthSelect.value);
+        populateYears();
+
+        yearSelect.onchange = function() {
+            populateDays(monthSelect.value);
+        }
+        monthSelect.onchange = function() {
+            populateDays(monthSelect.value);
+        }
+        daySelect.onchange = function() {
+            previousDay = daySelect.value;
+        }
+    </script>
 @endsection

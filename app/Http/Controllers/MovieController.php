@@ -174,6 +174,7 @@ class MovieController extends Controller
     public function edit($id, Request $request)
     {
         $data = [];
+
         $genres = Genre::orderBy('name', 'ASC')->get();
         $ages = Age::orderBy('name', 'ASC')->get();
         $casts = Cast::orderBy('name', 'ASC')->get();
@@ -191,6 +192,7 @@ class MovieController extends Controller
 
     public function update($id, Request $request)
     {
+
         $movie = Movie::find($id);
         if (empty($movie)){
             $request->session()->flash('error', 'Movie not found');
@@ -226,6 +228,23 @@ class MovieController extends Controller
             $movie->save();
             $oldImage = $movie->image;
 
+            $genresArray = [];
+            $movies = Movie::where('status', 1);
+            $movieGenres = MovieGenre::
+            join('movies', 'movie_genres.movie_id', 'movies.id')->orderBy('movie_genres.genre_id', 'DESC')->where('movies.status', 1)
+                ->get();
+            if (!empty($request->get('genre'))){
+                $genresArray = explode(',', $request->get('genre'));
+                $movieGenres = $movies->whereIn('genre_id', $genresArray)->join('movie_genres', 'movie_genres.movie_id', 'movies.id')->where('movies.status', 1);
+            }
+            foreach($request->genre_id as $value){
+                $i=0;
+                $movieGenre = [
+                    'movie_id'=> Movie::where('id', '=',Movie::max('id'))->first()->id,
+                    'genre_id'=>  $value ?? '',
+                ];
+                MovieGenre::create($movieGenre);
+            }
 //            foreach($request->cast_id as $value){
 //                $i=0;
 //                $movieCast = [
@@ -307,26 +326,21 @@ class MovieController extends Controller
 
 
     // ============================CUSTOMER===================================
-    public function show(Request $request, $movieAge = null )
+    public function show(Request $request, $movieAge = null)
     {
         $ageSelected = '';
         $genresArray = [];
-
 
         $genres = Genre::orderBy('name', 'ASC')->where('status', 1)->get();
         $ages = Age::orderBy('name', 'ASC')->get();
         $casts = Cast::orderBy('name', 'ASC')->where('status', 1)->get();
         $movies = Movie::where('status', 1);
-//        $movies = MovieGenre::where('movie_id', '=', $movieId)
-//            ->join('movies', 'movie_genres.movie_id', '=', 'movies.id')
-//            ->orderBy('id', 'DESC')
-//            ->get();;
 
         $movieGenres = Movie::
-            where('status', 1)
-            ->join('movie_genres', 'movie_genres.movie_id', 'movies.id')
-            ->orderBy('id', 'DESC')
+            join('movie_genres', 'movie_genres.movie_id', 'movies.id')->orderBy('movie_genres.genre_id', 'DESC')->where('movies.status', 1)
             ->get();
+
+//        $movieGenres = MovieGenre::all();
 
         //Filter
         if (!empty($movieAge)){
@@ -334,11 +348,24 @@ class MovieController extends Controller
             $movies = $movies->where('age_id', $age->id);
             $ageSelected = $age->id;
         }
-//        if (!empty($request->get('genre'))){
-//            $genresArray = explode(',', $request->get('genre'));
-//            $movies = $movie->whereIn('genre_id', $genresArray);
-//        }
-        $movies = $movies->orderBy('id', 'DESC');
+        if (!empty($request->get('genre'))){
+            $genresArray = explode(',', $request->get('genre'));
+            $movieGenres = $movies->whereIn('genre_id', $genresArray)->join('movie_genres', 'movie_genres.movie_id', 'movies.id')->where('movies.status', 1);
+        }
+
+        if (!empty($request->get('search'))){
+            $movies = $movies->where('title', 'like', '%'.$request->get('search').'%');
+        }
+
+        if ($request->get('sort') != ''){
+            if ($request->get('sort') == 'newest'){
+                $movies = $movies->orderBy('id', 'DESC');
+            }elseif ($request->get('sort') == 'oldest') {
+                $movies = $movies->orderBy('id', 'ASC');
+            }
+        }else{
+            $movies = $movies->orderBy('id', 'DESC');
+        }
         $movies = $movies->get();
 
 //        $movies = Movie::paginate(6);
@@ -349,6 +376,7 @@ class MovieController extends Controller
         $data['movieGenres'] = $movieGenres;
         $data['genresArray'] = $genresArray;
         $data['ageSelected'] = $ageSelected;
+        $data['sort'] = $request->get('sort');
         return view('customer.movie.index', $data);
     }
 
@@ -367,7 +395,7 @@ class MovieController extends Controller
         }
         $data['movie'] = $movie;
 
-        return view('customer.book_ticket.index', [
+        return view('customer.book_ticket.bookingProcess', [
             $data,
             'movieGenres' => $movieGenres,
             'movieCasts' => $movieCasts,
@@ -378,10 +406,9 @@ class MovieController extends Controller
         ]);
     }
 
-    public function showDetails()
+    public function showDetails(Movie $movie)
     {
-        $movies = Movie::all();
-        $ages = Age::all();
+        $ages = Age::where('id', '=', $movie->age_id)->first();
         $genres = Genre::all();
         $movieGenres = MovieGenre::all();
         $casts = Cast::all();
@@ -389,7 +416,7 @@ class MovieController extends Controller
         $data['genres'] = $genres;
         $data['ages'] = $ages;
         $data['casts'] = $casts;
-        $data['movies'] = $movies;
+        $data['movie'] = $movie;
         $data['movieGenres'] = $movieGenres;
         $data['movieCasts'] = $movieCasts;
         return view('customer.movie.movie-details', $data);

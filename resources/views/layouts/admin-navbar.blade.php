@@ -51,7 +51,7 @@
                         <i class="fas fa-user-cog mr-2"></i> Settings
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
+                    <a href="{{ route('change_password') }}" class="dropdown-item {{ request()->routeIs('change_password') ? 'bg-danger rounded-4' : '' }}">
                         <i class="fas fa-lock mr-2"></i> Change Password
                     </a>
                     <div class="dropdown-divider"></div>
@@ -64,7 +64,7 @@
     </nav>
     <!-- /.navbar -->
 
-    <aside class="main-sidebar sidebar-dark-primary elevation-4 h-100" style="background-color: #00001c">
+    <aside class="main-sidebar sidebar-dark-primary elevation-5" style="background-color: #00001c">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="{{asset('admin-assets/img/paradise-theatre-logo.png')}}" alt="AdminLTE Logo"
@@ -72,6 +72,7 @@
             <span class="brand-text font-weight-light">PARADISE THEATRE</span>
         </a>
         <!-- Sidebar -->
+
         <div class="sidebar">
             <!-- Sidebar user (optional) -->
             <nav class="mt-2">
@@ -94,9 +95,7 @@
                             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                                 <div class="accordion-body">
                                     <div class="navbar-nav ml-5">
-                                        <a href="" class="nav-item nav-link"></a>
-                                        <a href="" class="nav-item nav-link">Tablets</a>
-                                        <a href="" class="nav-item nav-link">Laptops</a>
+                                        <a href="{{route('admin.dashboard')}}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'bi bi-arrow-right bg-danger' : '' }}" class="nav-item nav-link">Employee</a>
                                         <a href="" class="nav-item nav-link">Speakers</a>
                                         <a href="" class="nav-item nav-link">Watches</a>
                                     </div>
@@ -105,7 +104,7 @@
 
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('genre.index')}}" class="nav-link {{ request()->routeIs('genre.index') ? 'bg-danger' : '' }}">
+                        <a href="{{route('genre.index')}}" class="nav-link {{ request()->routeIs('genre.index', 'genre.create', 'genre.edit') ? 'bg-danger' : '' }}">
                             <svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 4v12l-4-2-4 2V4M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                             </svg>
@@ -113,13 +112,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('movie.index')}}" class="nav-link {{ request()->routeIs('movie.index') ? 'bg-danger' : '' }}">
+                        <a href="{{route('movie.index')}}" class="nav-link {{ request()->routeIs('movie.index', 'movie.create', 'movie.edit', 'movie.indexDetail') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fa fa-film"></i>
                             <p>Movies</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('cast.index')}}" class="nav-link {{ request()->routeIs('cast.index') ? 'bg-danger' : '' }}">
+                        <a href="{{route('cast.index')}}" class="nav-link {{ request()->routeIs('cast.index', 'cast.creat', 'cast.edit') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fas bi-person-rolodex"></i>
                             <p>Cast</p>
                         </a>
@@ -149,19 +148,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('seatType.index')}}" class="nav-link {{ request()->routeIs('seatType.index') ? 'bg-danger' : '' }}">
+                        <a href="{{route('reservationType.index')}}" class="nav-link {{ request()->routeIs('reservationType.index') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fas bi-list-ul" aria-hidden="true"></i>
-                            <p>Seat Types </p>
+                            <p>Reservation Types </p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('age.index') }}" class="nav-link {{ request()->routeIs('age.index') ? 'bg-danger' : '' }}">
+                        <a href="{{ route('age.index') }}" class="nav-link {{ request()->routeIs('age.index', 'age.create', 'age.edit') ? 'bg-danger' : '' }}">
                             <i class="nav-icon  fa fa-birthday-cake" aria-hidden="true"></i>
                             <p>Age</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('customerAdmin.index')}}" class="nav-link {{ request()->routeIs('customerAdmin.index') ? 'bg-danger' : '' }}">
+                        <a href="{{route('customerAdmin.index')}}" class="nav-link {{ request()->routeIs('customerAdmin.index', 'customer.create', 'customer.edit') ? 'bg-danger' : '' }}">
                             <i class="nav-icon  fas fa-users"></i>
                             <p>Customers</p>
                         </a>
@@ -176,6 +175,7 @@
             </nav>
             <!-- /.sidebar-menu -->
         </div>
+
         <!-- /.sidebar -->
     </aside>
     <!-- Main Sidebar Container -->

@@ -496,31 +496,31 @@ video {
 
 
 /*==MOVIE LOGIN START ==================*/
-.login-box {
+.login-boX {
     position: absolute;
     top: 40%;
     left: 50%;
     width: 550px;
     padding: 40px;
     transform: translate(-50%, -50%);
-    background: rgba(229, 46, 58, 0.8);
+    background: #00001c;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
     border-radius: 10px;
 }
 
-.login-box h2 {
+.login-boX h2 {
     margin: 0 0 30px;
     padding: 0;
     color: #fff;
     text-align: center;
 }
 
-.login-box .user-box {
+.login-boX .user-box {
     position: relative;
 }
 
-.login-box .user-box input {
+.login-boX .user-box input {
     width: 100%;
     padding: 10px 0;
     font-size: 16px;
@@ -531,26 +531,26 @@ video {
     outline: none;
     background: transparent;
 }
-.login-box .user-box label {
+.login-boX .user-box label {
     position: absolute;
     top:0;
     left: 0;
-    padding: 10px 0;
+    padding-top: 10px ;
     font-size: 16px;
     color: #fff;
     pointer-events: none;
     transition: .5s;
 }
 
-.login-box .user-box input:focus ~ label,
-.login-box .user-box input:valid ~ label {
+.login-boX .user-box input:focus ~ label,
+.login-boX .user-box input:valid ~ label {
     top: -20px;
     left: 0;
     color: #03e9f4;
     font-size: 12px;
 }
 
-.login-box form a {
+.login-boX form button {
     position: relative;
     display: inline-block;
     padding: 10px 20px;
@@ -563,7 +563,7 @@ video {
     letter-spacing: 4px
 }
 
-.login-box a:hover {
+.login-boX button:hover {
     background: #03e9f4;
     color: #fff;
     border-radius: 5px;
@@ -573,12 +573,12 @@ video {
     0 0 100px #03e9f4;
 }
 
-.login-box a span {
+.login-boX button span {
     position: absolute;
     display: block;
 }
 
-.login-box a span:nth-child(1) {
+.login-boX button span:nth-child(1) {
     top: 0;
     left: -100%;
     width: 100%;
@@ -596,7 +596,7 @@ video {
     }
 }
 
-.login-box a span:nth-child(2) {
+.login-boX button span:nth-child(2) {
     top: -100%;
     right: 0;
     width: 2px;
@@ -615,7 +615,7 @@ video {
     }
 }
 
-.login-box a span:nth-child(3) {
+.login-boX button span:nth-child(3) {
     bottom: 0;
     right: -100%;
     width: 100%;
@@ -634,7 +634,7 @@ video {
     }
 }
 
-.login-box a span:nth-child(4) {
+.login-boX button span:nth-child(4) {
     bottom: -100%;
     left: 0;
     width: 2px;
@@ -760,3 +760,12 @@ video {
 .btns:hover {
     box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgb(11,78,179);
 }
+
+#vertical-scroller {
+    position: absolute;
+    top: 23%;
+    width: 61%;
+    height: 65%;
+    overflow-x: hidden;
+}
+

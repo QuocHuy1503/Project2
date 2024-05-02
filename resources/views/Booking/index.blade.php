@@ -51,7 +51,7 @@
           
           {{-- Cái này để chọn ghế --}}
           <td>
-            @if ($seat->status == 2)
+            {{-- @if ($seat->status == 2)
               <input type="checkbox" disabled class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="id[]" value="{{$seat->id}}">
               <label class="btn btn-primary" style="background-color: grey" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
             
@@ -62,7 +62,17 @@
             @elseif ($seat->status == 1 && $seat->type_id == 2)
               <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}">
               <label class="btn btn-primary" style="background-color: yellow" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
-            @endif
+            @endif --}}
+            
+            
+            {{-- Cái dòng quan trọng ở dưới --}}
+            <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}"
+                @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
+                    disabled
+                @endif>
+            {{-- Dùng để kiểm tra --}}
+            {{-- Cái dòng quan trọng ở trên --}}
+            <label class="btn @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray())) btn-secondary @else btn-primary @endif" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
 
             @php
               $nextSeat++;
@@ -84,7 +94,8 @@
   
         <!--Hết-->
         {{-- Screening --}}
-        <div class="d-flex flex-column">
+        <input type="hidden" name="screening_id" value="{{$screening_id}}">
+        {{-- <div class="d-flex flex-column">
           @foreach ($screening as $item)
             @if ($item->screening_end > now())
             <input type="hidden" name="screening_id" value="{{$item ->id}}">
@@ -94,7 +105,7 @@
             <label class="btn btn-outline-success" for="success-outlined-{{$item->id}}">{{$item->screening_start}}</label>
             @endif
            @endforeach
-        </div>
+        </div> --}}
          {{-- End Screening --}}
   </div>
   <button type="submit" class="btn btn-primary">Primary</button>

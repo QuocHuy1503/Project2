@@ -64,6 +64,19 @@ class CustomerController extends Controller
             Auth::guard('customer')->login($customer);
             //Ném thông tin customer đăng nhập lên session
             session(['customer' => $customer]);
+            $id =  Auth::guard('customer')->user()->id;
+            $date = Reservation::all()->where('customer_id', '=',$id);
+
+
+            $today = date('Y-m-d');
+
+            foreach($date as $checkExpiredDate){
+                if($checkExpiredDate->date < $today){
+                   $checkExpiredDate->status = 2;
+                   $checkExpiredDate->save();
+                }
+            } 
+        
             return Redirect::route('profile');
         } else {
             //cho quay về trang login
@@ -120,14 +133,13 @@ class CustomerController extends Controller
         //lay ban ghi
         $customer = Customer::find($id);
         $orders = Reservation::where('customer_id', $id)->paginate(2);
-
         return view('customer.profiles.orderHistory', [
             'customer' => $customer,
             'orders' => $orders,
         ]);
     }
 
-    public function orderDetail(Order $order)
+    public function orderDetail(Reservation $order)
     {
         //id cua customer dang dang nhap
         $id = Auth::guard('customer')->user()->id;

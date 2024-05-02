@@ -133,20 +133,46 @@ class OrderController extends Controller
         ]);
     }
 
-    public function order(){
-        $screening = Screening::all()->where('auditorium_id','=',1);
-        
-        // $rows = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_row');
-        // $cols = Seat::distinct()->where('auditorium_id', '=',3)->pluck('number_of_col');
-        // $ids = Seat::distinct()->where('auditorium_id', '=',3)->pluck('id');
-        // $seats  = Seat::where('auditorium_id','=',3)->orderBy('number_of_row','asc')->orderBy('id','asc')->get();
-        // dd($rows);
+    public function order(Request $request){
+        $screeningId = $request->screening_id; 
+        $reservedSeats = SeatReserved::where('screening_id', $screeningId)->get();
         $seats  = Seat::where('auditorium_id','=', 1 )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
         return view('Booking.index',[
-            'screening' => $screening,
             'seats' => $seats,
+            'screening_id' => $request -> screening_id,
+            'reservedSeats'=> $reservedSeats,
         ]);
     }
+
+
+    public function choosingScreening(){
+        $screening = Screening::all()->where('movie_id','=',1);
+        return view('Booking.stepOne',[
+            'screening' => $screening,
+        ]);
+    }
+
+    public function postScreening(Request $request){
+        $movie = $request -> movie_id;
+        $screening = $request -> screening_id;
+            return redirect(route('booking',
+                [
+                    'movie_id' => $movie,
+                    'screening_id' => $screening
+                ]
+            )
+        );
+    }
+    // public function choosingSeat(Request $request){
+    //     $screening = Screening::all()->where('auditorium_id','=', $request -> id);
+    //     foreach($screening as $item){
+    //         $seats  = Seat::where('auditorium_id','=', $item->auditorium_id )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
+    //         return redirect( route('Booking',[
+    //             'screening' => $screening,
+    //             'seats' => $seats,
+    //         ]));
+    //     }
+    // }
 
 
     public function bookingStore(Request $request){
@@ -154,26 +180,36 @@ class OrderController extends Controller
         $customer = Customer::find($id);
         // 
 
-
         $validator = Validator::make($request->all(), [
             'screening_id' => 'required',
             'customer_id' => 'required',
             'seat_id' => 'required' 
         ]);
-        $contact = $customer -> phone_number;
-       foreach($request->seat_id as $seat){
-         Reservation::create([
-            'screening_id' => $request->screening_id,
-            'customer_id' => $id,
-            'status' => 1,
-            'date' => now(),
-            'seat_id' => $seat,
-            'reservation_contact' => $contact,
-         ]);
-         $updateBookedSeat = Seat::find($seat);
-         $updateBookedSeat -> status = 2;
-         $updateBookedSeat -> save();   
-       }
-       return redirect(route('booking'));
+        // if($validator->passes()){
+                $contact = $customer -> phone_number;
+            foreach($request->seat_id as $seat){
+                $reservation = Reservation::create([
+                    'screening_id' => $request->screening_id,
+                    'customer_id' => $id,
+                    'status' => 1,
+                    'date' => now(),
+                    'seat_id' => $seat,
+                    'reservation_contact' => $contact,
+                ]);
+                // Có khi không cần cái này nữa?
+                $updateBookedSeat = Seat::find($seat);
+                $updateBookedSeat -> status = 2;
+                $updateBookedSeat -> save();   
+                SeatReserved::create([
+                    'seat_id' => $seat,
+                    'reservation_id' => $reservation->id,
+                    'screening_id' => $request->screening_id,
+                ]);
+            }
+            return redirect(route('booking'));
+        // }
+        // else{
+        //     return back();
+        // }
     }
 }

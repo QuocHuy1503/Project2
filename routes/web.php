@@ -160,19 +160,7 @@ Route::group(['prefix' => 'admin'], function (){
             Route::delete('/{seatType}', [SeatTypeController::class, 'destroy'])->name('seatType.destroy');
         });
 
-        // Reservation Type Admin Controller Route
-        Route::prefix('/reservationType')->group(function () {
 
-            Route::get('/', [ReservationTypeController::class, 'index'])->name('reservationType.index');
-            //show create form
-            Route::get('/create', [ReservationTypeController::class, 'create'])->name('reservationType.create');
-            Route::post('/create', [ReservationTypeController::class, 'store'])->name('reservationType.store');
-
-            //show edit form
-            Route::get('/{reservationType}/edit', [ReservationTypeController::class, 'edit'])->name('reservationType.edit');
-            Route::put('/{reservationType}', [ReservationTypeController::class, 'update'])->name('reservationType.update');
-            Route::delete('/{reservationType}', [ReservationTypeController::class, 'destroy'])->name('reservationType.destroy');
-        });
 
 
         // ADMIN ORDER MANAGER
@@ -249,10 +237,19 @@ Route::group(['prefix' => 'admin'], function (){
 Route::middleware(CheckLoginCustomer::class)->group(function () {
     Route::get('/profile', [CustomerController::class, 'editProfile'])->name('profile');
     Route::put('/profile', [CustomerController::class, 'updateProfile'])->name('profile.update');
+    
+    Route::post('booking',[OrderController::class,'bookingStore'])->name('bookingStore');
+   
+    Route::get('stepOne',[OrderController::class,'choosingScreening'])->name('choosingScreening');
+    Route::post('postScreening',[OrderController::class,'postScreening'])->name('postScreening');
+    // Route::post('stepTwo',[OrderController::class,'choosingSeat'])->name('choosingSeat');
+    Route::get('booking',[OrderController::class,'order'])->name('booking');
+
 
     Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])->name('orderHistory');
     Route::get('/order_detail/{order}', [CustomerController::class, 'orderDetail'])->name('orderDetail');
-//    Route::get('/cancel_order/{order}', [OrderController::class, 'cancelOrder'])->name('cancelOrder');
+
+    //    Route::get('/cancel_order/{order}', [OrderController::class, 'cancelOrder'])->name('cancelOrder');
 
     Route::get('/change_password', [CustomerController::class, 'editPassword'])->name('pwd.edit');
     Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');

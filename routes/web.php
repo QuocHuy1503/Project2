@@ -48,6 +48,7 @@ Route::get('/movie/{movieAge?}', [MovieController::class, 'show'])->name('movie'
 Route::get('/book-ticket/{movie}', [MovieController::class, 'bookTickets'])->name('bookTickets');
 Route::post('/book-ticket/{movie}', [MovieController::class, 'tickets'])->name('tickets');
 Route::get('/movie-details/{movie}', [MovieController::class, 'showDetails'])->name('movie-details');
+
 Route::get('/checkout', [\App\Http\Controllers\customer\BookingController::class, 'checkout'])->name('customer.checkout');
 Route::post('/add-to-wishlist', [\App\Http\Controllers\customer\HomeController::class, 'addToWishlist'])->name('customer.addToWishlist');
 Route::get('/contact-us', function (){
@@ -67,8 +68,16 @@ Route::get('/help', function () {
     return view('customer.help');
 })->name('help');
 
-// CUSTOMER
+    Route::get('choosingMovie',[OrderController::class,'choosingMovie'])->name('choosingMovie');
+    Route::post('postMovie',[OrderController::class,'postMovie'])->name('postMovie');
+    Route::get('choosingScreening',[OrderController::class,'choosingScreening'])->name('choosingScreening');
+    Route::post('postScreening',[OrderController::class,'postScreening'])->name('postScreening');
+
+    Route::get('choosingSeat',[OrderController::class,'choosingSeat'])->name('choosingSeat');
+    Route::post('postSeat',[OrderController::class,'bookingStore'])->name('bookingStore');
+
 Route::group(['prefix' => 'account'], function () {
+    
     Route::group(['middleware' => 'customer.guest'] , function (){
         Route::get('/login', [\App\Http\Controllers\customer\CustomerController::class, 'login'])->name('customer.login');
         Route::post('/authenticate', [\App\Http\Controllers\customer\CustomerController::class, 'authenticate'])->name('customer.loginProcess');
@@ -88,21 +97,23 @@ Route::group(['prefix' => 'account'], function () {
 });
 
 
-// ADMIN
+
+
 Route::group(['prefix' => 'admin'], function (){
 
    Route::group(['middleware' => 'admin.guest'], function() {
        Route::get('/login', [AdminLoginController::class, 'index'])->name('admin.login');
        Route::post('/authenticate', [AdminLoginController::class, 'authenticate'])->name('admin.authenticate');
+
    });
 
     Route::group(['middleware' => 'admin.auth'], function() {
         Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
         Route::get('/logout', [HomeController::class, 'logout'])->name('admin.logout');
 
+
         Route::get('change-password', [AdminLoginController::class, 'showChangePasswordForm'])->name('change_password');
         Route::post('process-change-password', [AdminLoginController::class, 'processChangePassword'])->name('process_change_password');
-
         // GENRE ROUTE
         Route::prefix('/genre')->group(function () {
 
@@ -194,19 +205,7 @@ Route::group(['prefix' => 'admin'], function (){
             Route::delete('/{seatType}', [SeatTypeController::class, 'destroy'])->name('seatType.destroy');
         });
 
-        // Reservation Type Admin Controller Route
-        Route::prefix('/reservationType')->group(function () {
 
-            Route::get('/', [ReservationTypeController::class, 'index'])->name('reservationType.index');
-            //show create form
-            Route::get('/create', [ReservationTypeController::class, 'create'])->name('reservationType.create');
-            Route::post('/create', [ReservationTypeController::class, 'store'])->name('reservationType.store');
-
-            //show edit form
-            Route::get('/{reservationType}/edit', [ReservationTypeController::class, 'edit'])->name('reservationType.edit');
-            Route::put('/{reservationType}', [ReservationTypeController::class, 'update'])->name('reservationType.update');
-            Route::delete('/{reservationType}', [ReservationTypeController::class, 'destroy'])->name('reservationType.destroy');
-        });
 
 
         // ADMIN ORDER MANAGER
@@ -279,28 +278,31 @@ Route::group(['prefix' => 'admin'], function (){
 });
 
 
+// CUSTOMER
+// Route::middleware(CheckLoginCustomer::class)->group(function () {
+//     Route::get('/profile', [CustomerController::class, 'editProfile'])->name('profile');
+//     Route::put('/profile', [CustomerController::class, 'updateProfile'])->name('profile.update');
+    
+   
 
 
-//Route::middleware(CheckLoginCustomer::class)->group(function () {
-//
-//
-//    Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])->name('orderHistory');
-//    Route::get('/order_detail/{order}', [CustomerController::class, 'orderDetail'])->name('orderDetail');
-////    Route::get('/cancel_order/{order}', [OrderController::class, 'cancelOrder'])->name('cancelOrder');
-//
-//    Route::get('/change_password', [CustomerController::class, 'editPassword'])->name('pwd.edit');
-//    Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');
-//
-////    Route::get('/cart', [ProductController::class, 'cart'])->name('product.cart');
-////    Route::get('/addToCart/{id}', [ProductController::class, 'addToCart'])->name('product.addToCart');
-////    Route::get('/addToCartAjax/{id}', [ProductController::class, 'addToCartAjax'])->name('product.addToCartAjax');
-////    Route::get('/updateCartQuantity/{id}', [ProductController::class, 'updateCartQuantity'])->name('product.updateCartQuantity');
-////    Route::get('/deleteFromCart/{id}', [ProductController::class, 'deleteFromCart'])->name('product.deleteFromCart');
-////    Route::get('/deleteAllFromCart', [ProductController::class, 'deleteAllFromCart'])->name('product.deleteAllFromCart');
-////
-////    Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
-////    Route::post('/checkout', [OrderController::class, 'checkoutProcess'])->name('checkoutProcess');
-//});
 
+//     Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])->name('orderHistory');
+//     Route::get('/order_detail/{order}', [CustomerController::class, 'orderDetail'])->name('orderDetail');
+
+//     //    Route::get('/cancel_order/{order}', [OrderController::class, 'cancelOrder'])->name('cancelOrder');
+
+//     Route::get('/change_password', [CustomerController::class, 'editPassword'])->name('pwd.edit');
+//     Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');
+// });
+
+// Route::get('/register', [CustomerController::class, 'register'])->name('customer.register');
+// Route::post('/register', [CustomerController::class, 'registerProcess'])->name('customer.registerProcess');
+
+// Route::get('/login', [CustomerController::class, 'login'])->name('customer.login');
+// Route::post('/login', [CustomerController::class, 'loginProcess'])->name('customer.loginProcess');
+
+// Route::get('/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+// Route::get('/forgot_password', [CustomerController::class, 'forgotPassword'])->name('customer.forgotPassword');
 
 

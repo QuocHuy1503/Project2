@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\admin;
 
 use App\Models\Seat;
+use App\Models\Genre;
+use App\Models\Movie;
 use App\Models\Customer;
 use App\Models\Screening;
+use App\Models\MovieGenre;
 use App\Models\Reservation;
+use App\Models\SeatReserved;
 use Illuminate\Http\Request;
 use App\Models\ReservationType;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\SeatReserved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -133,21 +136,29 @@ class OrderController extends Controller
         ]);
     }
 
-    public function order(Request $request){
-        $screeningId = $request->screening_id; 
-        $reservedSeats = SeatReserved::where('screening_id', $screeningId)->get();
-        $seats  = Seat::where('auditorium_id','=', 1 )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
-        return view('Booking.index',[
-            'seats' => $seats,
-            'screening_id' => $request -> screening_id,
-            'reservedSeats'=> $reservedSeats,
+
+    public function choosingMovie(){
+        $genres = Genre::all();
+        $data['genres'] = $genres;
+        $movieGenres = MovieGenre::all();
+        $data['movieGenres'] = $movieGenres;
+        $movies = Movie::where('is_featured', 'Yes')->where('status', 1)->get();
+        $data['isFeatures'] = $movies;
+        $latestMovies = Movie::orderBy('id', 'DESC')->where('status', 1)->get();
+        $data['latestMovies'] = $latestMovies;
+        return view('Booking.choosingMovie', ['movies' => $movies , 
+        'movieGenres' => $movieGenres , 'genres' => $genres,
         ]);
     }
 
-
-    public function choosingScreening(){
-        $screening = Screening::all()->where('movie_id','=',1);
-        return view('Booking.stepOne',[
+    public function postMovie(Request $request){
+        $movie = $request -> id;
+        return redirect(route('choosingScreening',['movie_id' => $movie]));
+    }
+    
+    public function choosingScreening(Request $request){
+        $screening = Screening::all()->where('movie_id','=',$request->movie_id);
+        return view('Booking.choosingScreening',[
             'screening' => $screening,
         ]);
     }
@@ -155,7 +166,7 @@ class OrderController extends Controller
     public function postScreening(Request $request){
         $movie = $request -> movie_id;
         $screening = $request -> screening_id;
-            return redirect(route('booking',
+            return redirect(route('choosingSeat',
                 [
                     'movie_id' => $movie,
                     'screening_id' => $screening
@@ -163,16 +174,18 @@ class OrderController extends Controller
             )
         );
     }
-    // public function choosingSeat(Request $request){
-    //     $screening = Screening::all()->where('auditorium_id','=', $request -> id);
-    //     foreach($screening as $item){
-    //         $seats  = Seat::where('auditorium_id','=', $item->auditorium_id )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
-    //         return redirect( route('Booking',[
-    //             'screening' => $screening,
-    //             'seats' => $seats,
-    //         ]));
-    //     }
-    // }
+
+    public function choosingSeat(Request $request){
+        $screeningId = $request->screening_id; 
+        $reservedSeats = SeatReserved::where('screening_id', $screeningId)->get();
+        $seats  = Seat::where('auditorium_id','=', 1 )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
+        return view('Booking.choosingSeat',[
+            'seats' => $seats,
+            'screening_id' => $request -> screening_id,
+            'reservedSeats'=> $reservedSeats,
+        ]);
+    }
+
 
 
     public function bookingStore(Request $request){
@@ -186,7 +199,7 @@ class OrderController extends Controller
             'seat_id' => 'required' 
         ]);
         // if($validator->passes()){
-                $contact = $customer -> phone_number;
+        $contact = $customer -> phone_number;
             foreach($request->seat_id as $seat){
                 $reservation = Reservation::create([
                     'screening_id' => $request->screening_id,
@@ -206,7 +219,7 @@ class OrderController extends Controller
                     'screening_id' => $request->screening_id,
                 ]);
             }
-            return redirect(route('booking'));
+            return redirect(route('choosingMovie'));
         // }
         // else{
         //     return back();

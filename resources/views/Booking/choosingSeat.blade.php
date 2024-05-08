@@ -51,28 +51,36 @@
           
           {{-- Cái này để chọn ghế --}}
           <td>
-            {{-- @if ($seat->status == 2)
-              <input type="checkbox" disabled class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="id[]" value="{{$seat->id}}">
+            @if ($seat->status == 2)
+              <input type="checkbox"  
+              @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
+              disabled
+              @endif
+              class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="id[]" value="{{$seat->id}}" data-id="{{$seat->seatType?->price}}" >
+              
               <label class="btn btn-primary" style="background-color: grey" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
             
             @elseif ($seat->status == 1 && $seat->type_id == 1)
-              <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}">
+              <input type="checkbox" @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
+              disabled
+              @endif class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}" data-id="{{$seat->seatType?->price}}" >
               <label class="btn btn-primary" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
 
             @elseif ($seat->status == 1 && $seat->type_id == 2)
-              <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}">
+              <input type="checkbox" @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
+              disabled
+              @endif class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}" data-id="{{$seat->seatType?->price}}">
               <label class="btn btn-primary" style="background-color: yellow" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
-            @endif --}}
-            
+            @endif
             
             {{-- Cái dòng quan trọng ở dưới --}}
-            <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}"
+            {{-- <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}"
                 @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
                     disabled
-                @endif>
+                @endif> --}}
             {{-- Dùng để kiểm tra --}}
             {{-- Cái dòng quan trọng ở trên --}}
-            <label class="btn @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray())) btn-secondary @else btn-primary @endif" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
+            {{-- <label class="btn @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray())) btn-secondary @else btn-primary @endif" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label> --}}
 
             @php
               $nextSeat++;
@@ -87,6 +95,9 @@
           {{-- comment --}}
           
         @endforeach
+        <p class="text" style="color: white">
+          You have selected <span id="count">0</span> seats for a price of $<span id="total">0</span>
+      </p>
       </table>
     </div>
         <!--In ghế-->
@@ -120,3 +131,30 @@
     <script src="{{asset('admin-assets/js/adminlte.min.js')}}"></script>
     <script src="{{asset('admin-assets/js/demo.js')}}"></script>
 @endsection
+
+<script>
+  const container = document.querySelector('.container');
+  // const seats = document.querySelectorAll('input type'); // Target checkboxes within seats
+  const seats = document.querySelectorAll('input[type="checkbox"]');
+  const count = document.getElementById('count');
+  const total = document.getElementById('total');
+  const ticketPrice = /* Your ticket price here */; // Set ticket price
+
+  function updateSelectedCount() {
+    const selectedSeats = document.querySelectorAll('input[type="checkbox"]'); // Get checked checkboxes
+    const selectedSeatsCount = selectedSeats.length;
+    count.innerText = selectedSeatsCount;
+    total.innerText = selectedSeatsCount * ticketPrice;
+  }
+
+  container.addEventListener('click', (e) => {
+    // Handle click events on checkboxes only
+    if (e.target.type === 'input[type="checkbox"]') {
+      e.target.classList.toggle('checked'); // Toggle checked class on click
+      updateSelectedCount();
+    }
+  });
+
+  // Update count initially (optional, in case seats are pre-selected)
+  updateSelectedCount();
+</script>

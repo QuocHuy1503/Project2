@@ -12,20 +12,25 @@
             @include('layouts/profile_menu')
         </div>
         <div class="border w-80 rounded-end p-3 h-100 text-white" style="background-color: #191c33">
-            <div class="fs-5">
-                My Wishlist
-            </div>
-            <div>
-                Manage wishlist information
-            </div>
+            <section class="justify-content-lg-between">
+                <div class="col-md-12">
+                    @include('admin.message')
+                </div>
+                <div>
+                    <div class="fs-5">
+                        My Wishlist
+                    </div>
+                    <div>
+                        Manage wishlist information
+                    </div>
+                </div>
+            </section>
             <hr>
-            <div class="col-md-12">
-                @include('admin.message')
-            </div>
+
             <div id="vertical-scroller">
                 @if($wishlists->isNotEmpty())
                     @foreach($wishlists as $wishlist)
-                        <div class="d-sm-flex justify-content-between mt-lg-4 mb-4 pb-3 pb-sm-2 border-bottom">
+                        <div class="d-sm-flex justify-content-between mt-lg-4 mb-4 pb-3 pb-sm-2 border-bottom me-2">
                             <div class="d-block d-sm-flex align-items-start text-center text-sm-start">
                                 <a class="d-block flex-shrink-0 mx-auto me-sm-4" href="{{ route('movie-details', $wishlist->movie) }}" style="width: 7rem;">
                                     @if(!empty($wishlist->movie->image))

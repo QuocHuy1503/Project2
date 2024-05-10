@@ -1,3 +1,4 @@
+
 @extends('layouts.admin-navbar')
 @section('content')
     <section class="content-header">
@@ -25,6 +26,7 @@
                                 <div class="mb-3">
                                     <label for="first_name">First Name</label>
                                     <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" value="{{$customer -> first_name}}">
+
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -63,6 +65,15 @@
                                     <select name="status" id="status" class="btn btn-dark bi bi-caret-down">
                                         <option {{($customer->status == 1) ? 'selected' : ''}} value="1" >Active</option>
                                         <option {{($customer->status == 0) ? 'selected' : ''}} value="0" >Block</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="mb-3">
+                                    <label for="gender">Gender</label>
+                                    <select name="gender" id="gender" class="btn btn-dark bi bi-caret-down">
+                                        <option {{($customer->gender == 1) ? 'selected' : ''}} value="1" >Male</option>
+                                        <option {{($customer->gender == 0) ? 'selected' : ''}} value="0" >Female</option>
                                     </select>
                                 </div>
                             </div>

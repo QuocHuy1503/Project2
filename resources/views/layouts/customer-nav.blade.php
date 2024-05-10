@@ -97,6 +97,10 @@
                     {{--                    </div>--}}
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link link-light {{ request()->routeIs('contact_us') ? 'active' : '' }}" href="{{route('contact_us')}}">Contact
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link link-light {{ request()->routeIs('help') ? 'active' : '' }}" href="{{route('help')}}">HELP
                     </a>
                 </li>
@@ -113,9 +117,15 @@
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link link-light {{ request()->routeIs('profile', 'wishlist','customer.login', 'customer.register') ? 'active' : '' }}"
+                    <a class="nav-link link-light {{ request()->routeIs('profile','customer.login', 'customer.register') ? 'active' : '' }}"
                        href="{{ route('profile') }}">
                         <i class="bi bi-person"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link-light {{ request()->routeIs('wishlist') ? 'active' : '' }}"
+                       href="{{ route('wishlist') }}">
+                        <i class="bi bi-heart"></i>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -134,7 +144,7 @@
     <div class="container-xxl pb-5 pt-3 backgroundEffect position-relative">
         <div class="row justify-content-sm-center col-12 text-sm-center">
             <div class="col-md-3">
-                <div class="footer-card text-white ">
+                <div class="footer-card text-white">
                     <img src="{{asset('admin-assets/img/paradise-theatre-logo.png')}}" alt="brand"
                          height="110" class="rounded">
                 </div>
@@ -145,12 +155,12 @@
                     <h3>Get In Touch</h3>
                     <p>No dolore ipsum accusam no lorem. <br>
                         123 Street, New York, USA <br>
-                        exampl@example.com <br>
-                        000 000 0000</p>
+                        phucsonmai999@gmail.com <br>
+                        012 345 6789</p>
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-lg-3">
                 <div class="footer-card text-white">
                     <h3>Important Links</h3>
                     <ul class="nav flex-column">
@@ -163,7 +173,7 @@
                 </div>
             </div>
 
-            <div class="col-xxl-3">
+            <div class="col-xl-3">
                 <div class="footer-card text-white">
                     <h3>My Account</h3>
                     <ul class="nav flex-column">

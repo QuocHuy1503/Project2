@@ -22,25 +22,25 @@ class AuditoriumController extends Controller
             'name' => 'required',
             'capacity' => 'required'
         ]);
-         if ($validator->passes()){
-             $auditoriums = new Auditorium();
-             $auditoriums -> name = $request -> name;
-             $auditoriums -> capacity = $request -> capacity;
-             $auditoriums->save();
-             $request->session()->flash('success', 'Auditorium added successfully');
-             return response()->json([
-                 'status' => true,
-                 'message' => 'Auditorium added successfully'
-             ]);
-         }else{
-             return response()->json([
+        if ($validator->passes()){
+            $auditoriums = new Auditorium();
+            $auditoriums -> name = $request -> name;
+            $auditoriums -> capacity = $request -> capacity;
+            $auditoriums->save();
+            $request->session()->flash('success', 'Auditorium added successfully');
+            return response()->json([
+                'status' => true,
+                'message' => 'Auditorium added successfully'
+            ]);
+        }else{
+            return response()->json([
                 'status' => false,
-                 'errors' => $validator->errors()
-             ]);
-         }
+                'errors' => $validator->errors()
+            ]);
+        }
     }
     public function show(){}
-    
+
     public function update(Request $request, Auditorium $auditoriums){
         $request -> validate([
             'name' => 'required',
@@ -70,8 +70,8 @@ class AuditoriumController extends Controller
         $auditoriums->delete();
         $request->session()->flash('success', 'Auditorium deleted successfully');
         return response()->json([
-           'status' => true,
-           'message' => 'Auditorium deleted successfully'
+            'status' => true,
+            'message' => 'Auditorium deleted successfully'
         ]);
     }
 }

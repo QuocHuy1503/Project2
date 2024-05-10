@@ -23,7 +23,7 @@
         <section class="section-7 pt-3 mb-3">
             <div class="container">
                 <div class="row ">
-                    <div class="col-sm-4 mb-sm-4">
+                    <div class="col-md-4 mb-sm-4">
                         <div>
                             @if(!empty($movie->image))
                                 <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="rounded-4 w-75" alt="">
@@ -81,7 +81,7 @@
                                 </span>
                             </div>
                             <div class="mt-3 row">
-                                <a href="{{ route('bookTickets', $movie) }}" class="watch-btn nav-link">Book now</a>
+                                <a href="{{ route('choosingScreening', $movie) }}" class="watch-btn nav-link">Book now</a>
                             </div>
                         </div>
                     </div>

@@ -1,68 +1,69 @@
+
 @extends('layouts.admin-navbar')
 @section('content')
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid my-2">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Customers</h1>
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        <a href="{{route('customer.create')}}" class="bi bi-plus-circle btn btn-primary">New Customers</a>
-                    </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid my-2">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Customers</h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="{{route('customer.create')}}" class="bi bi-plus-circle btn btn-primary">New Customers</a>
                 </div>
             </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <!-- Default box -->
-            <div class="container-fluid">
-                @include('admin.message')
-                <div class="card">
-                    <form action="" method="get">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <button type="button" onclick="window.location.href='{{route('genre.index')}}'" class="btn btn-default btn-sm">
-                                    Reset
-                                </button>
-                            </div>
-                            <div class="card-tools">
-                                <div class="input-group input-group" style="width: 250px;">
-                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Default box -->
+        <div class="container-fluid">
+            @include('admin.message')
+            <div class="card">
+                <form action="" method="get">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <button type="button" onclick="window.location.href='{{route('customerAdmin.index')}}'" class="btn btn-default btn-sm">
+                                Reset
+                            </button>
+                        </div>
+                        <div class="card-tools">
+                            <div class="input-group input-group" style="width: 250px;">
+                                <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
 
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover table-bordered text-nowrap">
-                            <thead>
-                            <tr class="text-center">
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @if($customers->count() > 0)
-                                @foreach($customers as $customer)
+                    </div>
+                </form>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover table-bordered text-nowrap">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($customers->count() > 0)
+                            @foreach($customers as $customer)
                                 <tr class="text-center">
                                     <td>{{$customer->id}}</td>
-                                    <td>{{$customer->first_name . $customer -> last_name}}</td>
+                                    <td>{{$customer->first_name}} {{$customer -> last_name}}</td>
                                     <td>
                                         <details>
                                             <summary>Details</summary>
-                                            <p class="border border-primary rounded-2 py-2 p-2">{{$customer->email}}</p>
-                                            <p class="border border-primary rounded-2 py-2 p-2">{{$customer->phone_number}}</p>
-                                            <p class="border border-primary rounded-2 py-2 p-2">{{$customer->address}}</p>
+                                            <p class="border border-primary rounded-2 py-2 p-2 "><b>Email: </b> {{$customer->email}}</p>
+                                            <p class="border border-primary rounded-2 py-2 p-2"><b>Phone: </b> {{$customer->phone_number}}</p>
+                                            <p class="border border-primary rounded-2 py-2 p-2"><b>Address: </b> {{$customer->address}}</p>
                                         </details>
                                     </td>
                                     <td>
@@ -90,24 +91,24 @@
                                         </a>
                                     </td>
                                 </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="5">Records Not Found</td>
-                                </tr>
-                            @endif
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="5">Records Not Found</td>
+                            </tr>
+                        @endif
 
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer clearfix">
-                        {{$customers->onEachSide(3)->links()}}
-                    </div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pt-3">
+                    {{$customers->onEachSide(3)->links()}}
                 </div>
             </div>
-            <!-- /.card -->
-        </section>
-        <!-- /.content -->
+        </div>
+        <!-- /.card -->
+    </section>
+    <!-- /.content -->
 @endsection
 @section('customJs')
     <script>

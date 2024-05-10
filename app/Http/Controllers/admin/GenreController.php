@@ -15,7 +15,7 @@ class GenreController extends Controller
         if (!empty($request->get('keyword'))){
             $genres = $genres->where('name', 'like', '%'.$request->get('keyword').'%' );
         }
-        $genres = $genres->paginate(11);
+        $genres = $genres->paginate(14);
         return view('admin.genre_manager.index', [
             'genres' => $genres,
         ]);
@@ -30,7 +30,6 @@ class GenreController extends Controller
     {
         $validator = Validator::make($request->all(), [
            'name' => 'required',
-            'description' => 'required|unique:genres',
         ]);
         if ($validator->passes()){
             $genre = new Genre();

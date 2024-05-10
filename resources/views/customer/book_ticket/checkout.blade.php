@@ -25,91 +25,105 @@
             </div>
         </section>
 
-        <section class="section-9 pt-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="sub-title">
-                            <h2 class="text-white">Movie Information</h2>
-                        </div>
-                        <div class="card shadow-lg border-0" style="background-color: #1A1B2A">
-                            <div class="card-body checkout-form">
-                                <div class="row">
-                                    <div class="col-md-12 text-white">
-                                        Movie
-                                    </div>
-                                    <div class="col-md-12 text-white">
-                                        <div class="mb-3">
-                                            ...
-                                        </div>
-                                    </div>
+        <div class="form container">
+            <div class="progressbar w-100 ">
+                <div class="progress" id="progress"></div>
 
-                                    <div class="col-md-12 text-white">
-                                        Screening
-                                    </div>
-
-                                    <div class="col-md-12 text-white">
-                                        <div class="mb-3">
-                                            ...
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4 text-white">
-                                        Seat:
-                                    </div>
-
-                                    <div class="col-md-4 text-white">
-                                        Cinema Room:
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-8 mt-5">
-                        <div class="sub-title">
-                            <h3 class="text-white">Payment Information</h3>
-                        </div>
-                        <div class="card shadow-lg cart-summery border-0" style="background-color: #1A1B2A">
-                            <div class="card-body rounded-3 text-white">
-                                <div class="d-flex justify-content-between pb-2">
-                                    <div class="h6">Category</div>
-                                    <div class="h6">Total</div>
-                                    <div class="h6">Price</div>
-                                </div>
-                                <div class="d-flex justify-content-between pb-2">
-                                    <div class="h6">Product Name Goes Here X 1</div>
-                                    <div class="h6">$100</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card payment-form " style="background-color: #1A1B2A">
-                            <h3 class="card-title h5 mb-3 text-white">Payment Details</h3>
-                            <div class="card-body p-0" >
-                                <div class="mb-3">
-                                    <label for="card_number" class="mb-2">Card Number</label>
-                                    <input type="text" name="card_number" id="card_number" placeholder="Valid Card Number" class="form-control">
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="expiry_date" class="mb-2">Expiry Date</label>
-                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY" class="form-control">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="expiry_date" class="mb-2">CVV Code</label>
-                                        <input type="text" name="expiry_date" id="expiry_date" placeholder="123" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="pt-4">
-                                    <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="progress-step progress-step-active" data-title=""></div>
+                <div class="progress-step progress-step-active" data-title=""></div>
+                <div class="progress-step progress-step-active" data-title=""></div>
             </div>
-        </section>
+            <div class="form-step form-step-active">
+                <section class="section-9 pt-4">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="col-md-10">
+                                    <div class="sub-title">
+                                        <h2 class="text-white">Movie Information</h2>
+                                    </div>
+                                    <div class="card shadow-lg border-0" style="background-color: #1A1B2A">
+                                        <div class="card-body checkout-form">
+                                            <div class="row">
+                                                <div class="col-md-12 text-white">
+                                                    Movie
+                                                </div>
+                                                <div class="col-md-12 text-white">
+                                                    <div class="mb-3">
+                                                        ...
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 text-white">
+                                                    Screening
+                                                </div>
+
+                                                <div class="col-md-12 text-white">
+                                                    <div class="mb-3">
+                                                        ...
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 text-white">
+                                                    Seat:
+                                                </div>
+
+                                                <div class="col-md-4 text-white">
+                                                    Cinema Room:
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mt-5">
+                                    <div class="sub-title">
+                                        <h3 class="text-white">Payment Information</h3>
+                                    </div>
+                                    <div class="card shadow-lg cart-summery border-0" style="background-color: #1A1B2A">
+                                        <div class="card-body rounded-3 text-white">
+                                            <div class="d-flex justify-content-between pb-2">
+                                                <div class="h6">Category</div>
+                                                <div class="h6">Total</div>
+                                                <div class="h6">Price</div>
+                                            </div>
+                                            <div class="d-flex justify-content-between pb-2">
+                                                <div class="h6">Product Name Goes Here X 1</div>
+                                                <div class="h6">$100</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mt-5">
+                                <div class="card payment-form " style="background-color: #1A1B2A">
+                                    <h3 class="card-title h5 mb-3 text-white">Payment Details</h3>
+                                    <div class="card-body p-0" >
+                                        <div class="mb-3">
+                                            <label for="card_number" class="mb-2">Card Number</label>
+                                            <input type="text" name="card_number" id="card_number" placeholder="Valid Card Number" class="form-control">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="expiry_date" class="mb-2">Expiry Date</label>
+                                                <input type="text" name="expiry_date" id="expiry_date" placeholder="MM/YYYY" class="form-control">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="expiry_date" class="mb-2">CVV Code</label>
+                                                <input type="text" name="expiry_date" id="expiry_date" placeholder="123" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="pt-4">
+                                            <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
     </main>
     {{--  Products  --}}
 

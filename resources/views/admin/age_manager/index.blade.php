@@ -41,18 +41,18 @@
                         </div>
                     </form>
                     <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                        <table class="table table-hover table-bordered text-nowrap">
                             <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Action</th>
+                            <tr class="text-center">
+                                <th width="500">ID</th>
+                                <th width="500">Name</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @if($ages->count() > 0)
                                 @foreach($ages as $age)
-                                <tr>
+                                <tr class="text-center">
                                     <td>{{$age->id}}</td>
                                     <td>{{$age->name}}</td>
                                     <td>

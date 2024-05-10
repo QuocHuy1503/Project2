@@ -18,13 +18,16 @@
                     {{--       IMG--}}
                     <div class="w-10 d-flex align-items-center justify-content-center h-50 overflow-hidden me-5">
                         <img src="{{ asset('uploads/movie/'.$movie->image) }}" alt="movie_image"
-                             class="h-75 w-100 rounded-2">
+                             class="h-100 w-100 rounded-2">
                     </div>
                     {{--        MAIN--}}
-                    <div class="w-50">
+                    <div class="col-7">
                         {{--            HEADING--}}
-                        <div class="w-100 d-flex justify-content-between align-items-center mb-3">
-                            <div class="fs-3 fw-bold text-capitalize w-50">{{ $movie->title }}</div>
+                        <div class=" d-flex justify-content-between align-items-center mb-3">
+                            <div class="fs-3 fw-bold text-capitalize col-lg-10">{{ $movie->title }}</div>
+                            <div class="fs-6 rounded-2 p-3 border border-success col-lg-2">Feature:
+                                <span class="bg-dark p-2 rounded-5">{{ $movie->is_featured }}</span>
+                            </div>
                         </div>
                         {{--            BODY--}}
                         <div class="my-3">

@@ -62,7 +62,7 @@
             e.preventDefault()
             $('#submit').prop('disabled', true)
             $.ajax({
-                url: '{{ route("process_change_password") }}',
+                url: '{{ route("customer.process_change_password") }}',
                 type: 'post',
                 data: $(this).serializeArray(),
                 dataType: 'json',
@@ -75,7 +75,7 @@
                         $("#new_password").removeClass('is-invalid');
                         $("#confirm_password").siblings('p').removeClass('invalid-feedback').html('');
                         $("#confirm_password").removeClass('is-invalid');
-                        window.location.href = "{{ route('change_password') }}"
+                        window.location.href = "{{ route('customer.change_password') }}"
                     }else {
                         var errors = response.errors
 

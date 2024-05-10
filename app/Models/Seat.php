@@ -13,7 +13,7 @@ class Seat extends Model
         'status',
         'auditorium_id',
         'type_id',
-    ];    public $timestamp = false;
+    ];    public $timestamps = false;
     public function auditorium(){
         return $this -> belongsTo(auditorium::class);
     }

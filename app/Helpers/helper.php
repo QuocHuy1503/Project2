@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Genre;
+use App\Models\Movie;
 
 function getGenres()
     {

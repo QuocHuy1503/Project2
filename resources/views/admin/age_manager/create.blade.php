@@ -21,30 +21,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="name">Name</label>
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                                     <p></p>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-1">
-                                <div class="mb-3">
-                                    <label for="status">Status</label>
-                                    <select name="status" id="status" class="btn btn-dark bi bi-caret-down">
-                                        <option value="1">Active</option>
-                                        <option value="0">Block</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="email">Description</label>
-                                    <textarea type="text" name="description" id="description" class="form-control" placeholder="Description" rows="4">
-                                </textarea>
-                                    <p></p>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -73,6 +56,7 @@
 
                     if (response["status"] == true){
                         window.location.href='{{route('age.index')}}'
+
                         $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                     }else {
                         var errors = response['errors'];
@@ -81,7 +65,7 @@
                         }else {
                             $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
-                      
+
                     }
 
                 }, error: function (jqXHR, exception){

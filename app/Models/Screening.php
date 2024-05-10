@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Screening extends Model
 {
-    protected $fillable = ['movie_id','auditorium_id', 'screening_start','screening_end'];
-    public $timestamp = false;
+    protected $fillable = ['movie_id','auditorium_id', 'screening_start','screening_end', 'created_at', 'updated_at'];
+    public $timestamps = false;
     public function movie(){
         return $this -> belongsTo(Movie::class);
     }

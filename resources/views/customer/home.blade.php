@@ -54,21 +54,21 @@
                             <a href="#" class="nav-link">Action</a>
                         </div>
                         <div class="watch-btn">
-                            <a href="javascript:void" class="watch-btn nav-link">Watch trailer</a>
+                            <a href="javascript:void(0)" class="watch-btn nav-link">Watch trailer</a>
                         </div>
                     </div>
                 </div>
         {{--            PLAY BTN--}}
                 <div class="play-btn-container">
                     <div class="play-btn">
-                        <a href="javascript:void">
+                        <a href="javascript:void(0)">
                             <i class="bi bi-play"></i>
                         </a>
                     </div>
                 </div>
 
                 <div id="play" class="play">
-                    <a href="javascript:void" class="close-movie">
+                    <a href="javascript:void(0)" class="close-movie">
                         <i class="bi bi-x-circle-fill"></i>
                     </a>
                     <div class="play-movie">
@@ -192,7 +192,12 @@
                                             {{$movie->director}}
                                         </p>
                                         <a href="javascript:void(0);" onclick="addToWishList({{ $movie->id }})" class="watch-btn nav-link whishlist">add to my list</a>
-                                        <a href="{{route('bookTickets', $movie)}}" class="watch-btn nav-link mt-2">Book now</a>
+                                        <form action="{{route('postMovie', $movie)}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('POST')
+                                            <input type="hidden" name="id" value="{{$movie->id}}">
+                                            <button class="text-white col-lg-12 watch-btn">Book tickets</button>
+                                        </form>
                                     </div>
                                     <div class="card-body h-100 pt-1 h-25">
                                         <a class="fs-4 nav-link text-white" href="{{ route('movie-details', $movie) }}">{{$movie->title}}</a>
@@ -251,7 +256,12 @@
                                             {{$movie->director}}
                                         </p>
                                         <a href="javascript:void(0);" onclick="addToWishList({{ $movie->id }})" class="watch-btn nav-link whishlist">add to my list</a>
-                                        <a href="{{route('bookTickets', $movie)}}" class="watch-btn nav-link mt-2">Book now</a>
+                                        <form action="{{route('postMovie', $movie)}}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('POST')
+                                            <input type="hidden" name="id" value="{{$movie->id}}">
+                                            <button class="text-white col-lg-12 watch-btn">Book tickets</button>
+                                        </form>
                                     </div>
                                     <div class="card-body h-100 pt-1 h-25">
                                         <a class="fs-4 nav-link text-white" href="{{ route('movie-details', $movie) }}">{{$movie->title}}</a>
@@ -307,29 +317,30 @@
                }
            }
        </script>
+       <script>
+           $(document).on('click','.play-btn a', function (){
+               $('.play').addClass('active-popup');
+           })
+
+           $(document).on('click','.watch-btn a', function (){
+               $('.play').addClass('active-popup');
+           })
+
+           $(document).on('click','.close-movie', function (){
+               $('.play').removeClass('active-popup');
+           })
+           $('.play-btn a').click(function (){
+               $('#m-video')[0].play()
+           })
+           $('.watch-btn a').click(function (){
+               $('#m-video')[0].play()
+           })
+           $('.close-movie').click(function (){
+               $('#m-video')[0].pause()
+           })
+
+       </script>
    @endsection
-    <script>
-        $(document).on('click','.play-btn a', function (){
-            $('.play').addClass('active-popup');
-        })
 
-        $(document).on('click','.watch-btn a', function (){
-            $('.play').addClass('active-popup');
-        })
-
-        $(document).on('click','.close-movie', function (){
-            $('.play').removeClass('active-popup');
-        })
-        $('.play-btn a').click(function (){
-            $('#m-video')[0].play()
-        })
-        $('.watch-btn a').click(function (){
-            $('#m-video')[0].play()
-        })
-        $('.close-movie').click(function (){
-            $('#m-video')[0].pause()
-        })
-
-    </script>
 
 

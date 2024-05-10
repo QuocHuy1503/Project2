@@ -133,7 +133,7 @@
                     }
                 })
             },
-            url: "{{ route('temp-images.create') }}",
+            url: "{{ route('cast.temp-images.create') }}",
             maxFiles: 1,
             paramName: 'image',
             addRemoveLinks: true,

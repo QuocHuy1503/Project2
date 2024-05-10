@@ -46,7 +46,7 @@
                             <tr class="text-center">
                                 <th scope="col">ID</th>
                                 <th scope="col">Screening Movie</th>
-                                {{-- <th scope="col">Reservation Type</th> --}}
+                                <th scope="col">Reservation Type</th>
                                 <th scope="col">Reservation Contact</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Status</th>
@@ -60,7 +60,7 @@
                                 <tr class="text-center">
                                     <td>{{$order->id}}</td>
                                     <td>{{$order->screening->movie->title}}</td>
-                                    {{-- <td>{{$order->seat->id}}</td> --}}
+                                    <td>{{$order->reservation_type->reservation_type}}</td>
                                     <td>{{$order->reservation_contact}}</td>
                                     <td>{{$order->date}}</td>
                                     <td>

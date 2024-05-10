@@ -28,17 +28,17 @@ class SeatController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-           'number_of_row' => 'required',
-           'number_of_col' => 'required',
-           'auditorium_id' => 'required'
+            'number_of_row' => 'required',
+            'number_of_col' => 'required',
+            'auditorium_id' => 'required'
         ]);
         $id = $request->auditorium_id;
         $auditorium = Auditorium::find($id);
         if($request->number_of_col * $request->number_of_row != $auditorium->capacity){
             return response()->json([
                 'status' => false,
-                 'errors' => $validator->errors()
-             ]);
+                'errors' => $validator->errors()
+            ]);
         }
         else{
             if ($validator->passes()){
@@ -50,7 +50,7 @@ class SeatController extends Controller
                         $seat->auditorium_id = $request->auditorium_id;
                         $seat->type_id = 1;
                         $seat->status = 1;
-                        $seat->save(); 
+                        $seat->save();
                     }
                 }
                 $request->session()->flash('success', 'Seat added successfully');
@@ -61,7 +61,7 @@ class SeatController extends Controller
 
             }else{
                 return response()->json([
-                'status' => false,
+                    'status' => false,
                     'errors' => $validator->errors()
                 ]);
             }
@@ -74,18 +74,18 @@ class SeatController extends Controller
     }
 
     public function changeStore(Request $request){
-      
+
         $validator = Validator::make($request->all(), [
-               'pointA' => 'required',
-               'pointB' => 'required',
-               'pointC' => 'required',
-               'pointD' => 'required',
-               'auditorium_id' => 'required',
-               'type_id' => 'required',
+            'pointA' => 'required',
+            'pointB' => 'required',
+            'pointC' => 'required',
+            'pointD' => 'required',
+            'auditorium_id' => 'required',
+            'type_id' => 'required',
         ]);
-        
+
         if ($validator->passes()){
-            
+
             $startingRow = $request -> pointA;
             $endRow = $request -> pointB;
             $startingCol = $request ->pointC;
@@ -93,26 +93,26 @@ class SeatController extends Controller
             $auditorium = $request -> auditorium_id;
 
             $seats = Seat::where('auditorium_id', '=',$auditorium)
-            ->whereBetween('number_of_row', [$startingRow, $endRow])
-            ->whereBetween('number_of_col', [$startingCol, $endCol])
-            ->get();
+                ->whereBetween('number_of_row', [$startingRow, $endRow])
+                ->whereBetween('number_of_col', [$startingCol, $endCol])
+                ->get();
 
             foreach($seats as $seat){
-                    $seat -> type_id = $request -> type_id;
-                    $seat -> save();
+                $seat -> type_id = $request -> type_id;
+                $seat -> save();
             }
-                $request->session()->flash('success', 'Seat updated successfully');
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Seat updated successfully'
-                ]);
-    
-            }else{
-                return response()->json([
-                    'status' => false,
-                    'errors' => $validator->errors()
-                ]);
-            }
+            $request->session()->flash('success', 'Seat updated successfully');
+            return response()->json([
+                'status' => true,
+                'message' => 'Seat updated successfully'
+            ]);
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     public function update($seatId, Request $request)
@@ -121,17 +121,17 @@ class SeatController extends Controller
         if (empty($seat)){
             $request->session()->flash('error', 'Seat not found');
             return response()->json([
-               'status' => false,
-               'notFound' => true,
-               'message' => 'Seat not found'
+                'status' => false,
+                'notFound' => true,
+                'message' => 'Seat not found'
             ]);
         }
 
-       $validator = Validator::make($request->all(), [
-        //    'number_of_row' => 'required',
-        //    'number_of_col' => 'required',
-        //    'auditorium_id' => 'required'
-              'status' => 'required'
+        $validator = Validator::make($request->all(), [
+            //    'number_of_row' => 'required',
+            //    'number_of_col' => 'required',
+            //    'auditorium_id' => 'required'
+            'status' => 'required'
         ]);
         if ($validator->passes()){
             // $seat-> number_of_row = $request->number_of_row;

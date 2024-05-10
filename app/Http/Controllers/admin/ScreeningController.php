@@ -12,11 +12,11 @@ use Illuminate\Support\Facades\Validator;
 class ScreeningController extends Controller
 {
     public function index(Request $request){
-        $screenings = Screening::latest()-> paginate(3);
+        $screenings = Screening::latest();
         if (!empty($request->get('keyword'))){
             $screenings = $screenings->where('name', 'like', '%'.$request->get('keyword').'%' ) -> movie -> auditorium;
         }
-        // $screenings = $screenings 
+        $screenings = $screenings -> paginate(10);
         return view('admin.screening_manager.index', ['screenings' => $screenings]);
     }
     public function create()

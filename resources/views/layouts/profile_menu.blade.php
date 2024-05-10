@@ -21,8 +21,8 @@
             </a>
         </li>
         <li class="py-2">
-            <a href="{{route('change_password')}}" class="text-decoration-none nav-link">
-                <i class="bi bi-shield-lock me-3 text-primary"></i> <span class="{{ request()->routeIs('change_password') ? 'fw-bolder text-danger' : '' }}">Change password</span>
+            <a href="{{route('customer.change_password')}}" class="text-decoration-none nav-link">
+                <i class="bi bi-shield-lock me-3 text-primary"></i> <span class="{{ request()->routeIs('customer.change_password') ? 'fw-bolder text-danger' : '' }}">Change password</span>
             </a>
         </li>
         <li class="py-2">

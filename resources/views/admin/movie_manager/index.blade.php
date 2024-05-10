@@ -101,10 +101,10 @@
                                             </svg>
                                         </a>
                                     </td>
-                                    {{-- <td>
+                                    <td>
                                         <a href="{{ route('movie.indexDetail', $movie) }}" class="bi bi-ticket-perforated nav-link">
                                         </a>
-                                    </td> --}}
+                                    </td>
                                 </tr>
                             @endforeach
                         @else

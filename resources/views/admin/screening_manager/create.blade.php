@@ -25,12 +25,14 @@
                                 <div class="mb-3">
                                     <label for="Screening Start">Screening Start</label>
                                     <input type="datetime-local" name="screening_start" id="screening_start" class="form-control">
+                                    <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="Screening End">Screening End</label>
                                     <input type="datetime-local" name="screening_end" id="screening_end" class="form-control">
+                                    <p></p>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -92,7 +94,7 @@
                         }else {
                             $("#movie_id").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
-                        
+
                         if (errors['auditorium_id']){
                             $("#auditorium_id").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['auditorium_id']);
                         }else {

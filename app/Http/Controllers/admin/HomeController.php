@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\TempImage;
 use App\Models\User;
@@ -16,6 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         Auth::guard('admin')->user();
+        
         $amount = DB::table('reservations')
             ->select(DB::raw('DATE(date) AS reservation_date'), DB::raw('COUNT(*) AS reservations_count'))
             ->groupBy('reservation_date')
@@ -41,9 +41,10 @@ class HomeController extends Controller
         foreach ($seatTypeData as $seatType) {
             $secondChartData[] = [
                 'label' => $seatType->name . ' (Price: $' . $seatType->price . ')',
-                'y' => $seatType->howMuch
+                'y' => $seatType->howMuch 
             ];
         }
+
         // Delete temp images here
         $dayBeforeToday = Carbon::now()->subDays(1)->format('Y-m-d H:i:s');
         $tempImages = TempImage::where('created_at', '<=', $dayBeforeToday)->get();
@@ -60,7 +61,7 @@ class HomeController extends Controller
 
         return view('admin.dashboard', [
             'firstChartData' => $firstChartData,
-            'secondChartData' => $secondChartData
+            'secondChartData' => $secondChartData // Pass the processed data for charts
         ]);
         //echo 'welcome'.$admin->name.' <a href="'.route('admin.logout').'">Logout</a>';
     }

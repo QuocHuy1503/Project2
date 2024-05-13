@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\SeatTypeController;
 use App\Http\Controllers\admin\TempImagesController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\admin\GenreController;
+use App\Http\Controllers\customer\BookingController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\CheckLoginCustomer;
@@ -34,7 +35,7 @@ use Illuminate\Support\Str;
 //Route::get('/', function (){
 //    return 'hello';
 //});
-
+Route::post('/vnpay_payment',[BookingController::class,'vnpay_payment']);
 
 Route::get('/', [\App\Http\Controllers\customer\HomeController::class, 'index'])->name('home');
 //Route::get('/home', [\App\Http\Controllers\customer\HomeController::class, 'index'])->name('home');
@@ -98,7 +99,6 @@ Route::group(['prefix' => 'account'], function () {
         Route::get('choosingSeat/{movie_id}',[\App\Http\Controllers\customer\BookingController::class,'choosingSeat'])->name('choosingSeat');
         Route::post('postSeat/{movie_id}',[\App\Http\Controllers\customer\BookingController::class,'bookingStore'])->name('bookingStore');
         Route::get('/checkout', [\App\Http\Controllers\customer\BookingController::class, 'checkout'])->name('customer.checkout');
-
     });
 });
 
@@ -209,19 +209,7 @@ Route::group(['prefix' => 'admin'], function (){
             Route::delete('/{seatType}', [SeatTypeController::class, 'destroy'])->name('seatType.destroy');
         });
 
-        // Reservation Type Admin Controller Route
-        Route::prefix('/reservationType')->group(function () {
 
-            Route::get('/', [ReservationTypeController::class, 'index'])->name('reservationType.index');
-            //show create form
-            Route::get('/create', [ReservationTypeController::class, 'create'])->name('reservationType.create');
-            Route::post('/create', [ReservationTypeController::class, 'store'])->name('reservationType.store');
-
-            //show edit form
-            Route::get('/{reservationType}/edit', [ReservationTypeController::class, 'edit'])->name('reservationType.edit');
-            Route::put('/{reservationType}', [ReservationTypeController::class, 'update'])->name('reservationType.update');
-            Route::delete('/{reservationType}', [ReservationTypeController::class, 'destroy'])->name('reservationType.destroy');
-        });
 
 
         // ADMIN ORDER MANAGER
@@ -316,6 +304,3 @@ Route::group(['prefix' => 'admin'], function (){
 ////    Route::get('/checkout', [ProductController::class, 'checkout'])->name('checkout');
 ////    Route::post('/checkout', [OrderController::class, 'checkoutProcess'])->name('checkoutProcess');
 //});
-
-
-

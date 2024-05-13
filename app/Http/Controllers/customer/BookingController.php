@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers\customer;
 
-use App\Http\Controllers\Controller;
-use App\Models\Customer;
-use App\Models\Movie;
-use App\Models\Reservation;
-use App\Models\Screening;
 use App\Models\Seat;
+use App\Models\Movie;
+use App\Models\Customer;
+use App\Models\SeatType;
+use App\Models\Screening;
+use App\Models\Auditorium;
+use App\Models\Reservation;
 use App\Models\SeatReserved;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
 {
-
     public function choosingScreening($id, Request $request){
         $movie_id = Movie::find($id)->id;
         if (empty($movie_id)){
@@ -23,6 +25,7 @@ class BookingController extends Controller
             return redirect()->route('movie');
         }
         $screening = Screening::all()->where('movie_id','=',$request->movie_id);
+        // $auditorium = Auditorium::all()->where('id','=',$screening->auditorium_id);
         return view('customer.book_ticket.bookingProcess',[
             'screening' => $screening,
             'movie_id' => $movie_id
@@ -32,26 +35,31 @@ class BookingController extends Controller
     public function postScreening(Request $request){
         $movie = $request -> movie_id;
         $screening = $request -> screening_id;
+        $auditorium = $request -> auditorium_id;
         return redirect()->route('choosingSeat', [
                 'movie_id' => $movie,
-                'screening_id' => $screening
+                'screening_id' => $screening,
+                'auditorium_id' => $auditorium
             ]
         );
     }
 
     public function choosingSeat($id, Request $request){
-        $movie_id = Movie::find($id);
-        if (empty($movie_id)){
+        $movieId = Movie::find($id);
+        if (empty($movieId)){
             $request->session()->flash('error', 'Movie not found');
             return redirect()->route('movie');
         }
         $screeningId = $request->screening_id;
+        $auditorium = $request->auditorium_id;
         $reservedSeats = SeatReserved::where('screening_id', $screeningId)->get();
-        $seats  = Seat::where('auditorium_id','=', 1 )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
+        $seats  = Seat::where('auditorium_id','=', $auditorium )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
         return view('customer.book_ticket.step-two',[
-            'movie_id' => $movie_id,
+            'movie' => $movieId,
+            'movie_id' => $request->movie_id,
             'seats' => $seats,
-            'screening_id' => $request -> screening_id,
+            'auditorium' => $auditorium,
+            'screening' => $screeningId,
             'reservedSeats'=> $reservedSeats,
         ]);
     }
@@ -59,8 +67,7 @@ class BookingController extends Controller
     public function bookingStore(Request $request){
         $id = Auth::guard('customer')->user()->id;
         $customer = Customer::find($id);
-        //
-        $movie = Movie::find($id);
+        // $movie = Movie::find($request->movie_id);
         $validator = Validator::make($request->all(), [
             'movie' => 'required',
             'screening_id' => 'required',
@@ -69,33 +76,54 @@ class BookingController extends Controller
         ]);
         // if($validator->passes()){
         $contact = $customer -> phone_number;
+        $screening = $request->screening_id;
+        $totalSeats = [];
+        foreach($request->seat_id as $seat){
+            $totalSeats[] = $seat;
+        }
         foreach($request->seat_id as $seat){
             $reservation = Reservation::create([
-                'movie' => $movie,
-                'screening_id' => $request->screening_id,
+                'movie' => $request->movie_id,
+                'screening_id' => $screening,
                 'customer_id' => $id,
                 'status' => 1,
                 'date' => now(),
                 'seat_id' => $seat,
                 'reservation_contact' => $contact,
             ]);
-//            // Có khi không cần cái này nữa?
-
+    
             SeatReserved::create([
-                'seat_id' => $seat,
-                'reservation_id' => $reservation->id,
-                'screening_id' => $request->screening_id,
+                    'seat_id' => $seat,
+                    'reservation_id' => $reservation->id,
+                    'screening_id' => $screening,
+                    
             ]);
-        }
-        return redirect(route('choosingMovie'));
+    }
+        return redirect(route('customer.checkout',[
+            'screening' => $screening,
+            'auditorium' => $request->auditorium_id,
+            'movie' => $request->movie_id,
+            'totalSeats' => $totalSeats,
+        ]));
         // }
         // else{
         //     return back();
         // }
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
+        // Cần lấy screening movie seat auditorium
+        // và cái quan trọng nhất là lấy tổng tiền của tổng ghế
+        $totalMoney = 0;
+        $totalSeats = $request->totalSeats;
+        foreach($totalSeats as $totalSeat){
+            $money = Seat::select(DB::raw('sum(seat_types.price) as total_price'))
+                        ->join('seat_types', 'seat_types.id', '=', 'seats.type_id')
+                        ->where('seats.id', '=',$totalSeat)
+                        ->first();
+            $totalMoney += $money->total_price;
+        }
         if (Auth::guard('customer')->check() === false){
             if (!session()->has('url.intended')){
                 session(['url.intended' => url()->current()]);
@@ -103,6 +131,108 @@ class BookingController extends Controller
             return redirect()->route('customer.login');
         }
         session()->forget('url.intended');
-        return view('customer.book_ticket.checkout');
+
+
+        $seats = DB::table('seats')->whereIn('id', $totalSeats)->get();     
+        $movie = Movie::all()->where('id','=',$request->movie);
+        $screening = Screening::all()->where('id','=',$request->screening);
+        $auditorium = Auditorium::all()->where('id','=',$request->auditorium);
+        $whatTypesOfSeats = $seatTypes = SeatType::select(
+            DB::raw('count(seats.id) as id'),
+            'seat_types.name',
+            DB::raw('sum(seat_types.price) as totalPrice') // Use price from seats
+        )
+        ->join('seats', 'seats.type_id', '=', 'seat_types.id')
+        ->whereIn('seats.id', $totalSeats)
+        ->groupBy('seat_types.name')
+        ->get();
+        return view('customer.book_ticket.checkout',[
+            'movie' => $movie,
+            'totalMoney' => $totalMoney,
+            'screening' => $screening,
+            'auditorium' => $auditorium,
+            'seats'=> $seats,
+            'seatTypes' => $whatTypesOfSeats,
+        ]);
+    }
+
+   
+    public function vnpay_payment(Request $request){
+
+    
+    $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+    $vnp_Returnurl = "https://localhost/vnpay_php/vnpay_return.php";
+    $vnp_TmnCode = "6IJUBOIH";//Mã website tại VNPAY 
+    $vnp_HashSecret = "NTWDAASDAOTUICDMDVBVJMAFTPTXNACU"; //Chuỗi bí mật
+    
+    // $vnp_TxnRef = $_POST['id']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này 
+    // $vnp_OrderInfo = $_POST['order_desc'];
+    $vnp_TxnRef = "1";
+    $vnp_OrderInfo = 'Thanh toán hóa đơn';
+    $vnp_OrderType = 'Paradise Cinema';
+    // $vnp_Amount = $_POST['amount'] * 100;
+    // $vnp_Amount = 10000 * 100;
+    $vnp_Amount = $request->totalMoney * 100000;
+    $vnp_Locale = 'VN';
+    $vnp_BankCode = "NCB";
+    $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+    
+    $inputData = array(
+        "vnp_Version" => "2.1.0",
+        "vnp_TmnCode" => $vnp_TmnCode,
+        "vnp_Amount" => $vnp_Amount,
+        "vnp_Command" => "pay",
+        "vnp_CreateDate" => date('YmdHis'),
+        "vnp_CurrCode" => "VND",
+        "vnp_IpAddr" => $vnp_IpAddr,
+        "vnp_Locale" => $vnp_Locale,
+        "vnp_OrderInfo" => $vnp_OrderInfo,
+        "vnp_OrderType" => $vnp_OrderType,
+        "vnp_ReturnUrl" => $vnp_Returnurl,
+        "vnp_TxnRef" => $vnp_TxnRef,
+        
+    );
+    
+    if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+        $inputData['vnp_BankCode'] = $vnp_BankCode;
+    }
+    if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+        $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+    }
+    
+    //var_dump($inputData);
+    ksort($inputData);
+    $query = "";
+    $i = 0;
+    $hashdata = "";
+    foreach ($inputData as $key => $value) {
+        if ($i == 1) {
+            $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+        } else {
+            $hashdata .= urlencode($key) . "=" . urlencode($value);
+            $i = 1;
+        }
+        $query .= urlencode($key) . "=" . urlencode($value) . '&';
+    }
+    
+    $vnp_Url = $vnp_Url . "?" . $query;
+    if (isset($vnp_HashSecret)) {
+        $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
+        $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+    }
+
+
+
+    $returnData = array('code' => '00'
+        , 'message' => 'success'
+        , 'data' => $vnp_Url);
+        if (isset($_POST['redirect'])) {
+            header('Location: ' . $vnp_Url);
+            die();
+        } else {
+            echo json_encode($returnData);
+        }
+        // vui lòng tham khảo thêm tại code demo
+    
     }
 }

@@ -31,12 +31,15 @@
                         $nextSeat = 1;
                         $previous = 1;
                     @endphp
-                    <form action="{{route('bookingStore', $movie_id)}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('bookingStore', $movie)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="col-md-12 screen" id="screen">
                             Screen
                         </div>
+                        <input type="hidden" name="screening_id" value="{{$screening}}">
+                        <input type="hidden" name="auditorium_id" value="{{$auditorium}}">
+                        <input type="hidden" name="movie_id" value="{{$movie_id}}">
                         <ul class="justify-content-between d-flex col-6" style="padding: 5px 10px;border-radius: 5px;color: #777;list-style-type: none;">
                             <li>
                                 <div class="" style="background-color: #444451; height: 12px;
@@ -115,7 +118,7 @@
 
                                                     @elseif ($seat->status == 1 && $seat->type_id == 2)
                                                         <input type="checkbox" @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
-                                                            disabled
+                                                            disabled style="background-color: #cf2e2e"
                                                                @endif class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}" data-id="{{$seat->seatType?->price}}">
                                                         <label class="btn btn-outline-warning mb-1" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
                                                     @endif
@@ -140,13 +143,16 @@
 
                             <!--Hết-->
                             {{-- Screening --}}
-                            <input type="hidden" name="screening_id" value="{{$screening_id}}">
+                             
+                            {{-- Cần lấy screening movie seat auditorium --}}
+
+
                             {{-- <div class="d-flex flex-column">
                               @foreach ($screening as $item)
                                 @if ($item->screening_end > now())
                                 <input type="hidden" name="screening_id" value="{{$item ->id}}">
                                 <input type="hidden" name="auditorium_id" value="{{$item->auditorium_id}}">
-                                <input type="hidden" name="movie_id" value="{{$item->movie_id}}">
+                                <input type="hidden" name="movie" value="{{$item->movie}}">
                                 <input type="radio" class="btn-check" name="options-screening_start" id="success-outlined-{{$item->id}}" autocomplete="off" checked>
                                 <label class="btn btn-outline-success" for="success-outlined-{{$item->id}}">{{$item->screening_start}}</label>
                                 @endif
@@ -156,7 +162,7 @@
 
                         </div>
 
-                        <button class="btn btn-primary"><a class="text-white nav-link" href="{{ route('choosingScreening', $movie_id) }}">Previous</a></button>
+                        <button class="btn btn-primary"><a class="text-white nav-link" href="{{ route('choosingScreening', $movie) }}">Previous</a></button>
                         <button type="submit" class="btn btn-primary" href="{{ 'customer.checkout' }}">Primary</button>
                     </form>
                 </div>
@@ -166,11 +172,11 @@
                     Auditorium: - Date:
                 </div>
                 <div class="px-xl-5 mt-xl-5 py-sm-3 ">
-                    <h2 class="text-danger">{{ $movie_id->title }}</h2>
+                    <h2 class="text-danger">{{ $movie->title }}</h2>
                     <h6 class="fw-bolder">Screening: <span></span></h6>
-                    <h6 class="fw-bolder">Directed by: {{$movie_id->director}}</h6>
-                    <span class="language"><span>{{ $movie_id->language }}</span>
-                                <span class="bg-danger">{{ $movie_id->age->name }}</span></span>
+                    <h6 class="fw-bolder">Directed by: {{$movie->director}}</h6>
+                    <span class="language"><span>{{ $movie->language }}</span>
+                                <span class="bg-danger">{{ $movie->age->name }}</span></span>
                 </div>
             </div>
         </div>

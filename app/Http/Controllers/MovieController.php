@@ -8,6 +8,7 @@ use App\Models\Movie;
 use App\Models\Genre;
 use App\Models\MovieCast;
 use App\Models\MovieGenre;
+use App\Models\Screening;
 use App\Models\TempImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -379,7 +380,6 @@ class MovieController extends Controller
         $data['sort'] = $request->get('sort');
         return view('customer.movie.index', $data);
     }
-
     public function bookTickets($id, Request $request)
     {
         $data = [];
@@ -394,15 +394,42 @@ class MovieController extends Controller
             return redirect()->route('movie');
         }
         $data['movie'] = $movie;
-
-        return view('customer.book_ticket.bookingProcess', [
+        $screenings = Screening::all()->where('movie_id','=',$movie->id);
+        return view('customer.book_ticket.bookingScreening', [
             $data,
             'movieGenres' => $movieGenres,
             'movieCasts' => $movieCasts,
             'ages' => $ages,
             'movie' => $movie,
             'genres'=> $genres,
-            'casts' => $casts
+            'casts' => $casts,
+            'screenings' => $screenings
+        ]);
+    }
+    public function bookScreening($id, Request $request)
+    {
+        $data = [];
+        $movieGenres = MovieGenre::all();
+        $ages = Age::all();
+        $genres = Genre::all();
+        $casts = Cast::all();
+        $movieCasts = MovieCast::all();
+        $movie = Movie::find($id);
+        if (empty($movie)){
+            $request->session()->flash('error', 'Movie not found');
+            return redirect()->route('movie');
+        }
+        $data['movie'] = $movie;
+        $screenings = Screening::all()->where('movie_id','=',$movie->id);
+        return view('customer.book_ticket.bookingScreening', [
+            $data,
+            'movieGenres' => $movieGenres,
+            'movieCasts' => $movieCasts,
+            'ages' => $ages,
+            'movie' => $movie,
+            'genres'=> $genres,
+            'casts' => $casts,
+            'screenings' => $screenings
         ]);
     }
 

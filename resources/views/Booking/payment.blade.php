@@ -17,7 +17,11 @@
             </div>
         </div>
     </section>
-
+    <form action="{{url('vnpay_payment')}}" method="POST"  enctype="multipart/form-data">
+        @csrf
+        @method('POST')
+        <button type="submit">Thanh toán</button>
+    </form>
     <button type="button" class="btn btn-primary">Primary</button>
     @include('layouts/scroll_to_top')
     </body>

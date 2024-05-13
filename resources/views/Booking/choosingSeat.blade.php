@@ -17,13 +17,6 @@
             </div>
         </div>
     </section>
-      {{-- @foreach ($seats as $seat)
-        @php
-          $rows = $seat->number_of_row;
-          $cols = $seat->number_of_col;
-          $nextSeat = 1;
-       @endphp
-      @endforeach --}}
       @php
           $nextSeat = 1;
           $previous = 1;
@@ -56,7 +49,7 @@
               @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
               disabled
               @endif
-              class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="id[]" value="{{$seat->id}}" data-id="{{$seat->seatType?->price}}" >
+              class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}" data-id="{{$seat->seatType?->price}}" >
               
               <label class="btn btn-primary" style="background-color: grey" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
             
@@ -72,15 +65,6 @@
               @endif class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}" data-id="{{$seat->seatType?->price}}">
               <label class="btn btn-primary" style="background-color: yellow" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
             @endif
-            
-            {{-- Cái dòng quan trọng ở dưới --}}
-            {{-- <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}"
-                @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
-                    disabled
-                @endif> --}}
-            {{-- Dùng để kiểm tra --}}
-            {{-- Cái dòng quan trọng ở trên --}}
-            {{-- <label class="btn @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray())) btn-secondary @else btn-primary @endif" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label> --}}
 
             @php
               $nextSeat++;
@@ -97,7 +81,15 @@
         @endforeach
         <p class="text" style="color: white">
           You have selected <span id="count">0</span> seats for a price of $<span id="total">0</span>
-      </p>
+        </p>
+        {{-- Cái dòng quan trọng ở dưới --}}
+            {{-- <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}"
+                @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray()))
+                    disabled
+                @endif> --}}
+            {{-- Dùng để kiểm tra --}}
+            {{-- Cái dòng quan trọng ở trên --}}
+            {{-- <label class="btn @if (in_array($seat->id, $reservedSeats->pluck('seat_id')->toArray())) btn-secondary @else btn-primary @endif" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label> --}}
       </table>
     </div>
         <!--In ghế-->
@@ -123,6 +115,7 @@
 </form>
 
 
+
 @include('layouts/scroll_to_top')
     </body>
     <script src="{{asset('frontend/js/home.js')}}"></script>
@@ -133,12 +126,12 @@
 @endsection
 
 <script>
-  const container = document.querySelector('.container');
+  const container = document.querySelector('form');
   // const seats = document.querySelectorAll('input type'); // Target checkboxes within seats
   const seats = document.querySelectorAll('input[type="checkbox"]');
   const count = document.getElementById('count');
   const total = document.getElementById('total');
-  const ticketPrice = /* Your ticket price here */; // Set ticket price
+  const ticketPrice = 5 /* Your ticket price here */; // Set ticket price
 
   function updateSelectedCount() {
     const selectedSeats = document.querySelectorAll('input[type="checkbox"]'); // Get checked checkboxes
@@ -157,4 +150,6 @@
 
   // Update count initially (optional, in case seats are pre-selected)
   updateSelectedCount();
+
+  
 </script>

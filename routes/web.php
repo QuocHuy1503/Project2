@@ -1,25 +1,26 @@
 <?php
 
 
-use App\Http\Controllers\admin\AdminLoginController;
-use App\Http\Controllers\admin\AgeController;
-use App\Http\Controllers\admin\AuditoriumController;
-use App\Http\Controllers\admin\CastController;
-use App\Http\Controllers\admin\CustomerController;
-use App\Http\Controllers\admin\HomeController;
-use App\Http\Controllers\admin\OrderController;
-use App\Http\Controllers\admin\ReservationTypeController;
-use App\Http\Controllers\admin\ScreeningController;
-use App\Http\Controllers\admin\SeatController;
-use App\Http\Controllers\admin\SeatTypeController;
-use App\Http\Controllers\admin\TempImagesController;
-use App\Http\Controllers\MovieController;
-use App\Http\Controllers\admin\GenreController;
-use App\Http\Controllers\customer\BookingController;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Middleware\CheckLoginCustomer;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MovieController;
+use App\Http\Middleware\CheckLoginCustomer;
+use App\Http\Controllers\admin\AgeController;
+use App\Http\Controllers\admin\CastController;
+use App\Http\Controllers\admin\FoodController;
+use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\admin\SeatController;
+use App\Http\Controllers\admin\GenreController;
+use App\Http\Controllers\admin\OrderController;
+use App\Http\Controllers\admin\CustomerController;
+use App\Http\Controllers\admin\SeatTypeController;
+use App\Http\Controllers\admin\ScreeningController;
+use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\admin\AuditoriumController;
+
+use App\Http\Controllers\admin\TempImagesController;
+use App\Http\Controllers\customer\BookingController;
+use App\Http\Controllers\admin\ReservationTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,6 +133,25 @@ Route::group(['prefix' => 'admin'], function (){
             Route::delete('/{genre}', [GenreController::class, 'destroy'])->name('genre.destroy');
         });
 
+
+        Route::prefix('/food')->group(function () {
+
+            Route::get('/', [FoodController::class, 'index'])->name('food.index');
+        
+            // Show create form for food
+            Route::get('/create', [FoodController::class, 'create'])->name('food.create');
+            Route::post('/create', [FoodController::class, 'store'])->name('food.store');
+        
+            // Edit and update routes for food
+            Route::get('/{food}/edit', [FoodController::class, 'edit'])->name('food.edit');
+            Route::put('/{food}', [FoodController::class, 'update'])->name('food.update');
+            Route::post('/upload-temp-image', [TempImagesController::class, 'createFoodImg'])->name('food.temp-images.create');
+
+            // Delete route for food
+            Route::delete('/{food}', [FoodController::class, 'destroy'])->name('food.destroy');
+        });
+
+        
         // MOVIE ROUTE
         Route::prefix('/movie')->group(function () {
 

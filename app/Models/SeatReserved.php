@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class SeatReserved extends Model
 {
+    protected $fillable = ['seat_id', 'reservation_id', 'screening_id'];
     public  $table = 'seat_reserved';
     public $timestamps = false;
-    protected $fillable = ['seat_id', 'reservation_id', 'screening_id'];
+
+    public function seat(){
+        return $this->hasMany(Seat::class);
+    }
     use HasFactory;
 }

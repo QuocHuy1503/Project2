@@ -36,7 +36,6 @@ use App\Http\Controllers\admin\ReservationTypeController;
 //Route::get('/', function (){
 //    return 'hello';
 //});
-Route::post('/vnpay_payment',[BookingController::class,'vnpay_payment']);
 
 Route::get('/', [\App\Http\Controllers\customer\HomeController::class, 'index'])->name('home');
 //Route::get('/home', [\App\Http\Controllers\customer\HomeController::class, 'index'])->name('home');
@@ -71,9 +70,9 @@ Route::post('/process-reset-password', [\App\Http\Controllers\customer\CustomerC
 //Route::post('booking',[OrderController::class,'bookingStore'])->name('bookingStore');
 Route::get('/home',[\App\Http\Controllers\customer\HomeController::class,'index'])->name('choosingMovie');
 Route::post('postMovie/{movie}',[\App\Http\Controllers\customer\HomeController::class,'postMovie'])->name('postMovie');
-Route::get('choosingScreening/{movie_id}',[\App\Http\Controllers\customer\BookingController::class,'choosingScreening'])->name('choosingScreening');
-Route::post('postScreening/{movie_id}',[\App\Http\Controllers\customer\BookingController::class,'postScreening'])->name('postScreening');
-
+Route::get('choosingScreening/{movie_id}',[BookingController::class,'choosingScreening'])->name('choosingScreening');
+Route::post('postScreening/{movie_id}',[BookingController::class,'postScreening'])->name('postScreening');
+Route::get('/test',[BookingController::class,'finishCheckOut'])->name('test');
 
 
 Route::get('/help', function () {
@@ -96,10 +95,13 @@ Route::group(['prefix' => 'account'], function () {
         Route::post('/remove-movie-from-wishlist', [\App\Http\Controllers\customer\CustomerController::class, 'removeMovieFromWishList'])->name('removeMovieFromWishlist');
         Route::get('/change-password', [\App\Http\Controllers\customer\CustomerController::class, 'showChangePassword'])->name('customer.change_password');
         Route::post('/process-change-password', [\App\Http\Controllers\customer\CustomerController::class, 'changePassword'])->name('customer.process_change_password');
+        Route::get('/orders_history', [App\Http\Controllers\customer\CustomerController::class, 'showOrderHistory'])->name('orderHistory');
         Route::get('/logout', [\App\Http\Controllers\customer\CustomerController::class, 'logout'])->name('customer.logout');
-        Route::get('choosingSeat/{movie_id}',[\App\Http\Controllers\customer\BookingController::class,'choosingSeat'])->name('choosingSeat');
-        Route::post('postSeat/{movie_id}',[\App\Http\Controllers\customer\BookingController::class,'bookingStore'])->name('bookingStore');
-        Route::get('/checkout', [\App\Http\Controllers\customer\BookingController::class, 'checkout'])->name('customer.checkout');
+        Route::get('choosingSeat/{movie_id}',[BookingController::class,'choosingSeat'])->name('choosingSeat');
+        Route::post('postSeat/{movie_id}',[BookingController::class,'bookingStore'])->name('bookingStore');
+        Route::get('/checkout', [BookingController::class, 'checkout'])->name('customer.checkout');
+
+        Route::post('/vnpay_payment',[BookingController::class,'vnpay_payment'])->name('vnpay_payment');
     });
 });
 

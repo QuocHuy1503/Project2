@@ -28,7 +28,26 @@ class TempImagesController extends Controller
             ]);
         }
     }
+    public function createFoodImg(Request $request)
+    {
+        $image = $request->image;
 
+        if (!empty($image)){
+            $ext = $image->getClientOriginalExtension();
+            $newName = time().'.'.$ext;
+            $tempImage = new TempImage();
+            $tempImage->name = $newName;
+            $tempImage->save();
+
+            $image->move(public_path().'/temp', $newName);
+
+            return response()->json([
+               'status' => true,
+               'image_id' => $tempImage->id,
+                'message' => 'Image uploaded successfully'
+            ]);
+        }
+    }
     public function createImgMovie(Request $request)
     {
         $image = $request->image;
@@ -49,7 +68,6 @@ class TempImagesController extends Controller
             ]);
         }
     }
-
     public function createImgUser(Request $request)
     {
         $image = $request->image;

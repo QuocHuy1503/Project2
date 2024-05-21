@@ -13,7 +13,7 @@ class ScreeningController extends Controller
 {
     public function index(Request $request){
         $screenings = Screening::latest();
-        if (!empty($request->get('keyword'))){
+            if (!empty($request->get('keyword'))){
             $screenings = $screenings->where('name', 'like', '%'.$request->get('keyword').'%' ) -> movie -> auditorium;
         }
         $screenings = $screenings -> paginate(10);
@@ -27,6 +27,11 @@ class ScreeningController extends Controller
         return view('admin.screening_manager.create',['screenings' => $screenings , 'movies' => $movies, 'auditoriums' => $auditorium]);
     }
 
+    public function create2(Request $request){
+        $screenings = Screening::latest();
+        $movies = $request -> movies;
+        $auditorium = Auditorium::all();
+    }
     public function store(Request $request)
     {
     

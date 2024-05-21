@@ -99,7 +99,7 @@ Route::group(['prefix' => 'account'], function () {
         Route::get('/logout', [\App\Http\Controllers\customer\CustomerController::class, 'logout'])->name('customer.logout');
         Route::get('choosingSeat/{movie_id}',[BookingController::class,'choosingSeat'])->name('choosingSeat');
         Route::post('postSeat/{movie_id}',[BookingController::class,'bookingStore'])->name('bookingStore');
-        Route::get('/checkout', [BookingController::class, 'checkout'])->name('customer.checkout');
+        Route::get('/checkout/{movie_id}', [BookingController::class, 'checkout'])->name('customer.checkout');
 
         Route::post('/vnpay_payment',[BookingController::class,'vnpay_payment'])->name('vnpay_payment');
     });

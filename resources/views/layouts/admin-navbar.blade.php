@@ -136,6 +136,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('food.index')}}" class="nav-link {{ request()->routeIs('food.index') ? 'bg-danger' : '' }}">
+                            <i class="nav-icon fas fa-shopping-bag" aria-hidden="true"></i>
+                            <p>Foods</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{route('order.index')}}" class="nav-link {{ request()->routeIs('order.index') ? 'bg-danger' : '' }}">
                             <i class="nav-icon fas fa-shopping-bag" aria-hidden="true"></i>
                             <p>Orders</p>

@@ -13,9 +13,11 @@ class Reservation extends Model
         'reservation_contact',
         'date',
         'status',
-        'customer_id'
+        'customer_id',
+        'created_at',
+        'updated_at',
     ];
-    public $timestamps = false;
+
     public function screening(){
         return $this -> belongsTo(Screening::class);
     }

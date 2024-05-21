@@ -1,75 +1,96 @@
-@vite(["resources/sass/app.scss", "resources/js/app.js"])
-<x-layout>
-    @include('layouts/nav')
-    <div class="container d-flex align-items-center h-80 mt-5  overflow-hidden">
-        <div class="border w-20 rounded-start p-3 h-100">
+@extends('layouts.customer-nav')
+@section('content')
+    @vite(["resources/sass/app.scss", "resources/js/app.js"])
+    <head>
+        <title>Profile</title>
+        <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
+    </head>
+    <body style="background-color: #00001c">
+    <hr class="text-white">
+    <div class="container d-flex align-items-center mt-5 h-80 overflow-hidden">
+        <div class="border w-20 rounded-start p-3 h-100 text-white" style="background-color: #191c33">
             @include('layouts/profile_menu')
         </div>
-        <div class="bg-white border w-80 rounded-end p-3 h-100 d-flex flex-column justify-content-between">
-            <div>
-                <div class="fs-5">
-                    Orders history
+        <div class="border w-80 rounded-end p-3 h-100 text-white" style="background-color: #191c33">
+            <section class="justify-content-lg-between">
+                <div class="col-md-12">
+                    @include('admin.message')
                 </div>
                 <div>
-                    Manage your order details
-                </div>
-                <hr>
-            </div>
-            <div class="d-flex w-100 h-100 flex-column">
-                @foreach($orders as $order)
-                    <div class="w-100 h-50 d-flex justify-content-between align-items-center border rounded bg-light mb-3 p-3">
-                        <div class="h-100 w-75 d-flex flex-column justify-content-center">
-                            <div class="fw-bold fst-italic">
-                                @switch($order->order_status)
-                                    @case(0)
-                                        <span class="text-danger">Pending</span>
-                                        @break
-                                    @case(1)
-                                        <span class="text-success">Confirmed</span>
-                                        @break
-                                    @case(2)
-                                        <span class="text-primary">Delivery</span>
-                                        @break
-                                    @case(3)
-                                        <span class="text-success">Completed</span>
-                                        @break
-                                    @case(4)
-                                        <span class="text-danger">Cancelled</span>
-                                        @break
-                                @endswitch
-                            </div>
-                            <div>
-                                Order number: {{$order->id}}
-                            </div>
-                            <div>
-                                @php
-                                    $hour = substr($order->order_date, 10);
-                                    $day = substr($order->order_date, 8, 2);
-                                    $month = date("F", mktime(0, 0, 0, substr($order->order_date, 5, 2), 1));
-                                    $year = substr($order->order_date, 0, 4);
-                                    $orderDate = $hour . ' - ' . $month . ' ' . $day . ', ' . $year;
-                                @endphp
-                                Order date: {{$orderDate}}
-                            </div>
-                            <div>
-                                Payment method: Pay on delivery
-                            </div>
-                        </div>
-                        <div class="h-100 w-25 d-flex align-items-center justify-content-end">
-                            <a href="{{route('orderDetail', $order)}}" class="btn btn-primary">
-                                View order
-                            </a>
-                        </div>
+                    <div class="fs-5">
+                        My Wishlist
                     </div>
-                @endforeach
-            </div>
-            <div>
-                <hr class="mt-0">
-                <div class="d-flex justify-content-between align-items-center">
-                    {{$orders->onEachSide(2)->links()}}
+                    <div>
+                        Manage wishlist information
+                    </div>
                 </div>
-            </div>
+            </section>
+            <hr>
+
+            <div id="vertical-scroller">
+                {{-- @if($wishlists->isNotEmpty())
+                    @foreach($wishlists as $wishlist)
+                        <div class="d-sm-flex justify-content-between mt-lg-4 mb-4 pb-3 pb-sm-2 border-bottom me-2">
+                            <div class="d-block d-sm-flex align-items-start text-center text-sm-start">
+                                <a class="d-block flex-shrink-0 mx-auto me-sm-4" href="{{ route('movie-details', $wishlist->movie) }}" style="width: 7rem;">
+                                    @if(!empty($wishlist->movie->image))
+                                        <img src="{{ asset('uploads/movie/'.$wishlist->movie->image) }}" class="img-thumbnail" alt="Movie">
+                                    @else
+                                        <img src="{{ asset('admin-assets/img/default-150x150.png') }}" class="img-thumbnail">
+                                    @endif
+                                </a>
+                                <div class="pt-2">
+                                    <h3 class="product-title fs-base mb-2">
+                                        <a class="nav-link" href="{{ route('movie-details', $wishlist->movie) }}">{{ $wishlist->movie->title }}</a>
+                                    </h3>
+                                    <div class="fs-lg text-accent pt-2">
+                                        <span class="rounded p-2 me-3" style="background-color: #0093E9; background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);">
+                                            {{ $wishlist->movie->age->name }}
+                                        </span>
+                                        <div class="pt-3">
+                                            @foreach($movieGenres as $movieGenre)
+                                                @if($movieGenre->movie_id == $wishlist->movie->id)
+                                                    <li class="">
+                                                @foreach($genres as $genre)
+                                                            <span> {{$genre->id == $movieGenre->genre_id ? $genre->name:''}}</span>
+                                                        @endforeach
+                                            </li>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                                <button onclick="removeMovie({{ $wishlist->movie_id }});" class="btn btn-outline-danger btn-sm" type="button">
+                                    <i class="fas fa-trash-alt me-2"></i>Remove
+                                </button>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="fs-3">Your wishlist is empty !!</div>
+                @endif
+            </div> --}}
         </div>
     </div>
-    @include('layouts/footer')
-</x-layout>
+    </body>
+@endsection
+
+@section('customJs')
+    <script>
+        function removeMovie(id) {
+            $.ajax({
+                url: '{{ route("removeMovieFromWishlist") }}',
+                type: 'post',
+                data: {id: id},
+                dataType: 'json',
+                success: function (response){
+                    if (response.status == true){
+                        window.location.href = "{{ route('wishlist') }}";
+                    }
+                }
+            })
+        }
+    </script>
+@endsection

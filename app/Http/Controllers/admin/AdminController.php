@@ -47,8 +47,6 @@ class AdminController extends Controller
         }
     }
 
-
-
     public function index2(Request $request)
     {
         $users = User::latest();
@@ -149,7 +147,7 @@ class AdminController extends Controller
             $user->role = $request->role;
             $user->password = $request->password;
             $user->save();
-
+            
                 // Save Image Here
                 if (!empty($request->image_id)) {
                     $tempImage = TempImage::find($request->image_id);
@@ -162,7 +160,7 @@ class AdminController extends Controller
                     $user->image = $newImageName;
                     $user->save();
                 }
-
+            
             $request->session()->flash('success', 'User updated successfully');
             return response()->json([
                 'status' => true,

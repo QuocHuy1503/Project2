@@ -30,11 +30,12 @@ class HomeController extends Controller
         return view('customer.home', $data);
     }
 
+
     public function postMovie(Request $request){
         $movie = $request -> id;
         return redirect(route('choosingScreening', $movie,['movie_id' => $movie]));
     }
-
+    
     public function addToWishlist (Request $request)
     {
         if ((Auth::guard('customer')->check()) == false){
@@ -105,7 +106,6 @@ class HomeController extends Controller
         }
     }
 }
-
 
 
 

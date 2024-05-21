@@ -135,12 +135,23 @@
                                             </div>
                                         </div>
                                         <div class="pt-4">
-                                            <form action="{{url('vnpay_payment')}}" method="POST"  enctype="multipart/form-data">
+                                            <form action="{{route('vnpay_payment')}}" method="POST"  enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="totalMoney" value="{{$totalMoney}}">
+                                                <input type="hidden" name="movie" value="{{$movie}}">
+                                                @foreach ($seats as $seat)
+                                                    <input type="hidden" name="seat[]" value="{{$seat->id}}"> 
+                                                @endforeach
+                                                @foreach ($screening as $item)
+                                                    <input type="hidden" name="screening" value="{{$item->id}}"> 
+                                                @endforeach
+                                                @foreach ($movie as $item)
+                                                    <input type="hidden" name="movie" value="{{$item->id}}"> 
+                                                @endforeach
                                                 <button type="submit" name="redirect" class="btn-dark btn btn-block w-100">Pay Now</button>
                                               </form>
-                                            {{-- <a href="#" >Pay Now</a> --}}
+                                              {{--//Movie, Screening, Customer(id , phone number), seat--}}
+
                                         </div>
                                     </div>
                                 </div>

@@ -9,6 +9,7 @@ use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\MovieGenre;
 use App\Models\Order;
+use App\Models\Reservation;
 use App\Models\WishList;
 use App\Requests\StoreCustomerRequest;
 use App\Requests\UpdateCustomerRequest;
@@ -340,50 +341,50 @@ class CustomerController extends Controller
 //        return Redirect::route('profile');
 //    }
 //
-//    public function showOrderHistory()
-//    {
-//        //id cua customer dang dang nhap
-//        $id = Auth::guard('customer')->user()->id;
-//        //lay ban ghi
-//        $customer = Customer::find($id);
-//        $orders = Order::where('customer_id', $id)->paginate(2);
-//
-//        return view('customer.profiles.orderHistory', [
-//            'customer' => $customer,
-//            'orders' => $orders,
-//        ]);
-//    }
-//
-//    public function orderDetail(Order $order)
-//    {
-//        //id cua customer dang dang nhap
-//        $id = Auth::guard('customer')->user()->id;
-//        //lay ban ghi
-//        $customer = Customer::find($id);
-//        $orderId = $order->id;
-//        $orderDetails = DB::table('orders_details')
-//            ->where('order_id', '=', $orderId)
-//            ->join('products', 'orders_details.product_id', '=', 'products.id')
-//            ->get();
-//
-//        $orderAmount = 0;
-//        $orderItems = 0;
-//        foreach ($orderDetails as $detail) {
-//            $orderItems += $detail->sold_quantity;
-//            $orderAmount += $detail->sold_price * $detail->sold_quantity;
-//        }
-//        $orderTotal = $orderAmount + 10;
-//
-//        return view('customers.profiles.orderDetail', [
-//            'order' => $order,
-//            'order_details' => $orderDetails,
-//            'order_item' => $orderItems,
-//            'order_amount' => $orderAmount,
-//            'order_total' => $orderTotal,
-//            'customer' => $customer,
-//        ]);
-//    }
-//
+   public function showOrderHistory()
+   {
+       //id cua customer dang dang nhap
+       $id = Auth::guard('customer')->user()->id;
+       //lay ban ghi
+       $customer = Customer::find($id);
+       $orders = Reservation::where('customer_id', $id)->paginate(2);
+
+       return view('customer.profiles.orderHistory', [
+           'customer' => $customer,
+           'orders' => $orders,
+       ]);
+   }
+
+   public function orderDetail(Order $order)
+   {
+       //id cua customer dang dang nhap
+       $id = Auth::guard('customer')->user()->id;
+       //lay ban ghi
+       $customer = Customer::find($id);
+       $orderId = $order->id;
+       $orderDetails = DB::table('orders_details')
+           ->where('order_id', '=', $orderId)
+           ->join('products', 'orders_details.product_id', '=', 'products.id')
+           ->get();
+
+       $orderAmount = 0;
+       $orderItems = 0;
+       foreach ($orderDetails as $detail) {
+           $orderItems += $detail->sold_quantity;
+           $orderAmount += $detail->sold_price * $detail->sold_quantity;
+       }
+       $orderTotal = $orderAmount + 10;
+
+       return view('customers.profiles.orderDetail', [
+           'order' => $order,
+           'order_details' => $orderDetails,
+           'order_item' => $orderItems,
+           'order_amount' => $orderAmount,
+           'order_total' => $orderTotal,
+           'customer' => $customer,
+       ]);
+   }
+
 //    public function editPassword()
 //    {
 //        //id cua customer dang dang nhap

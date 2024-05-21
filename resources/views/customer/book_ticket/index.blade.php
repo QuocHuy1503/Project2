@@ -68,19 +68,6 @@
 
                                 {{-- Cái này để chọn ghế --}}
                                 <td>
-                                    {{-- @if ($seat->status == 2)
-                                      <input type="checkbox" disabled class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="id[]" value="{{$seat->id}}">
-                                      <label class="btn btn-primary" style="background-color: grey" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
-
-                                    @elseif ($seat->status == 1 && $seat->type_id == 1)
-                                      <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}">
-                                      <label class="btn btn-primary" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
-
-                                    @elseif ($seat->status == 1 && $seat->type_id == 2)
-                                      <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}">
-                                      <label class="btn btn-primary" style="background-color: yellow" for="btn-check-{{$nextSeat}}">{{ $seat->number_of_row . chr($seat->number_of_col + 64) }}</label>
-                                    @endif --}}
-
 
                                     {{-- Cái dòng quan trọng ở dưới --}}
                                     <input type="checkbox" class="btn-check" id="btn-check-{{$nextSeat}}" autocomplete="off" name="seat_id[]" value="{{$seat->id}}"
@@ -106,24 +93,7 @@
                     @endforeach
                 </table>
             </div>
-            <!--In ghế-->
-
-
-            <!--Hết-->
-            {{-- Screening --}}
             <input type="hidden" name="screening_id" value="{{$screening_id}}">
-            {{-- <div class="d-flex flex-column">
-              @foreach ($screening as $item)
-                @if ($item->screening_end > now())
-                <input type="hidden" name="screening_id" value="{{$item ->id}}">
-                <input type="hidden" name="auditorium_id" value="{{$item->auditorium_id}}">
-                <input type="hidden" name="movie_id" value="{{$item->movie_id}}">
-                <input type="radio" class="btn-check" name="options-screening_start" id="success-outlined-{{$item->id}}" autocomplete="off" checked>
-                <label class="btn btn-outline-success" for="success-outlined-{{$item->id}}">{{$item->screening_start}}</label>
-                @endif
-               @endforeach
-            </div> --}}
-            {{-- End Screening --}}
         </div>
         <button type="submit" class="btn btn-primary">Primary</button>
     </form>

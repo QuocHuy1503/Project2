@@ -151,7 +151,9 @@
                                                 <button type="submit" name="redirect" class="btn-dark btn btn-block w-100">Pay Now</button>
                                               </form>
                                               {{--//Movie, Screening, Customer(id , phone number), seat--}}
-
+                                              @foreach ($movie as $item)
+                                              <a href="{{route('choosingScreening',$item->id)}}" class="btn-dark btn btn-block w-100"> Return </a>
+                                              @endforeach
                                         </div>
                                     </div>
                                 </div>

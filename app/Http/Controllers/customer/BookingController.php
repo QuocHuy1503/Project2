@@ -25,6 +25,7 @@ class BookingController extends Controller
             return redirect()->route('movie');
         }
         $screening = Screening::all()->where('movie_id','=',$request->movie_id);
+        
         // $auditorium = Auditorium::all()->where('id','=',$screening->auditorium_id);
         return view('customer.book_ticket.bookingProcess',[
             'screening' => $screening,
@@ -85,7 +86,7 @@ class BookingController extends Controller
         return redirect(route('customer.checkout',[
             'screening' => $screening,
             'auditorium' => $request->auditorium_id,
-            'movie' => $request->movie_id,
+            'movie_id' => $request->movie_id,
             'totalSeats' => $totalSeats,
         ]));
         // }
@@ -94,7 +95,7 @@ class BookingController extends Controller
         // }
     }
 
-    public function checkout(Request $request)
+    public function checkout($id,Request $request)
     {
         // Cần lấy screening movie seat auditorium
         // và cái quan trọng nhất là lấy tổng tiền của tổng ghế
@@ -115,9 +116,9 @@ class BookingController extends Controller
         }
         session()->forget('url.intended');
 
-
+        
         $seats = DB::table('seats')->whereIn('id', $totalSeats)->get();     
-        $movie = Movie::all()->where('id','=',$request->movie);
+        $movie = Movie::all()->where('id','=',$request->movie_id);
         $screening = Screening::all()->where('id','=',$request->screening);
         $auditorium = Auditorium::all()->where('id','=',$request->auditorium);
         $whatTypesOfSeats = $seatTypes = SeatType::select(
@@ -129,6 +130,14 @@ class BookingController extends Controller
         ->whereIn('seats.id', $totalSeats)
         ->groupBy('seat_types.name')
         ->get();
+        
+
+        $returnData = [
+            'movie' => $request->movie_id,
+            'screening' => $request->screening,
+        ];
+        session()->put('returnData',$returnData);
+        session()->save();
         return view('customer.book_ticket.checkout',[
             'movie' => $movie,
             'totalMoney' => $totalMoney,

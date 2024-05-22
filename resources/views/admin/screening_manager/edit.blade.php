@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Screening</h1>
+                    <h1>Sửa thông tin đợt chiếu</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('screening.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('screening.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -23,19 +23,19 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="Screening Start">Screening Start</label>
+                                    <label for="Screening Start">Thời gian đợt chiếu bắt đầu</label>
                                     <input type="datetime-local" value="{{$screening ->screening_start}}" name="screening_start" id="screening_start" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="Screening End">Screening End</label>
+                                    <label for="Screening End">Thời gian đợt chiếu kết thúc</label>
                                     <input type="datetime-local" value="{{$screening ->screening_end}}" name="screening_end" id="screening_end" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <label for="auditorium_id">Auditorium</label>
+                                    <label for="auditorium_id">Phòng chiếu</label>
                                     <select name="auditorium_id" id="auditorium_id" class="btn btn-dark bi bi-caret-down">
                                         @foreach ($auditoriums as $auditorium)
                                         <option value="{{$auditorium -> id}}">{{$auditorium -> name}}</option>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <label for="movie_id">Movies</label>
+                                    <label for="movie_id">Phim</label>
                                     <select name="movie_id" id="movie_id" class="btn btn-dark bi bi-caret-down">
                                         @foreach ($movies as $movie)
                                         <option value="{{$movie -> id}}">{{$movie -> title}}</option>
@@ -57,8 +57,8 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Update</button>
-                    <a href="{{route('screening.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
+                    <a href="{{route('screening.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>

@@ -5,10 +5,10 @@
             <div class="container-fluid my-2">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Seat Types</h1>
+                        <h1>Tất cả các loại ghế</h1>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <a href="{{route('seatType.create')}}" class="bi bi-plus-circle btn btn-primary">New Seat Type</a>
+                        <a href="{{route('seatType.create')}}" class="bi bi-plus-circle btn btn-primary">Tạo loại ghế mới</a>
                     </div>
                 </div>
             </div>
@@ -23,13 +23,13 @@
                     <form action="" method="get">
                         <div class="card-header">
                             <div class="card-title">
-                                <button type="button" onclick="window.location.href='{{route('genre.index')}}'" class="btn btn-default btn-sm">
+                                <button type="button" onclick="window.location.href='{{route('seatType.index')}}'" class="btn btn-default btn-sm">
                                     Reset
                                 </button>
                             </div>
                             <div class="card-tools">
                                 <div class="input-group input-group" style="width: 250px;">
-                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm">
 
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
@@ -45,11 +45,11 @@
                             <thead>
                             <tr class="text-center">
                                 <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">Tên loại ghế</th>
+                                <th scope="col">Giá</th>
                                 {{-- <th scope="col">Description</th>
                                 <th scope="col">Status</th> --}}
-                                <th scope="col">Action</th>
+                                <th scope="col">Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -58,7 +58,7 @@
                                 <tr class="text-center">
                                     <td>{{$seatType->id}}</td>
                                     <td>{{$seatType->name}}</td>
-                                    <td>{{$seatType->price}}</td>
+                                    <td>${{$seatType->price}}</td>
                                     {{-- <td>
                                         <details>
                                             <summary>Details</summary>
@@ -93,7 +93,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5">Records Not Found</td>
+                                    <td colspan="5">Chưa có loại ghế nào 😓</td>
                                 </tr>
                             @endif
 
@@ -115,7 +115,7 @@
             var url = '{{ route('seatType.destroy', 'ID') }}';
             var newUrl = url.replace("ID", id);
 
-            if (confirm("Are you sure you want to delete !!")) {
+            if (confirm("Bạn có chắc rằng muốn xóa loại ghế này không !!")) {
                 $.ajax({
                     url: newUrl,
                     type: 'delete',

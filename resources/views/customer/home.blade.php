@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Home</title>
+        <title>Trang chủ</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
     <body style="background-color: #00001c;; box-sizing: border-box" data-instant-intensity="mousedown">
@@ -15,11 +15,11 @@
             <div
                 class="position-absolute text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
                 <span class="luxury-font fs-1 fade-in fade-bottom">
-                    Welcome to Your Paradise Theatre
+                    Chào mừng bạn đến với Paradise Theatre
                 </span>
                 <button class="btn">
                     <a class="fade-in fade-bottom nav-link fs-4 d-flex text-white btn btn-danger" href="{{route('movie')}}">
-                        View more Film<span class="bi bi-incognito p-2"></span>
+                        Xem nhiều phim hơn<span class="bi bi-incognito p-2"></span>
                     </a>
                 </button>
             </div>
@@ -36,25 +36,25 @@
                 <div class="title-container">
                     <div class="title-top">
                         <div class="movie-title">
-                            <h1 class="text-sm-start">Godzilla x Kong: The New Empire</h1>
+                            <h1 class="text-sm-start">Godzilla x Kong: Đế chế mới</h1>
                         </div>
                         <div class="more-about-movie w-50 justify-content-between">
                             <span class="quality">Full HD</span>
-                            <span>29 March 2024</span>
-                            <span>115min</span>
+                            <span>29/03/2024</span>
+                            <span>115 phút</span>
                         </div>
                         <div class="language">
-                            <span>Vietsub</span>
+                            <span>Phụ đề</span>
                         </div>
                     </div>
 
                     <div class="title-bottom">
                         <div class="category">
-                            <strong>Category</strong>
-                            <a href="#" class="nav-link">Action</a>
+                            <strong>Thể loại</strong>
+                            <a href="#" class="nav-link">Hành động</a>
                         </div>
                         <div class="watch-btn">
-                            <a href="javascript:void(0)" class="watch-btn nav-link">Watch trailer</a>
+                            <a href="javascript:void(0)" class="watch-btn nav-link">Xem trailer</a>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
         <section class="section-4 pt-5">
             <div class="container">
                 <div class="content-heading text-white">
-                    <h2>Trending Movies</h2>
+                    <h2>Phim phổ biến</h2>
                 </div>
                 <div class="row pb-1">
                     @if($isFeatures->count() > 0)
@@ -184,19 +184,19 @@
                                             <span class="bi bi-dot">{{$movie->duration}}</span>
                                         </p>
                                         <p class="card-subtitle">
-                                            <span class="text-white-50">Language: </span>
+                                            <span class="text-white-50">Ngôn ngữ: </span>
                                             {{$movie->language}}
                                         </p>
                                         <p class="card-body">
-                                            <span class="text-white-50">Director: </span>
+                                            <span class="text-white-50">Đạo diễn: </span>
                                             {{$movie->director}}
                                         </p>
-                                        <a href="javascript:void(0);" onclick="addToWishList({{ $movie->id }})" class="watch-btn nav-link whishlist">add to my list</a>
+                                        <a href="javascript:void(0);" onclick="addToWishList({{ $movie->id }})" class="watch-btn nav-link whishlist">Thêm vào yêu thích</a>
                                         <form action="{{route('postMovie', $movie)}}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('POST')
                                             <input type="hidden" name="id" value="{{$movie->id}}">
-                                            <button class="text-white col-lg-12 watch-btn">Book tickets</button>
+                                            <button class="text-white col-lg-12 watch-btn">Đặt vé</button>
                                         </form>
                                     </div>
                                     <div class="card-body h-100 pt-1 h-25">
@@ -217,7 +217,7 @@
                             </div>
                         @endforeach
                     @else
-                        <span class="text-white fs-4 text-center bg-danger">No Movies found</span>
+                        <span class="text-white fs-4 text-center bg-danger">Không tìm thấy phim phổ biến nào 😓</span>
                     @endif
             </div>
             </div>
@@ -226,7 +226,7 @@
         <section class="section-4 pt-5">
             <div class="container">
                 <div class="section-title text-white">
-                    <h2>Latest Produsts</h2>
+                    <h2>Phim mới nhất</h2>
                 </div>
                 <div class="row">
                     @if($latestMovies->count() > 0)
@@ -280,7 +280,7 @@
                             </div>
                         @endforeach
                     @else
-                        <span class="text-white fs-4 text-center bg-danger">No Movies found</span>
+                        <span class="text-white fs-4 text-center bg-danger">Không tìm thấy phim mới nhất nào 😓</span>
                     @endif
                 </div>
                     </div>

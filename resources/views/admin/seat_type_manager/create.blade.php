@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Seat Type</h1>
+                    <h1>Thêm loại ghế mới</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('seatType.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('seatType.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -23,13 +23,13 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
+                                    <label for="name">Tên loại ghế</label>
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="price">Price</label>
+                                    <label for="price">Giá</label>
                                     <input type="number" name="price" max="120" min="80" id="price" class="form-control" placeholder="price">
                                 </div>
                             </div>
@@ -37,8 +37,8 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Create</button>
-                    <a href="{{route('seatType.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Tạo</button>
+                    <a href="{{route('seatType.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>

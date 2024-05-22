@@ -1,7 +1,7 @@
 @extends('layouts.customer-nav')
 @section('content')
     <head>
-        <title>Forgot Password</title>
+        <title>Quên mật khẩu</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
@@ -11,8 +11,8 @@
         <div class="container">
             <div>
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li class="bi bi-slash-lg text-white">Forgot Password</li>
+                    <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Trang chủ</a></li>
+                    <li class="bi bi-slash-lg text-white">Quên mật khẩu</li>
                 </ol>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     {{ Session::get('error') }}
                 </div>
             @endif
-            <h2>Login</h2>
+            <h2>Nhập email để thay đổi mật khẩu</h2>
             <form action="{{ route('customer.processForgotPassword') }}" method="post">
                 @csrf
                 <div class="user-box">
@@ -44,8 +44,9 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    Submit
+                    GỬI
                 </button>
+                <div class="mt-3 text-center bi bi-arrow-left link-light"><a class="link-light text-decoration-none" href="{{ route('customer.login') }}">Quay lại trang đăng nhập</a></div>
             </form>
         </div>
     </div>

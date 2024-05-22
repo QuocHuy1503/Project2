@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Auditorium</h1>
+                    <h1>Tạo phòng chiếu mới</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('auditorium.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('auditorium.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -23,14 +23,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
+                                    <label for="name">Tên phòng chiếu</label>
                                     <input type="text" name="name" id="name" class="form-control" placeholder="Name">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="capacity">Capacity</label>
+                                    <label for="capacity">Số lượng ghế</label>
                                     <input type="number" name="capacity" id="capacity" class="form-control" placeholder="How much" max="100" min="20">
                                 </div>
                             </div>
@@ -38,8 +38,8 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Create</button>
-                    <a href="{{route('auditorium.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Tạo</button>
+                    <a href="{{route('auditorium.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>

@@ -1,75 +1,71 @@
+
 @extends('layouts.admin-navbar')
 @section('content')
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <div class="container-fluid my-2">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Foods</h1>
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        <a href="{{route('food.create')}}" class="bi bi-plus-circle btn btn-primary">New Food</a>
-                    </div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid my-2">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Foods</h1>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <a href="{{route('food.create')}}" class="bi bi-plus-circle btn btn-primary">New Food</a>
                 </div>
             </div>
-            <!-- /.container-fluid -->
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <!-- Default box -->
-            <div class="container-fluid">
-                @include('admin.message')
-                <div class="card">
-                    <form action="" method="get">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <button type="button" onclick="window.location.href='{{route('food.index')}}'" class="btn btn-default btn-sm">
-                                    Reset
-                                </button>
-                            </div>
-                            <div class="card-tools">
-                                <div class="input-group input-group" style="width: 250px;">
-                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Default box -->
+        <div class="container-fluid">
+            @include('admin.message')
+            <div class="card">
+                <form action="" method="get">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <button type="button" onclick="window.location.href='{{route('food.index')}}'" class="btn btn-default btn-sm">
+                                Reset
+                            </button>
+                        </div>
+                        <div class="card-tools">
+                            <div class="input-group input-group" style="width: 250px;">
+                                <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
 
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover table-bordered text-nowrap">
-                            <thead>
-                            <tr class="text-center">
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @if($foods->count() > 0)
-                                @foreach($foods as $food)
+                    </div>
+                </form>
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover table-bordered text-nowrap">
+                        <thead>
+                        <tr class="text-center">
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($foods->count() > 0)
+                            @foreach($foods as $food)
                                 <tr class="text-center">
                                     <td>{{$food->id}}</td>
                                     <td>{{$food->name}}</td>
-                                    <td>{{$food->price}}</td>
+                                    <td>${{$food->price}}</td>
                                     <td>
                                         @if(!empty($food->image))
-                                            <img width="70" src="{{ asset('uploads/foods/'.$food->image) }}" class="img-thumbnail" alt="">
+                                            <img width="150" src="{{ asset('uploads/food/'.$food->image) }}" class="img-thumbnail" alt="">
                                         @else
                                             <img width="100" src="{{ asset('admin-assets/img/default-150x150.png') }}" class="img-thumbnail" alt="">
                                         @endif
-                                    </td>
-                                    <td>
-                                        <details>
-                                            <summary>Details</summary>
-                                            <p class="border border-primary rounded-2 py-2 p-2">{{$food->description}}</p>
-                                        </details>
                                     </td>
                                     <td>
                                         @if($food->status == 1)
@@ -96,24 +92,24 @@
                                         </a>
                                     </td>
                                 </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="5">Records Not Found</td>
-                                </tr>
-                            @endif
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="5">Records Not Found</td>
+                            </tr>
+                        @endif
 
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer clearfix">
-                        {{$foods->onEachSide(3)->links()}}
-                    </div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer clearfix">
+                    {{$foods->onEachSide(3)->links()}}
                 </div>
             </div>
-            <!-- /.card -->
-        </section>
-        <!-- /.content -->
+        </div>
+        <!-- /.card -->
+    </section>
+    <!-- /.content -->
 @endsection
 @section('customJs')
     <script>

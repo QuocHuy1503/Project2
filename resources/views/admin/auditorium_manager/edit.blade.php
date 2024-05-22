@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Genre</h1>
+                    <h1>Sửa thông tin phòng chiếu #{{ $auditorium->id }}</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('auditorium.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('auditorium.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -23,35 +23,23 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
-                                    <input value="{{$genre->name}}" type="text" name="name" id="name" class="form-control" placeholder="Name">
+                                    <label for="name">Tên phòng chiếu</label>
+                                    <input value="{{$auditorium->name}}" type="text" name="name" id="name" class="form-control" placeholder="Name">
                                     <p></p>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div class="mb-3">
-                                    <label for="status">Status</label>
-                                    <select name="status" id="status" class="btn btn-dark bi bi-caret-down">
-                                        <option {{($genre->status == 1) ? 'selected' : ''}} value="1" >Active</option>
-                                        <option {{($genre->status == 0) ? 'selected' : ''}} value="0" >Block</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email">Description</label>
-                                    <textarea type="text" name="description" id="description" class="form-control" placeholder="Description" rows="4">
-                                        {{$genre->description}}
-                                    </textarea>
-                                    <p></p>
+                                    <label for="capacity">Số lượng ghế</label>
+                                    <input value="{{$auditorium->capacity}}" type="number" name="capacity" id="capacity" class="form-control" placeholder="How much" max="100" min="20">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Update</button>
-                    <a href="{{route('auditorium.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
+                    <a href="{{route('auditorium.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>
@@ -65,7 +53,7 @@
             var element = $(this);
             $("button[type=submit]").prop('disabled', true)
             $.ajax({
-                url: '{{route('genre.update', $genre->id)}}',
+                url: '{{route('auditorium.update', $auditorium->id)}}',
                 type: 'put',
                 data: element.serializeArray(),
                 dataType: 'json',
@@ -73,13 +61,13 @@
                     $("button[type=submit]").prop('disabled', false)
 
                     if (response["status"] === true){
-                        window.location.href='{{route('genre.index')}}';
+                        window.location.href='{{route('auditorium.index')}}';
 
                         $("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         $("#capacity").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                     }else {
                         if (response['notFound'] == true){
-                            window.location.href = "{{ route('genre.index') }}";
+                            window.location.href = "{{ route('auditorium.index') }}";
                         }
 
                         var errors = response['errors'];

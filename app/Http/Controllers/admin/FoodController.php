@@ -26,13 +26,13 @@ class FoodController extends Controller
         ]);
     }
     public function create(){
-            return view('admin.food_manager.create');
-        }
-    
+        return view('admin.food_manager.create');
+    }
+
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'price' => 'required|numeric', // Ensures price is numeric
+            'price' => 'required', // Ensures price is numeric
         ]);
 
         if ($validator->passes()) {
@@ -42,6 +42,7 @@ class FoodController extends Controller
             $food->price = $request->price;
             $food->status = $request->status;
             $food->save();
+
             if (!empty($request->image_id)) {
                 $tempImage = TempImage::find($request->image_id);
                 $extArray = explode('.', $tempImage->name);
@@ -54,7 +55,7 @@ class FoodController extends Controller
                 $food->image = $newImageName;
                 $food->save();
             }
-            
+
 
             $request->session()->flash('success', 'Food added successfully');
             return response()->json([
@@ -97,16 +98,34 @@ class FoodController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'price' => 'required|numeric',
+            'price' => 'required',
         ]);
 
         if ($validator->passes()) {
             $food->name = $request->name;
             $food->description = $request->description;
             $food->price = $request->price;
-            $food->image = $request->image; // Assuming image path is updated
             $food->status = $request->status;
             $food->save();
+            $oldImage = $food->image;
+
+            if (!empty($request->image_id)) {
+                $tempImage = TempImage::find($request->image_id);
+                $extArray = explode('.', $tempImage->name);
+                $ext = last($extArray);
+
+                $newImageName = $food->id.'-'.time().'.'.$ext;
+                $sPath = public_path().'/temp/'.$tempImage->name;
+                $dPath = public_path().'/uploads/food/'.$newImageName;
+                File::copy($sPath, $dPath);
+
+                $food->image = $newImageName;
+                $food->save();
+
+                // DELETE old image here
+                File::delete(public_path().'/temp/'.$oldImage);
+                File::delete(public_path().'/uploads/food/'.$oldImage);
+            }
 
             $request->session()->flash('success', 'Food updated successfully');
             return response()->json([
@@ -120,6 +139,4 @@ class FoodController extends Controller
             ]);
         }
     }
-
-
 }

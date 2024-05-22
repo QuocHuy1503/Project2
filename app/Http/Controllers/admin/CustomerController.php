@@ -61,10 +61,10 @@ class CustomerController extends Controller
             $customer->gender = $request->gender;
             $customer->status = $request->status;
             $customer->save();
-            $request->session()->flash('success', 'Customer added successfully');
+            $request->session()->flash('success', 'Đã thêm khách hàng thành công 👍👍👍');
             return response()->json([
                 'status' => true,
-                'message' => 'Customer added successfully'
+                'message' => 'Đã thêm khách hàng thành công 👍👍👍'
             ]);
 
         }else{
@@ -78,7 +78,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($customerId);
         if (empty($customer)){
-            $request->session()->flash('error', 'Customer not found');
+            $request->session()->flash('error', 'Không tìm thấy khách hàng 😓');
             return redirect()->route('customerAdmin.index');
         }
         $data['customer'] = $customer;
@@ -89,12 +89,12 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($customerId);
         if (empty($customer)){
-            $request->session()->flash('error', 'Customer not found');
+            $request->session()->flash('error', 'Không tìm thấy khách hàng 😓');
 
             return response()->json([
                 'status' => false,
                 'notFound' => true,
-                'message' => 'Customer not found'
+                'message' => 'Không tìm thấy khách hàng 😓'
             ]);
         }
 
@@ -120,10 +120,10 @@ class CustomerController extends Controller
             $customer->gender = $request->gender;
             $customer->status = $request->status;
             $customer->save();
-            $request->session()->flash('success', 'Customer updated successfully');
+            $request->session()->flash('success', 'Đã cập nhật thông tin khách hàng thành công 👍👍👍');
             return response()->json([
                 'status' => true,
-                'message' => 'Customer updated successfully'
+                'message' => 'Đã cập nhật thông tin khách hàng thành công 👍👍👍'
             ]);
 
         }else{
@@ -138,18 +138,18 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($customerId);
         if (empty($customer)){
-            $request->session()->flash('error', 'Customer not found');
+            $request->session()->flash('error', 'Không tìm thấy khách hàng 😓');
             return response()->json([
                 'status' => true,
-                'message' => 'Customer not found'
+                'message' => 'Không tìm thấy khách hàng 😓'
             ]);
         }
 
         $customer->delete();
-        $request->session()->flash('success', 'Customer deleted successfully');
+        $request->session()->flash('success', 'Đã xóa khách hàng thành công 👍👍👍');
         return response()->json([
             'status' => true,
-            'message' => 'Customer deleted successfully'
+            'message' => 'Đã xóa khách hàng thành công 👍👍👍'
         ]);
     }
 }

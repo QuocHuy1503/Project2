@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Movie Details</title>
+        <title>Chi tiết phim</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
     <body style="background-color: #00001c;">
@@ -12,8 +12,8 @@
             <div class="container">
                 <div class="text-white">
                     <ul class="breadcrumb primary-color text-white mb-0">
-                        <li><a class="nav-link text-danger fw-bold" href="{{ route('home') }}">Home<span class="text-white bi bi-slash-lg"></span></a></li>
-                        <li><a class="nav-link text-danger fw-bold" href="{{ route('movie') }}">Movie</a></li>
+                        <li><a class="nav-link text-danger fw-bold" href="{{ route('home') }}">Trang chủ<span class="text-white bi bi-slash-lg"></span></a></li>
+                        <li><a class="nav-link text-danger fw-bold" href="{{ route('movie') }}">Phim</a></li>
                         <li class="bi bi-slash-lg text-white breadcrumb-item">{{ $movie->title }}</li>
                     </ul>
                 </div>
@@ -47,12 +47,12 @@
                                 <span>{{\Carbon\Carbon::parse($movie->release_date)->format('d-m-Y')}}</span>
                                 <span class="bi bi-dot">{{$movie->duration}}</span>
                             </div>
-                            <p class="text-justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis officiis dolor aut nihil iste porro
+                            <p class="text-justify my-sm-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis officiis dolor aut nihil iste porro
                                 ullam repellendus inventore voluptatem nam veritatis exercitationem doloribus voluptates dolorem nobis voluptatum
                                 qui, minus facere. {!! $movie->description !!}</p>
                             <div class="mt-3">
                                 <span>
-                                    <b>Genre:</b>
+                                    <b>Thể loại:</b>
                                     @foreach($movieGenres as $movieGenre)
                                         @if($movieGenre->movie_id == $movie->id)
                                             <li class="">
@@ -66,7 +66,7 @@
                             </div>
                             <div class="mt-3">
                                 <span>
-                                    <b>Cast:</b>
+                                    <b>Diễn viên:</b>
                                     @foreach($movieCasts as $movieCast)
                                         @if($movieCast->movie_id == $movie->id)
                                             <span class="bi bi-das">
@@ -81,7 +81,7 @@
                                 </span>
                             </div>
                             <div class="mt-3 row">
-                                <a href="{{ route('choosingScreening', $movie) }}" class="watch-btn nav-link">Book now</a>
+                                <a href="{{ route('choosingScreening', $movie) }}" class="watch-btn nav-link">Đặt vé</a>
                             </div>
                         </div>
                     </div>

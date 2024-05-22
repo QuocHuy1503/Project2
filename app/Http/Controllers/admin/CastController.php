@@ -65,10 +65,10 @@ class CastController extends Controller
             }
 
 
-            $request->session()->flash('success', 'Cast added successfully');
+            $request->session()->flash('success', 'Đã thêm diễn viên thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Cast added successfully'
+                'message' => 'Đã thêm diễn viên thành công'
             ]);
 
         }else{
@@ -83,7 +83,7 @@ class CastController extends Controller
     {
         $cast = Cast::find($castId);
         if (empty($cast)){
-            $request->session()->flash('error', 'Cast not found');
+            $request->session()->flash('error', 'Không tìm thấy diễn viên');
             return redirect()->route('cast.index');
         }
         $data['cast'] = $cast;
@@ -94,12 +94,12 @@ class CastController extends Controller
     {
         $cast = Cast::find($castId);
         if (empty($cast)){
-            $request->session()->flash('error', 'Cast not found');
+            $request->session()->flash('error', 'Không tìm thấy diễn viên');
 
             return response()->json([
                 'status' => false,
                 'notFound' => true,
-                'message' => 'Cast not found'
+                'message' => 'Không tìm thấy diễn viên'
             ]);
         }
 
@@ -139,10 +139,10 @@ class CastController extends Controller
                 File::delete(public_path().'/uploads/cast/'.$oldImage);
             }
 
-            $request->session()->flash('success', 'Cast updated successfully');
+            $request->session()->flash('success', 'Đã cập nhật thông tin diễn viên thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Cast updated successfully'
+                'message' => 'Đã cập nhật thông tin diễn viên thành công'
             ]);
 
         }else{
@@ -157,20 +157,20 @@ class CastController extends Controller
     {
         $cast = Cast::find($castId);
         if (empty($cast)){
-            $request->session()->flash('error', 'Cast not found');
+            $request->session()->flash('error', 'Không tìm thấy diễn viên');
             return response()->json([
                 'status' => true,
-                'message' => 'Cast not found'
+                'message' => 'Không tìm thấy diễn viên'
             ]);
         }
 
         File::delete(public_path().'/temp/'.$cast->image);
         File::delete(public_path().'/uploads/cast/'.$cast->image);
         $cast->delete();
-        $request->session()->flash('success', 'Cast deleted successfully');
+        $request->session()->flash('success', 'Đã xóa diễn viên thành công');
         return response()->json([
             'status' => true,
-            'message' => 'Cast deleted successfully'
+            'message' => 'Đã xóa diễn viên thành công'
         ]);
     }
 }

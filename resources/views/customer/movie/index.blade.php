@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Movie</title>
+        <title>Phim</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
     <body style="background-color: #00001c;">
@@ -18,8 +18,8 @@
             <div class="container">
                 <div>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
-                        <li class="bi bi-slash-lg text-white">Movie</li>
+                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="bi bi-slash-lg text-white">Phim</li>
                     </ol>
                 </div>
             </div>
@@ -37,7 +37,7 @@
                         <section class="d-lg-block">
                             <div class="col-lg-12">
                                 <div class="sub-title mt-4 text-white">
-                                    <span class="fs-2">Explore by Genres</span>
+                                    <span class="fs-2">Thể loại</span>
                                 </div>
 
                                 <div class="card col-8 text-white" style="background-color: #191c33">
@@ -61,7 +61,7 @@
 
                             <div class="col-lg-12">
                                 <div class="sub-title mt-5 text-white">
-                                    <h2>Ages</h2>
+                                    <h2>Độ tuổi</h2>
                                 </div>
                                 <div class="card col-8 text-white" style="background-color: #191c33">
                                     <div class="card-body justify-content-between">
@@ -91,16 +91,16 @@
                                     <form action="" class="d-flex mb-0" style="width: 250px">
                                         {{--                select--}}
                                         <label for="sorting" class="w-50 d-flex align-items-center justify-content-center text-white">
-                                            Sort by <span class="bi bi-filter-circle-fill"></span>
+                                            Sắp xếp <span class="bi bi-filter-circle-fill"></span>
                                         </label>
                                         <select class="form-select rounded-5" id="sort" name="sort">
                                             <option>
                                             </option>
                                             <option value="newest" {{ ($sort == 'newest') ? 'selected' : ''}}>
-                                                Newest
+                                                Mới nhất
                                             </option>
                                             <option value="oldest" {{ ($sort == 'oldest') ? 'selected' : '' }}>
-                                                Oldest
+                                                Cũ nhất
                                             </option>
                                         </select>
                                     </form>
@@ -116,32 +116,32 @@
                                                     @if(!empty($movie->image))
                                                         <div class="position-relative rounded rounded-4 overflow-hidden mb-3">
                                                             <img src="{{ asset('uploads/movie/'.$movie->image) }}" class="card-img" alt="">
-                                                            <div class="position-absolute text-white top-0 p-2 border  rounded-4">
-                                                    <span class="luxury-font fs-5">
-                                                        @switch($movie->age->id)
-                                                            @case(1)
-                                                                <div class="text-success">
-                                                                    13+
-                                                                </div>
-                                                                @break
-                                                            @case(2)
-                                                                <div class="text-warning">
-                                                                    16+
-                                                                </div>
-                                                                @break
-                                                            @case(3)
-                                                                <div class="text-danger">
-                                                                    18+
-                                                                </div>
-                                                                @break
-                                                        @endswitch
-                                                        {{--                                                        {{ $movie->age->name }}--}}
-                                                    </span>
+                                                            <div class="position-absolute text-white top-0 p-2 rounded-4 bg-dark">
+                                                                <span class="luxury-font fs-5">
+                                                                    @switch($movie->age->id)
+                                                                        @case(1)
+                                                                            <div class="text-success">
+                                                                                13+
+                                                                            </div>
+                                                                            @break
+                                                                        @case(2)
+                                                                            <div class="text-warning">
+                                                                                16+
+                                                                            </div>
+                                                                            @break
+                                                                        @case(3)
+                                                                            <div class="text-danger">
+                                                                                18+
+                                                                            </div>
+                                                                            @break
+                                                                    @endswitch
+                                                                    {{--                                                        {{ $movie->age->name }}--}}
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     @endif
 
-                                                    <h3 class="text-white mb-2">{{$movie->title}}</h3>
+                                                    <h4 class="text-white mb-2">{{$movie->title}}</h4>
                                                     <span class="language justify-content-lg-between">
                                                         <span class="fs-6 bg-success  rounded-3">{{$movie->language}}</span>
                                                         <span class="bg-danger rounded-3 text-end">
@@ -162,13 +162,13 @@
                                                     </span>
                                                     </div>
                                                     <p class="screen-name"></p>
-                                                    <div class="d-flex align-items-center justify-content-sm-center justify-content-between row">
-                                                        <a href="{{ route('movie-details', $movie) }}" class="btn btn-outline-success text-white border-light-subtle col-lg-5 mx-lg-2">View Detail <span class="bi bi-info-circle"></span></a>
-                                                        <form action="{{route('postMovie', $movie)}}" method="POST" enctype="multipart/form-data" class="col-lg-6">
+                                                    <div class="d-flex align-items-center justify-content-sm-center justify-content-between row ms-lg-4">
+                                                        <a href="{{ route('movie-details', $movie) }}" class="btn btn-outline-success text-white border-light-subtle col-lg-6">Chi tiết<span class="bi bi-info-circle"></span></a>
+                                                        <form action="{{route('postMovie', $movie)}}" method="POST" enctype="multipart/form-data" class="col-lg-6 mt-3">
                                                             @csrf
                                                             @method('POST')
                                                             <input type="hidden" name="id" value="{{$movie->id}}">
-                                                            <button class="btn btn-outline-danger text-white border-white ">Buy Tickets</button>
+                                                            <button class="btn btn-outline-danger text-white border-white ">Đặt vé</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -176,7 +176,7 @@
 
                                         @endforeach
                                     @else
-                                        <span class="text-white fs-4 text-center bg-danger">No Movies found</span>
+                                        <span class="text-white fs-4 text-center bg-danger">Không tìm thấy phim nào 😓</span>
                                     @endif
                                 </div>
                             </div>

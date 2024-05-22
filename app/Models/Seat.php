@@ -13,8 +13,7 @@ class Seat extends Model
         'status',
         'auditorium_id',
         'type_id',
-    ];    
-    public $timestamps = false;
+    ];    public $timestamps = false;
     public function auditorium(){
         return $this -> belongsTo(auditorium::class);
     }
@@ -22,5 +21,16 @@ class Seat extends Model
     {
         return $this->belongsTo(SeatType::class);
     }
+
+//    public function isBooked(Movie $movie, Reservation $reservation, Screening $showtime): bool
+//    {
+//        return DB::table('seat_reserved')
+//            ->join('screenings', 'seat_reserved.screening_id', '=', 'id')
+//            ->join('reservations', 'seat_reserved.reservation_id', '=', 'id')
+//            ->where('date_showtime.showtime_id', $showtime->id)
+//            ->where('seat_reserved.seat_id', $this->id)
+//            ->where('bookings.movie_id', $movie->id)
+//            ->exists();
+//    }
     use HasFactory;
 }

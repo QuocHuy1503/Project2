@@ -5,10 +5,10 @@
             <div class="container-fluid my-2">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Ages</h1>
+                        <h1>Tất cả tuổi</h1>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <a href="{{route('age.create')}}" class="bi bi-plus-circle btn btn-primary">New Age</a>
+                        <a href="{{route('age.create')}}" class="bi bi-plus-circle btn btn-primary">Thêm tuổi mới</a>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="card-tools">
                                 <div class="input-group input-group" style="width: 250px;">
-                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm">
 
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
@@ -45,8 +45,8 @@
                             <thead>
                             <tr class="text-center">
                                 <th width="500">ID</th>
-                                <th width="500">Name</th>
-                                <th>Action</th>
+                                <th width="500">Tuổi</th>
+                                <th>Hành động</th>
                             </tr>
                             </thead>
                             <tbody>

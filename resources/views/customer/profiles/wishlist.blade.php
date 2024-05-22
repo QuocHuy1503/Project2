@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Profile</title>
+        <title>Hồ sơ</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
     <body style="background-color: #00001c">
@@ -18,10 +18,10 @@
                 </div>
                 <div>
                     <div class="fs-5">
-                        My Wishlist
+                        Phim yêu thích
                     </div>
                     <div>
-                        Manage wishlist information
+                        Quản lý thông tin phim yêu thích
                     </div>
                 </div>
             </section>
@@ -63,13 +63,13 @@
                             </div>
                             <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
                                 <button onclick="removeMovie({{ $wishlist->movie_id }});" class="btn btn-outline-danger btn-sm" type="button">
-                                    <i class="fas fa-trash-alt me-2"></i>Remove
+                                    <i class="fas fa-trash-alt me-2"></i>Xóa
                                 </button>
                             </div>
                         </div>
                     @endforeach
                 @else
-                    <div class="fs-3">Your wishlist is empty !!</div>
+                    <div class="fs-3">Danh sách phim yêu thích của bạn đang trống !!</div>
                 @endif
             </div>
         </div>

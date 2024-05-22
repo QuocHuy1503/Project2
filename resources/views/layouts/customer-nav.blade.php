@@ -34,6 +34,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('customer-assets/css/slick-theme.css')}}" />
 <link rel="stylesheet" type="text/css" href="{{asset('customer-assets/css/video-js.css')}}" />
 
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,12 +53,12 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
                 <li class="nav-item">
                     <a class="nav-link link-light {{ request()->routeIs('home') ? 'active' : '' }}" aria-current="page"
-                       href="{{route('home')}}">HOME</a>
+                       href="{{route('home')}}">Trang chủ</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link link-light  {{ request()->routeIs('movie', 'movie-details', 'bookTickets') ? 'active' : '' }}" href="{{route('movie')}}">
                         {{--                       id="navbarDropdown" role="button" data-bs-toggle="dropdown">--}}
-                        MOVIE
+                        Phim
                     </a>
                     {{--                    <div class="dropdown-menu rounded-4" aria-labelledby="navbarDropdown">--}}
                     {{--                        <ul>--}}
@@ -97,18 +98,18 @@
                     {{--                    </div>--}}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-light {{ request()->routeIs('contact_us') ? 'active' : '' }}" href="{{route('contact_us')}}">Contact
+                    <a class="nav-link link-light {{ request()->routeIs('contact_us') ? 'active' : '' }}" href="{{route('contact_us')}}">Liên hệ
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-light {{ request()->routeIs('help') ? 'active' : '' }}" href="{{route('help')}}">HELP
+                    <a class="nav-link link-light {{ request()->routeIs('help') ? 'active' : '' }}" href="{{route('help')}}">Giúp đỡ
                     </a>
                 </li>
             </ul>
             <h2 class="mt-3 text-center text-white me-md-auto fw-semibold font-monospace rounded-2" style="background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);">PARADISE THEATRE</h2>
             <form method="get" action="{{ route('movie') }}" class="d-flex search-form mb-0">
                 <div class="input-group input-group-sm">
-                    <input class="form-control" type="text" placeholder="Search for Movie..." name="search" id="search"
+                    <input class="form-control" type="text" placeholder="Tìm kiếm phim..." name="search" id="search"
                            value="{{ request()->get('search') }}">
                     <button class="btn btn-outline-secondary" type="submit">
                         <i class="bi bi-search"></i>
@@ -117,7 +118,7 @@
             </form>
             <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link link-light {{ request()->routeIs('profile','customer.login', 'customer.register') ? 'active' : '' }}"
+                    <a class="nav-link link-light {{ request()->routeIs('profile','customer.login', 'customer.register', 'customer.forgotPassword') ? 'active' : '' }}"
                        href="{{ route('profile') }}">
                         <i class="bi bi-person"></i>
                     </a>
@@ -152,7 +153,7 @@
 
             <div class="col-md-3">
                 <div class="footer-card text-white bd-lead">
-                    <h3>Get In Touch</h3>
+                    <h3>Liên lạc</h3>
                     <p>No dolore ipsum accusam no lorem. <br>
                         123 Street, New York, USA <br>
                         phucsonmai999@gmail.com <br>
@@ -162,23 +163,22 @@
 
             <div class="col-lg-3">
                 <div class="footer-card text-white">
-                    <h3>Important Links</h3>
+                    <h3>Đường dẫn quan trọng</h3>
                     <ul class="nav flex-column">
-                        <li><a class="text-decoration-none link-light" href="{{ route('about') }}" title="About">About</a></li>
-                        <li><a class="text-decoration-none link-light" href="{{ route('contact_us') }}" title="Contact Us">Contact Us</a></li>
-                        <li><a class="text-decoration-none link-light" href="#" title="Privacy">Privacy</a></li>
-                        <li><a class="text-decoration-none link-light" href="#" title="Privacy">Terms & Conditions</a></li>
-                        <li><a class="text-decoration-none link-light" href="#" title="Privacy">Refund Policy</a></li>
+                        <li><a class="text-decoration-none link-light" href="{{ route('about') }}" title="About">Về chúng tôi</a></li>
+                        <li><a class="text-decoration-none link-light" href="{{ route('contact_us') }}" title="Contact Us">Liên hệ</a></li>
+                        <li><a class="text-decoration-none link-light" href="#" title="Privacy">Sự riêng tư</a></li>
+                        <li><a class="text-decoration-none link-light" href="#" title="Privacy">Điều khoản & Điều kiện</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="col-xl-3">
                 <div class="footer-card text-white">
-                    <h3>My Account</h3>
+                    <h3>Tài khoản</h3>
                     <ul class="nav flex-column">
-                        <li><a class="text-decoration-none link-light" href="{{route('profile')}}" title="Login">Login</a></li>
-                        <li><a class="text-decoration-none link-light" href="#" title="Contact Us">My Orders</a></li>
+                        <li><a class="text-decoration-none link-light" href="{{route('profile')}}" title="Login">Đăng nhập</a></li>
+                        <li><a class="text-decoration-none link-light" href="#" title="Contact Us">Vé đã đặt</a></li>
                     </ul>
                 </div>
             </div>
@@ -202,14 +202,14 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Thành công</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>

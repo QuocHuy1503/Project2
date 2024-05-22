@@ -5,10 +5,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Customer</h1>
+                    <h1>Thêm khách hàng mới</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('customerAdmin.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('customerAdmin.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -24,21 +24,21 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="first_name">First Name</label>
+                                    <label for="first_name">Họ</label>
                                     <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
                                     <p class="error"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="last_name">Last Name</label>
+                                    <label for="last_name">Tên</label>
                                     <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
                                     <p class="error"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="password">Password</label>
+                                    <label for="password">Mật khẩu</label>
                                     <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                                     <p class="error"></p>
                                 </div>
@@ -52,33 +52,33 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="phone_number">Phone Number</label>
+                                    <label for="phone_number">Số điện thoại</label>
                                     <input type="text" name="phone_number"  id="phone_number" class="form-control" placeholder="0359887669">
                                     <p class="error"></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="address">Address</label>
+                                    <label for="address">Địa chỉ</label>
                                     <input type="text" name="address" id="address" class="form-control" placeholder="Address">
                                     <p class="error"></p>
                                 </div>
                             </div>
-                            <div class="col-md-1">
+                            <div class="col-md-2">
                                 <div class="mb-3">
-                                    <label for="status">Status</label>
+                                    <label for="status">Trạng thái</label>
                                     <select name="status" id="status" class="btn btn-dark bi bi-caret-down">
-                                        <option value="1">Active</option>
-                                        <option value="0">Block</option>
+                                        <option value="1">Hoạt động</option>
+                                        <option value="0">Không hoạt động</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="mb-3">
-                                    <label for="gender">Gender</label>
+                                    <label for="gender">Giới tính</label>
                                     <select name="gender" id="gender" class="btn btn-dark bi bi-caret-down">
-                                        <option value="1">Male</option>
-                                        <option value="0">Female</option>
+                                        <option value="1">Nam</option>
+                                        <option value="0">Nữ</option>
                                     </select>
                                 </div>
                             </div>
@@ -86,8 +86,8 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Create</button>
-                    <a href="{{route('customerAdmin.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Tạo</button>
+                    <a href="{{route('customerAdmin.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>

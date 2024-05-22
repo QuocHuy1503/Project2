@@ -5,10 +5,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Movies</h1>
+                    <h1>Tất cả phim</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('movie.create')}}" class="bi bi-plus-circle btn btn-primary">New Movie</a>
+                    <a href="{{route('movie.create')}}" class="bi bi-plus-circle btn btn-primary">Thêm phim mới</a>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                         </div>
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
-                                <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+                                <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -45,13 +45,13 @@
                         <thead>
                         <tr class="text-center">
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Genre</th>
-                            <th scope="col">Director</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                            <th scope="col">Details</th>
+                            <th scope="col">Tên phim</th>
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Thể loại</th>
+                            <th scope="col">Đạo diễn</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Hành động</th>
+                            <th scope="col">Chi tiết</th>
                         </tr>
                         </thead>
                         <tbody>

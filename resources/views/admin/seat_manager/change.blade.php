@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Change Seat Type</h1>
+                    <h1>Thay đổi loại ghế</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('seat.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('seat.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -23,27 +23,27 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="number_of_row">From Row</label>
+                                    <label for="number_of_row">Từ hàng</label>
                                     <input type="number" min="1" name="pointA" id="pointA" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="number_of_row">To Row</label>
+                                    <label for="number_of_row">đến hàng</label>
                                     <input type="number" min="1" name="pointB" id="pointB" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="Screening End">From Column</label>
+                                    <label for="Screening End">Từ cột</label>
                                     <input type="number" min="1" name="pointC" id="pointC" class="form-control">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="Screening End">To Column</label>
+                                    <label for="Screening End">Đến cột</label>
                                     <input type="number" min="1" name="pointD" id="pointD" class="form-control">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="auditorium_id">Auditorium</label>
+                                    <label for="auditorium_id">Phòng chiếu</label>
                                     <select name="auditorium_id" id="auditorium_id" class="btn btn-dark bi bi-caret-down">
                                         @foreach ($auditoriums as $auditorium)
                                         <option value="{{$auditorium ->id}}">{{$auditorium ->name}}</option>
@@ -53,7 +53,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="type_id">Type of Seat</label>
+                                    <label for="type_id">Loại ghế</label>
                                     <select name="type_id" id="type_id" class="btn btn-dark bi bi-caret-down">
                                         @foreach ($types as $type)
                                         <option value="{{$type -> id}}">{{$type->name}}</option>
@@ -65,8 +65,8 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Create</button>
-                    <a href="{{route('seat.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
+                    <a href="{{route('seat.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>
@@ -99,7 +99,7 @@
                         }else {
                             $("#number_of_row").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
                         }
-                        
+
                         if (errors['number_of_col']){
                             $("#number_of_col").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['number_of_col']);
                         }else {

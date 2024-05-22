@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Paradise Theatre :: Administrative Panel</title>
+    <title>Đăng nhập</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -22,7 +22,7 @@
             <a href="#" class="h3">Administrative Panel</a>
         </div>
         <div class="card-body">
-            <p class="login-box-msg">Sign in</p>
+            <p class="login-box-msg">Đăng nhập tài khoản</p>
             <form action="{{route('admin.authenticate')}}" method="post">
                 @csrf
                 <div class="input-group mb-3">
@@ -57,8 +57,8 @@
                           </div>
                     </div> -->
                     <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    <div class="col-5">
+                        <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
                     </div>
                     <!-- /.col -->
                 </div>

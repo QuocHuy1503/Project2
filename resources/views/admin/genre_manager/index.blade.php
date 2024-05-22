@@ -5,10 +5,10 @@
             <div class="container-fluid my-2">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Genres</h1>
+                        <h1>Tất cả thể loại</h1>
                     </div>
                     <div class="col-sm-6 text-right">
-                        <a href="{{route('genre.create')}}" class="bi bi-plus-circle btn btn-primary">New Genre</a>
+                        <a href="{{route('genre.create')}}" class="bi bi-plus-circle btn btn-primary"> Thêm thể loại mới</a>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="card-tools">
                                 <div class="input-group input-group" style="width: 250px;">
-                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm">
 
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
@@ -45,10 +45,10 @@
                             <thead>
                             <tr class="text-center">
                                 <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Thể loại</th>
+                                <th scope="col">Miêu tả</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -59,7 +59,7 @@
                                     <td>{{$genre->name}}</td>
                                     <td>
                                         <details>
-                                            <summary>Details</summary>
+                                            <summary>Chi tiết</summary>
                                             <p class="border border-primary rounded-2 py-2 p-2">{{$genre->description}}</p>
                                         </details>
                                     </td>
@@ -91,7 +91,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="5">Records Not Found</td>
+                                    <td colspan="5">Không tìm thấy thể loại nào</td>
                                 </tr>
                             @endif
 
@@ -113,7 +113,7 @@
             var url = '{{ route('genre.destroy', 'ID') }}';
             var newUrl = url.replace("ID", id);
 
-            if (confirm("Are you sure you want to delete !!")) {
+            if (confirm("Bạn có chắc muốn xóa thể loại này không !!")) {
                 $.ajax({
                     url: newUrl,
                     type: 'delete',

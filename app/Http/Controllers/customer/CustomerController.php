@@ -9,7 +9,6 @@ use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\MovieGenre;
 use App\Models\Order;
-use App\Models\Reservation;
 use App\Models\WishList;
 use App\Requests\StoreCustomerRequest;
 use App\Requests\UpdateCustomerRequest;
@@ -149,16 +148,15 @@ class CustomerController extends Controller
             $customer->first_name = $request->first_name;
             $customer->last_name = $request->last_name;
             $customer->email = $request->email;
-            $customer->birthday = $request->birthday;
             $customer->gender = $request->gender;
             $customer->phone_number = $request->phone_number;
             $customer->address = $request->address;
             $customer->save();
 
-            session()->flash('success', 'Profile updated successfully');
+            session()->flash('success', 'Hồ sơ được cập nhật thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Profile updated successfully'
+                'message' => 'Hồ sơ được cập nhật thành công'
             ]);
         }else{
             return response()->json([
@@ -173,7 +171,7 @@ class CustomerController extends Controller
         Auth::guard('customer')->logout();
         session()->forget('customer');
         return redirect()->route('customer.login')
-            ->with('success', 'You successfully logged out!');
+            ->with('success', 'Bạn đã đăng xuất thành công!');
     }
 
     public function wishlist(Movie $movie)
@@ -195,13 +193,13 @@ class CustomerController extends Controller
     {
         $wishlist = WishList::where('customer_id', Auth::guard('customer')->user()->id)->where('movie_id', $request->id)->first();
         if ($wishlist == null){
-            session()->flash('error', 'Movie already removed.');
+            session()->flash('error', 'Phim đã bị xóa rồi.');
             return response()->json([
                 'status' => true,
             ]);
         }else{
             WishList::where('customer_id', Auth::guard('customer')->user()->id)->where('movie_id', $request->id)->delete();
-            session()->flash('success', 'Movie removed successfully.');
+            session()->flash('success', 'Đã xóa phim khỏi mục phim yêu thích thành công.');
             return response()->json([
                'status' => true,
             ]);
@@ -227,7 +225,7 @@ class CustomerController extends Controller
             $customer = Customer::select('id', 'password')->where('id', Auth::guard('customer')->user()->id)->first();
 
             if (!Hash::check($request->old_password, $customer->password)){
-                session()->flash('error', 'Your old password is incorrect, please try again.');
+                session()->flash('error', 'Mật khẩu cũ của bạn không chính xác, vui lòng thử lại.');
                 return response()->json([
                     'status' => true,
                 ]);
@@ -237,7 +235,7 @@ class CustomerController extends Controller
                 'password' => Hash::make($request->new_password)
             ]);
 
-            session()->flash('success', 'Your have successfully changed your password.');
+            session()->flash('success', 'Bạn đã đổi mật khẩu thành công.');
             return response()->json([
                 'status' => true,
             ]);
@@ -278,11 +276,11 @@ class CustomerController extends Controller
         $formData = [
             'token' => $token,
             'customer'=> $customer,
-            'mailSubject' => 'You have requested to reset your password'
+            'mailSubject' => 'Bạn đã yêu cầu đặt lại mật khẩu của mình'
         ];
         Mail::to($request->email)->send(new ResetPasswordEmail($formData));
 
-        return \redirect()->route('customer.forgotPassword')->with('success', 'Please check your inbox to reset your password.');
+        return \redirect()->route('customer.forgotPassword')->with('success', 'Vui lòng kiểm tra hộp thư đến của bạn để đặt lại mật khẩu.');
     }
 
     public function resetPassword($token)
@@ -319,7 +317,7 @@ class CustomerController extends Controller
         ]);
 
         DB::table('password_reset_tokens')->where('email', $customer->email)->delete();
-        return \redirect()->route('customer.login')->with('success', 'You have successfully updated your password');
+        return \redirect()->route('customer.login')->with('success', 'Bạn đã cập nhật mật khẩu thành công');
     }
 //
 //    public function updateProfile(UpdateCustomerRequest $request)
@@ -341,50 +339,50 @@ class CustomerController extends Controller
 //        return Redirect::route('profile');
 //    }
 //
-   public function showOrderHistory()
-   {
-       //id cua customer dang dang nhap
-       $id = Auth::guard('customer')->user()->id;
-       //lay ban ghi
-       $customer = Customer::find($id);
-       $orders = Reservation::where('customer_id', $id)->paginate(2);
-
-       return view('customer.profiles.orderHistory', [
-           'customer' => $customer,
-           'orders' => $orders,
-       ]);
-   }
-
-   public function orderDetail(Order $order)
-   {
-       //id cua customer dang dang nhap
-       $id = Auth::guard('customer')->user()->id;
-       //lay ban ghi
-       $customer = Customer::find($id);
-       $orderId = $order->id;
-       $orderDetails = DB::table('orders_details')
-           ->where('order_id', '=', $orderId)
-           ->join('products', 'orders_details.product_id', '=', 'products.id')
-           ->get();
-
-       $orderAmount = 0;
-       $orderItems = 0;
-       foreach ($orderDetails as $detail) {
-           $orderItems += $detail->sold_quantity;
-           $orderAmount += $detail->sold_price * $detail->sold_quantity;
-       }
-       $orderTotal = $orderAmount + 10;
-
-       return view('customers.profiles.orderDetail', [
-           'order' => $order,
-           'order_details' => $orderDetails,
-           'order_item' => $orderItems,
-           'order_amount' => $orderAmount,
-           'order_total' => $orderTotal,
-           'customer' => $customer,
-       ]);
-   }
-
+//    public function showOrderHistory()
+//    {
+//        //id cua customer dang dang nhap
+//        $id = Auth::guard('customer')->user()->id;
+//        //lay ban ghi
+//        $customer = Customer::find($id);
+//        $orders = Order::where('customer_id', $id)->paginate(2);
+//
+//        return view('customer.profiles.orderHistory', [
+//            'customer' => $customer,
+//            'orders' => $orders,
+//        ]);
+//    }
+//
+//    public function orderDetail(Order $order)
+//    {
+//        //id cua customer dang dang nhap
+//        $id = Auth::guard('customer')->user()->id;
+//        //lay ban ghi
+//        $customer = Customer::find($id);
+//        $orderId = $order->id;
+//        $orderDetails = DB::table('orders_details')
+//            ->where('order_id', '=', $orderId)
+//            ->join('products', 'orders_details.product_id', '=', 'products.id')
+//            ->get();
+//
+//        $orderAmount = 0;
+//        $orderItems = 0;
+//        foreach ($orderDetails as $detail) {
+//            $orderItems += $detail->sold_quantity;
+//            $orderAmount += $detail->sold_price * $detail->sold_quantity;
+//        }
+//        $orderTotal = $orderAmount + 10;
+//
+//        return view('customers.profiles.orderDetail', [
+//            'order' => $order,
+//            'order_details' => $orderDetails,
+//            'order_item' => $orderItems,
+//            'order_amount' => $orderAmount,
+//            'order_total' => $orderTotal,
+//            'customer' => $customer,
+//        ]);
+//    }
+//
 //    public function editPassword()
 //    {
 //        //id cua customer dang dang nhap

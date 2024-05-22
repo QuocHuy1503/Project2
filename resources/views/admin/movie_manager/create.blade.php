@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Create Movie</h1>
+                    <h1>Thêm phim mới</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{ route('movie.index') }}" class="btn btn-primary">Back</a>
+                    <a href="{{ route('movie.index') }}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -25,14 +25,14 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="title">Title</label>
-                                        <input type="text" name="title" id="title" class="form-control" placeholder="Title">
+                                        <label for="title">Tên phim</label>
+                                        <input type="text" name="title" id="title" class="form-control" placeholder="Tên phim">
                                         <p class="error"></p>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
-                                        <label for="description">Description</label>
+                                        <label for="description">Mô tả</label>
                                         <textarea name="description" id="description" type="text" cols="30" rows="10" class="summernote" placeholder="Description"></textarea>
                                     </div>
                                 </div>
@@ -42,10 +42,10 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <input type="hidden" id="image_id" name="image_id" value="">
-                            <label for="image" class="mb-3">Media</label>
+                            <label for="image" class="mb-3">Ảnh</label>
                             <div id="image" class="dropzone dz-clickable">
                                 <div class="dz-message needsclick">
-                                    <br>Drop files here or click to upload.<br><br>
+                                    <br>Thả tệp ở đây hoặc ấn để tải lên.<br><br>
                                 </div>
                                 <p></p>
                             </div>
@@ -55,23 +55,23 @@
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h2 class="h4">Movie status</h2>
+                            <h2 class="h4">Trạng thái</h2>
                             <div class="mb-3">
                                 <select name="status" id="status" class="form-select">
-                                    <option value="1">Active</option>
-                                    <option value="0">Block</option>
+                                    <option value="1">Chiếu</option>
+                                    <option value="0">Không chiếu</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="h4 mb-3">Movie details</h2>
+                            <h2 class="h4 mb-3">Chi tiết</h2>
                             <div class="accordion accordion-flush" id="accordionExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                            Genre
+                                            Thể loại
                                         </button>
                                     </h2>
                                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
@@ -88,7 +88,7 @@
                                                             @endforeach
                                                         @else
                                                             <label class="form-check-label" for="genre_id">
-                                                                Records not found
+                                                                Không tìm thấy thể loại nào
                                                             </label>
                                                         @endif
                                                     </form>
@@ -101,7 +101,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Age
+                                            Độ tuổi
                                         </button>
                                     </h2>
                                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
@@ -125,7 +125,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Cast
+                                            Diễn viên
                                         </button>
                                     </h2>
                                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
@@ -142,7 +142,7 @@
                                                             @endforeach
                                                         @else
                                                             <label class="form-check-label" for="cast_id">
-                                                                Records not found
+                                                                Không tìm thấy diễn viên nào
                                                             </label>
                                                         @endif
                                                     </select>
@@ -156,44 +156,44 @@
                     </div>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h2 class="h4 mb-3">Director</h2>
+                            <h2 class="h4 mb-3">Đạo diễn</h2>
                             <div class="mb-3">
-                                <input type="text" name="director" id="director" class="form-control" placeholder="Enter director name">
+                                <input type="text" name="director" id="director" class="form-control" placeholder="Nhập tên đạo diễn">
                             </div>
                         </div>
                     </div>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h2 class="h4 mb-3">Language</h2>
+                            <h2 class="h4 mb-3">Ngôn ngữ</h2>
                             <div class="mb-3">
-                                <input type="text" name="language" id="language" class="form-control" placeholder="Language">
+                                <input type="text" name="language" id="language" class="form-control" placeholder="Ngôn ngữ">
                             </div>
                         </div>
                     </div>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h2 class="h4">Movie feature</h2>
+                            <h2 class="h4">Phổ biến</h2>
                             <div class="mb-3">
                                 <select name="is_featured" id="is_featured" class="form-select">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
+                                    <option value="No">Không</option>
+                                    <option value="Yes">Có</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h2 class="h4 mb-3">Time</h2>
+                            <h2 class="h4 mb-3">Thời gian</h2>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="release_date">Release date</label>
+                                        <label for="release_date">Khỏi chiếu</label>
                                         <input type="date" name="release_date" id="release_date" class="form-control" placeholder="date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="duration">Duration min</label>
+                                        <label for="duration">Thời lượng</label>
                                         <input type="text" name="duration" id="duration" class="form-control" placeholder="Duration">
                                     </div>
                                 </div>
@@ -204,8 +204,8 @@
             </div>
 
             <div class="pb-5 pt-3">
-                <button class="btn btn-primary" type="submit" >Create</button>
-                <a href="{{ route('movie.index') }}" class="btn btn-outline-dark ml-3">Cancel</a>
+                <button class="btn btn-primary" type="submit" >Tạo</button>
+                <a href="{{ route('movie.index') }}" class="btn btn-outline-dark ml-3">Hủy</a>
             </div>
         </div>
         </form>

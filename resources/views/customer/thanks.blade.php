@@ -7,7 +7,7 @@
                     {{ \Illuminate\Support\Facades\Session::get('success') }}
                 </div>
             @endif
-            <h1>Thank You!</h1>
+            <h1>Cảm ơn!</h1>
             <p>Your Order Id is {{$id}} </p>
         </div>
     </section>

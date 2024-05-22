@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Change Password</title>
+        <title>Thay đổi mật khẩu</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
@@ -17,36 +17,36 @@
                 @include('admin.message')
             </div>
             <div class="fs-5">
-                My profile
+                Thông tin của tôi
             </div>
             <div>
-                Manage profile information to secure your account
+                Quản lý thông tin hồ sơ để bảo mật tài khoản của bạn
             </div>
             <hr>
             <div>
                 <form action="" id="changePasswordForm" name="changePasswordForm" class="row g-3 text-white">
                     <div class="col-md-12">
-                        <label for="old_pwd" class="form-label">Old password</label>
+                        <label for="old_pwd" class="form-label">Mật khẩu cũ</label>
                         <input type="password" class="form-control bg-dark border-0 text-white w-40" id="old_password"
                                name="old_password" placeholder="Old Password">
                         <p></p>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="new_pwd" class="form-label">New password</label>
+                        <label for="new_pwd" class="form-label">Mật khẩu mới</label>
                         <input type="password" class="form-control bg-dark border-0 text-white w-40" id="new_password"
                                name="new_password" placeholder="New Password">
                         <p></p>
                     </div>
 
                     <div class="col-md-12">
-                        <label for="new_pwd2" class="form-label">Re-enter new password</label>
+                        <label for="new_pwd2" class="form-label">Nhập lại mật khẩu mới</label>
                         <input type="password" class="form-control bg-dark border-0 text-white w-40" id="confirm_password"
                                name="confirm_password" placeholder="Re-enter new password">
                         <p></p>
                     </div>
                     <div class="col-12">
-                        <button id="submit" name="submit" type="submit" class="btn btn-primary rounded-5 px-4">Save</button>
+                        <button id="submit" name="submit" type="submit" class="btn btn-primary rounded-5 px-4">Lưu</button>
                     </div>
 
                 </form>

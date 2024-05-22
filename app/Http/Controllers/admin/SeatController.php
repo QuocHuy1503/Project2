@@ -16,7 +16,8 @@ class SeatController extends Controller
         if (!empty($seats->get('number_of_row'))){
             $seats = $seats->where('number_of_row', 'like', '%'.$request->get('number_of_row').'%' );
         }
-        $seats = $seats -> paginate(10);
+        $seats = $seats->paginate(10);
+
         return view('admin.seat_manager.index', ['seats' => $seats]);
     }
     public function create()
@@ -28,17 +29,17 @@ class SeatController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-           'number_of_row' => 'required',
-           'number_of_col' => 'required',
-           'auditorium_id' => 'required'
+            'number_of_row' => 'required',
+            'number_of_col' => 'required',
+            'auditorium_id' => 'required'
         ]);
         $id = $request->auditorium_id;
         $auditorium = Auditorium::find($id);
         if($request->number_of_col * $request->number_of_row != $auditorium->capacity){
             return response()->json([
                 'status' => false,
-                 'errors' => $validator->errors()
-             ]);
+                'errors' => $validator->errors()
+            ]);
         }
         else{
             if ($validator->passes()){
@@ -50,18 +51,18 @@ class SeatController extends Controller
                         $seat->auditorium_id = $request->auditorium_id;
                         $seat->type_id = 1;
                         $seat->status = 1;
-                        $seat->save(); 
+                        $seat->save();
                     }
                 }
-                $request->session()->flash('success', 'Seat added successfully');
+                $request->session()->flash('success', 'Đã thêm ghế thành công');
                 return response()->json([
                     'status' => true,
-                    'message' => 'Seat added successfully'
+                    'message' => 'Đã thêm ghế thành công'
                 ]);
 
             }else{
                 return response()->json([
-                'status' => false,
+                    'status' => false,
                     'errors' => $validator->errors()
                 ]);
             }
@@ -74,18 +75,18 @@ class SeatController extends Controller
     }
 
     public function changeStore(Request $request){
-      
+
         $validator = Validator::make($request->all(), [
-               'pointA' => 'required',
-               'pointB' => 'required',
-               'pointC' => 'required',
-               'pointD' => 'required',
-               'auditorium_id' => 'required',
-               'type_id' => 'required',
+            'pointA' => 'required',
+            'pointB' => 'required',
+            'pointC' => 'required',
+            'pointD' => 'required',
+            'auditorium_id' => 'required',
+            'type_id' => 'required',
         ]);
-        
+
         if ($validator->passes()){
-            
+
             $startingRow = $request -> pointA;
             $endRow = $request -> pointB;
             $startingCol = $request ->pointC;
@@ -93,45 +94,45 @@ class SeatController extends Controller
             $auditorium = $request -> auditorium_id;
 
             $seats = Seat::where('auditorium_id', '=',$auditorium)
-            ->whereBetween('number_of_row', [$startingRow, $endRow])
-            ->whereBetween('number_of_col', [$startingCol, $endCol])
-            ->get();
+                ->whereBetween('number_of_row', [$startingRow, $endRow])
+                ->whereBetween('number_of_col', [$startingCol, $endCol])
+                ->get();
 
             foreach($seats as $seat){
-                    $seat -> type_id = $request -> type_id;
-                    $seat -> save();
+                $seat -> type_id = $request -> type_id;
+                $seat -> save();
             }
-                $request->session()->flash('success', 'Seat updated successfully');
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Seat updated successfully'
-                ]);
-    
-            }else{
-                return response()->json([
-                    'status' => false,
-                    'errors' => $validator->errors()
-                ]);
-            }
+            $request->session()->flash('success', 'Đã cập nhật thông tin ghế thành công');
+            return response()->json([
+                'status' => true,
+                'message' => 'Đã cập nhật thông tin ghế thành công'
+            ]);
+
+        }else{
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
     }
 
     public function update($seatId, Request $request)
     {
         $seat = Seat::find($seatId);
         if (empty($seat)){
-            $request->session()->flash('error', 'Seat not found');
+            $request->session()->flash('error', 'Không tìm thấy ghế');
             return response()->json([
-               'status' => false,
-               'notFound' => true,
-               'message' => 'Seat not found'
+                'status' => false,
+                'notFound' => true,
+                'message' => 'Không tìm thấy ghế'
             ]);
         }
 
-       $validator = Validator::make($request->all(), [
-        //    'number_of_row' => 'required',
-        //    'number_of_col' => 'required',
-        //    'auditorium_id' => 'required'
-              'status' => 'required'
+        $validator = Validator::make($request->all(), [
+            //    'number_of_row' => 'required',
+            //    'number_of_col' => 'required',
+            //    'auditorium_id' => 'required'
+            'status' => 'required'
         ]);
         if ($validator->passes()){
             // $seat-> number_of_row = $request->number_of_row;
@@ -140,10 +141,10 @@ class SeatController extends Controller
             $seat-> status = $request ->status;
             $seat->save();
             // Status = 2 (la bị hỏng) , 3 là đã đặt, 1 là còn trống
-            $request->session()->flash('success', 'Seat updated successfully');
+            $request->session()->flash('success', 'Đã cập nhật thông tin ghế thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Seat updated successfully'
+                'message' => 'Đã cập nhật thông tin ghế thành công'
             ]);
 
         }else{
@@ -157,18 +158,18 @@ class SeatController extends Controller
     {
         $seat = Seat::find($seatId);
         if (empty($seat)) {
-            $request->session()->flash('error', 'Seat not found');
+            $request->session()->flash('error', 'Không tìm thấy ghế');
             return response()->json([
                 'status' => false,
-                'message' => 'Seat not found'
+                'message' => 'Không tìm thấy ghế'
             ]);
         }
 
         $seat->delete();
-        $request->session()->flash('success', 'Seat deleted successfully');
+        $request->session()->flash('success', 'Đã xóa ghế thành công');
         return response()->json([
             'status' => true,
-            'message' => 'Seat deleted successfully'
+            'message' => 'Đã xóa ghế thành công'
         ]);
     }
 }

@@ -22,6 +22,7 @@
                 ></div>
                 <div class="progress-step" data-title=""></div>
                 <div class="progress-step" data-title=""></div>
+                <div class="progress-step" data-title=""></div>
             </div>
             <!-- Steps -->
             <div class="form-step form-step-active">
@@ -51,21 +52,21 @@
                                                     <div class="text-white">Time: {{\Carbon\Carbon::parse($item->screening_start)->format('H:i')}}</div>
                                                     <span class="text-white">Auditorium:</span> {{$item->auditorium->name}}
                                                 </label>
-
+                                                <div class="ds">
+                                                    <button type="submit" class=" btn btn-primary w-10">Primary</button>
+                                                </div>
                                             @endif
+
                                         @endforeach
-                                            <div class="ds">
-                                                <button type="submit" class=" btn btn-primary w-10">Primary</button>
-                                            </div>
+
                                             {{-- End Screening --}}
-                                    @else
-                                        <div>
-                                            <p class="fs-3 text-center">There are no screenings</p>
-                                        </div>
+{{--                                    @else--}}
+{{--                                        <div>--}}
+{{--                                            <p class="fs-3 text-center">There are no screenings</p>--}}
+{{--                                        </div>--}}
                                     @endif
 
                                 </div>
-
                             </form>
                         </div>
                     </div>

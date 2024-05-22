@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Genre</h1>
+                    <h1>Sửa thông tin thể loại</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('genre.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('genre.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -23,23 +23,23 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
+                                    <label for="name">Thể loại</label>
                                     <input value="{{$genre->name}}" type="text" name="name" id="name" class="form-control" placeholder="Name">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-1">
                                 <div class="mb-3">
-                                    <label for="status">Status</label>
+                                    <label for="status">Trạng thái</label>
                                     <select name="status" id="status" class="btn btn-dark bi bi-caret-down">
-                                        <option {{($genre->status == 1) ? 'selected' : ''}} value="1" >Active</option>
-                                        <option {{($genre->status == 0) ? 'selected' : ''}} value="0" >Block</option>
+                                        <option {{($genre->status == 1) ? 'selected' : ''}} value="1" >Hoạt động</option>
+                                        <option {{($genre->status == 0) ? 'selected' : ''}} value="0" >Không hoạt động</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="email">Description</label>
+                                    <label for="email">Miêu tả</label>
                                     <textarea type="text" name="description" id="description" class="form-control" placeholder="Description" rows="4">
                                         {{$genre->description}}
                                     </textarea>
@@ -50,8 +50,8 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Update</button>
-                    <a href="{{route('genre.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
+                    <a href="{{route('genre.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>

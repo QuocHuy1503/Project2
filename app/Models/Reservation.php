@@ -15,9 +15,9 @@ class Reservation extends Model
         'status',
         'customer_id',
         'created_at',
-        'updated_at',
+        'updated_at'
     ];
-
+    public $timestamps = false;
     public function screening(){
         return $this -> belongsTo(Screening::class);
     }
@@ -25,10 +25,12 @@ class Reservation extends Model
         return $this -> belongsTo(Customer::class);
     }
     public function seat(){
-        return $this -> hasMany(Seat::class);
+        return $this -> hasMany(Seat::class, 'seat_reserved');
     }
     public function seat_reservation(){
         return $this -> hasMany(SeatReserved::class);
     }
+
+
     use HasFactory;
 }

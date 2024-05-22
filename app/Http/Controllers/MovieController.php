@@ -49,7 +49,7 @@ class MovieController extends Controller
         $movieCasts = MovieCast::all();
         $movie = Movie::find($id);
         if (empty($movie)){
-            $request->session()->flash('error', 'Movie not found');
+            $request->session()->flash('error', 'Không tìm thấy phim');
             return redirect()->route('movie.index');
         }
         $data['movie'] = $movie;
@@ -158,10 +158,10 @@ class MovieController extends Controller
                 $movie->save();
             }
 
-            $request->session()->flash('success', 'Movie added successfully');
+            $request->session()->flash('success', 'Đã thêm phim thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Movie added successfully'
+                'message' => 'Đã thêm phim thành công'
             ]);
 
         }else{
@@ -184,7 +184,7 @@ class MovieController extends Controller
         $data['casts'] = $casts;
         $movie = Movie::find($id);
         if (empty($movie)){
-            $request->session()->flash('error', 'Movie not found');
+            $request->session()->flash('error', 'Không tìm thấy phim');
             return redirect()->route('movie.index');
         }
         $data['movie'] = $movie;
@@ -196,12 +196,12 @@ class MovieController extends Controller
 
         $movie = Movie::find($id);
         if (empty($movie)){
-            $request->session()->flash('error', 'Movie not found');
+            $request->session()->flash('error', 'Không tìm thấy phim');
 
             return response()->json([
                 'status' => false,
                 'notFound' => true,
-                'message' => 'Movie not found'
+                'message' => 'Không tìm thấy phim'
             ]);
         }
 
@@ -209,7 +209,7 @@ class MovieController extends Controller
             'title' => 'required',
             'director' => 'required',
             'duration' => 'required',
-            'description' => 'required',
+//            'description' => 'required',
             'is_featured' => 'required',
             'language' => 'required',
             'release_date' => 'required',
@@ -223,6 +223,7 @@ class MovieController extends Controller
             $movie->description = $request->description;
             $movie->is_featured = $request->is_featured;
             $movie->duration = $request->duration;
+            $movie->language = $request->language;
             $movie->release_date = $request->release_date;
             $movie->age_id = $request->age_id;
             $movie->status = $request->status ;
@@ -234,18 +235,18 @@ class MovieController extends Controller
             $movieGenres = MovieGenre::
             join('movies', 'movie_genres.movie_id', 'movies.id')->orderBy('movie_genres.genre_id', 'DESC')->where('movies.status', 1)
                 ->get();
-            if (!empty($request->get('genre'))){
-                $genresArray = explode(',', $request->get('genre'));
-                $movieGenres = $movies->whereIn('genre_id', $genresArray)->join('movie_genres', 'movie_genres.movie_id', 'movies.id')->where('movies.status', 1);
-            }
-            foreach($request->genre_id as $value){
-                $i=0;
-                $movieGenre = [
-                    'movie_id'=> Movie::where('id', '=',Movie::max('id'))->first()->id,
-                    'genre_id'=>  $value ?? '',
-                ];
-                MovieGenre::create($movieGenre);
-            }
+//            if (!empty($request->get('genre'))){
+//                $genresArray = explode(',', $request->get('genre'));
+//                $movieGenres = $movies->whereIn('genre_id', $genresArray)->join('movie_genres', 'movie_genres.movie_id', 'movies.id')->where('movies.status', 1);
+//            }
+//            foreach($request->genre_id as $value){
+//                $i=0;
+//                $movieGenre = [
+//                    'movie_id'=> Movie::where('id', '=',Movie::max('id'))->first()->id,
+//                    'genre_id'=>  $value ?? '',
+//                ];
+//                MovieGenre::create($movieGenre);
+//            }
 //            foreach($request->cast_id as $value){
 //                $i=0;
 //                $movieCast = [
@@ -280,10 +281,10 @@ class MovieController extends Controller
                 File::delete(public_path().'/uploads/movie/'.$oldImage);
             }
 
-            $request->session()->flash('success', 'Movie updated successfully');
+            $request->session()->flash('success', 'Đã cập nhật thông tin phim thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Movie updated successfully'
+                'message' => 'Đã cập nhật thông tin phim thành công'
             ]);
 
         }else{
@@ -298,10 +299,10 @@ class MovieController extends Controller
     {
         $movie = Movie::find($id);
         if (empty($movie)){
-            $request->session()->flash('error', 'Movie not found');
+            $request->session()->flash('error', 'Không tìm thấy phim');
             return response()->json([
                 'status' => true,
-                'message' => 'Movie not found'
+                'message' => 'Không tìm thấy phim'
             ]);
         }
 //        $movieCasts = MovieCast::where('cast_id', $id)->get();
@@ -317,10 +318,10 @@ class MovieController extends Controller
         File::delete(public_path().'/uploads/movie/'.$movie->image);
 
         $movie->delete();
-        $request->session()->flash('success', 'Movie deleted successfully');
+        $request->session()->flash('success', 'Đã xóa phim thành công');
         return response()->json([
             'status' => true,
-            'message' => 'Movie deleted successfully'
+            'message' => 'Đã xóa phim thành công'
         ]);
     }
 
@@ -380,6 +381,7 @@ class MovieController extends Controller
         $data['sort'] = $request->get('sort');
         return view('customer.movie.index', $data);
     }
+
     public function bookTickets($id, Request $request)
     {
         $data = [];
@@ -390,12 +392,12 @@ class MovieController extends Controller
         $movieCasts = MovieCast::all();
         $movie = Movie::find($id);
         if (empty($movie)){
-            $request->session()->flash('error', 'Movie not found');
+            $request->session()->flash('error', 'Không tìm thấy phim');
             return redirect()->route('movie');
         }
         $data['movie'] = $movie;
         $screenings = Screening::all()->where('movie_id','=',$movie->id);
-        return view('customer.book_ticket.bookingScreening', [
+        return view('customer.book_ticket.choosingScreening', [
             $data,
             'movieGenres' => $movieGenres,
             'movieCasts' => $movieCasts,
@@ -416,12 +418,12 @@ class MovieController extends Controller
         $movieCasts = MovieCast::all();
         $movie = Movie::find($id);
         if (empty($movie)){
-            $request->session()->flash('error', 'Movie not found');
+            $request->session()->flash('error', 'Không tìm thấy phim');
             return redirect()->route('movie');
         }
         $data['movie'] = $movie;
         $screenings = Screening::all()->where('movie_id','=',$movie->id);
-        return view('customer.book_ticket.bookingScreening', [
+        return view('customer.book_ticket.choosingScreening', [
             $data,
             'movieGenres' => $movieGenres,
             'movieCasts' => $movieCasts,

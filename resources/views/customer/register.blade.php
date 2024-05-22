@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Register</title>
+        <title>Đăng ký</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
@@ -14,8 +14,8 @@
             <div class="container">
                 <div>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
-                        <li class="bi bi-slash-lg text-white">Register</li>
+                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="bi bi-slash-lg text-white">Đăng ký</li>
                     </ol>
                 </div>
             </div>
@@ -23,20 +23,20 @@
         <div class="pt-3 mt-5">
             <div class="mt-5 container position-relative h-70 fixed">
                 <div class="login-boX">
-                    <h2 class="fs-2">Register</h2>
+                    <h2 class="fs-2">Đăng ký</h2>
                     <form action="" method="post" name="registrationForm" id="registrationForm" class="col-12">
                         <div class="row">
                             <div class="user-box col-md-6">
                                 <span class="">
                                     <input type="text" class="form-control" name="first_name" id="first_name">
                                     <p></p>
-                                    <label>First Name</label>
+                                    <label>Họ</label>
                                 </span>
                             </div>
                             <div class="user-box col-md-6">
                                 <span class="">
                                     <input type="text" class="form-control" name="last_name" id="last_name">
-                                    <label>Last Name</label>
+                                    <label>Tên</label>
                                     <p></p>
                                 </span>
                             </div>
@@ -59,11 +59,11 @@
 {{--                                <p></p>--}}
 {{--                            </>--}}
 
-                            <div class="col-md-3 text-white mb-3 d-flex">
-                                <label style="color: #03e9f4" class="fs-6 col-md-12">Gender</label>
+                            <div class="col-md-3 text-white mb-3 d-flex py-sm-2">
+                                <label style="color: #03e9f4" class="fs-6 col-md-12">Giới tính</label>
                                 <select name="gender" id="gender" class="btn btn-dark bi bi-caret-down">
-                                    <option value="1">Male</option>
-                                    <option value="0">Female</option>
+                                    <option value="1">Nam</option>
+                                    <option value="0">Nữ</option>
                                 </select>
                                 <p></p>
                             </div>
@@ -71,21 +71,21 @@
                             <div class="d-flex ">
                                 <div class="user-box col-lg-6">
                                     <input type="password" class="form-control" name="password" id="password">
-                                    <label>Password</label>
+                                    <label>Mật khẩu</label>
                                     <p></p>
                                 </div>
                                 <div class="user-box col-lg-6">
                                     <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
-                                    <label>Re-enter password</label>
+                                    <label>Nhập lại mật khẩu</label>
                                 </div>
                             </div>
                             <div class="user-box col-md-6">
                                 <input type="number" class="form-control" name="phone_number" id="phone_number">
-                                <label>Phone number</label>
+                                <label>Số điện thoại</label>
                             </div>
                             <div class="user-box col-md-6">
                                 <input type="text" class="form-control" name="address" id="address">
-                                <label>Address</label>
+                                <label>Địa chỉ</label>
                             </div>
                             <input class="hidden invisible opacity-0" type="hidden"
                                    name="status" value="1" readonly>
@@ -95,10 +95,10 @@
                             <span></span>
                             <span></span>
                             <span></span>
-                            Submit
+                            Đăng ký
                         </button>
                         <div class="p-2 text-white">
-                            Already have an account? <a class="text-danger fs-4 text-decoration-none" href="{{route('customer.login')}}">Login</a>
+                            Bạn đã có tài khoản? <a class="text-danger fs-4 text-decoration-none" href="{{route('customer.login')}}">Đăng nhập</a>
                         </div>
                     </form>
                 </div>

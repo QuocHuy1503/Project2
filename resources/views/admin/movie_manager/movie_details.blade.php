@@ -4,7 +4,7 @@
             <div class="container-fluid my-2">
                 <div class="row mb-2">
                     <div class="">
-                        <h1>Movie Details #{{$movie->id}}</h1>
+                        <h1>Chi tiết phim #{{$movie->id}}</h1>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                         {{--            HEADING--}}
                         <div class=" d-flex justify-content-between align-items-center mb-3">
                             <div class="fs-3 fw-bold text-capitalize col-lg-10">{{ $movie->title }}</div>
-                            <div class="fs-6 rounded-2 p-3 border border-success col-lg-2">Feature:
+                            <div class="fs-6 rounded-2 p-3 border border-success col-lg-2">Phổ biến:
                                 <span class="bg-dark p-2 rounded-5">{{ $movie->is_featured }}</span>
                             </div>
                         </div>
@@ -38,12 +38,12 @@
                         <table class="table table-bordered text-center w-100 my-3">
 
                             <tr>
-                                <td class="w-25">Director</td>
+                                <td class="w-25">Đạo diễn</td>
                                 <td class="bg-white">{{ $movie->director }}</td>
                             </tr>
 
                             <tr>
-                                <td class="w-25">Cast</td>
+                                <td class="w-25">Diễn viên</td>
                                 <td class="bg-white">
                                     @foreach($movieCasts as $movieCast)
                                         @if($movieCast->movie_id == $movie->id)
@@ -55,11 +55,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="w-25">Age</td>
+                                <td class="w-25">Độ tuổi</td>
                                 <td class="bg-white">{{ $movie->age->name }}</td>
                             </tr>
                             <tr>
-                                <td class="w-25">Genre</td>
+                                <td class="w-25">Thể loại</td>
                                 <td class="bg-white">
                                     @foreach($movieGenres as $movieGenre)
                                         @if($movieGenre->movie_id == $movie->id)

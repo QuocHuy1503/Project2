@@ -30,12 +30,11 @@ class HomeController extends Controller
         return view('customer.home', $data);
     }
 
-
     public function postMovie(Request $request){
         $movie = $request -> id;
         return redirect(route('choosingScreening', $movie,['movie_id' => $movie]));
     }
-    
+
     public function addToWishlist (Request $request)
     {
         if ((Auth::guard('customer')->check()) == false){
@@ -46,10 +45,10 @@ class HomeController extends Controller
             ]);
         }
         $movie = Movie::where('id', $request->id)->first();
-        if ($movie == null){
+        if ($movie == null || $movie->status == 0){
             return response()->json([
                 'status' => true,
-                'message' => '<div class="alert alert-danger">Movie not found.</div>'
+                'message' => '<div class="alert alert-danger">Không tìm thấy phim.</div>'
             ]);
         }
 
@@ -69,7 +68,7 @@ class HomeController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => '<div class="alert alert-success"><strong>"'.$movie->title.'"</strong> added in your wish list</div>'
+            'message' => '<div class="alert alert-success"><strong>"'.$movie->title.'"</strong> đã được thêm vào trong mục phim yêu thích</div>'
         ]);
     }
 
@@ -88,12 +87,12 @@ class HomeController extends Controller
                 'email' => $request->email,
                 'subject' => $request->subject,
                 'message' => $request->message,
-                'mail_subject' => 'You have received a contact email'
+                'mail_subject' => 'Bạn đã nhận được email liên hệ'
             ];
 
             $admin = User::where('id', 1)->first();
             Mail::to($admin->email)->send(new ContactEmail($mailData));
-            session()->flash('success', 'Thanks for contacting us, we will get back to you soon.');
+            session()->flash('success', 'Cảm ơn bạn đã liên hệ với chúng tôi, chúng tôi sẽ sớm liên hệ lại với bạn.');
             return response()->json([
                 'status' => true,
             ]);
@@ -106,6 +105,7 @@ class HomeController extends Controller
         }
     }
 }
+
 
 
 

@@ -5,13 +5,13 @@
             <div class="container-fluid my-2">
                 <div class="row mb-2">
                     <div class="col-sm-8">
-                        <h1>Seats</h1>
+                        <h1>Tất cả ghế</h1>
                     </div>
                     <div class="col-sm-2 text-right">
-                        <a href="{{route('seat.change')}}" class="bi bi-plus-circle btn btn-primary">Change Type</a>
+                        <a href="{{route('seat.change')}}" class="bi bi-plus-circle btn btn-primary"> Thay đổi loại ghế</a>
                     </div>
                     <div class="col-sm-2 text-right">
-                        <a href="{{route('seat.create')}}" class="bi bi-plus-circle btn btn-primary">New seat</a>
+                        <a href="{{route('seat.create')}}" class="bi bi-plus-circle btn btn-primary"> Thêm ghế mới</a>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                             </div>
                             <div class="card-tools">
                                 <div class="input-group input-group" style="width: 250px;">
-                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+                                    <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm">
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-default">
                                             <i class="fas fa-search"></i>
@@ -48,12 +48,12 @@
                             <tr class="text-center">
                                 <th scope="col">ID</th>
                                 {{-- <th scope="col">Name</th> --}}
-                                <th scope="col">Row</th>
-                                <th scope="col">Column</th>
-                                <th scope="col">Auditorium Id</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Hàng</th>
+                                <th scope="col">Cột</th>
+                                <th scope="col">Phòng chiếu</th>
+                                <th scope="col">Kiểu ghế</th>
+                                <th scope="col">Trạng thái</th>
+                                <th scope="col">Hành động</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -63,15 +63,21 @@
                                     <td>{{$seat->id}}</td>
                                     {{-- <td>{{$screenings->name}}</td> --}}
                                     <td>{{$seat ->number_of_row}}</td>
-                                    <td>{{$seat ->number_of_col}}</td> 
+                                    <td>{{$seat ->number_of_col}}</td>
                                     <td>{{$seat ->auditorium->name }}</td>
-                                    <td>{{$seat->type_id}}</td>
+                                    <td>
+                                       @if($seat->type_id == 1)
+                                           Standard
+                                       @endif
+                                           @if($seat->type_id == 2)
+                                               VIP
+                                           @endif
+                                    </td>
                                     <td>
                                         @if($seat->status == 1)
                                             <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                             </svg>
-
                                         @else
                                             <svg class="text-danger h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>

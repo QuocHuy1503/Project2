@@ -1,4 +1,5 @@
 
+
 @extends('layouts.customer-nav')
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
@@ -51,9 +52,9 @@
                                                 </div>
                                                 <div class="col-md-12 text-white">
                                                     <div class="mb-3">
-                                                       @foreach ($movie as $item)
-                                                           {{$item->title}}
-                                                       @endforeach
+                                                        @foreach ($movie as $item)
+                                                            {{$item->title}}
+                                                        @endforeach
                                                     </div>
                                                 </div>
 
@@ -64,22 +65,22 @@
                                                 <div class="col-md-12 text-white">
                                                     <div class="mb-3">
                                                         @foreach ($screening as $item)
-                                                           {{$item->screening_start}}
-                                                           
-                                                           {{$item->screening_end}}
-                                                       @endforeach
+                                                            {{$item->screening_start}}
+
+                                                            {{$item->screening_end}}
+                                                        @endforeach
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4 text-white">
                                                     Seat: @foreach ($seats as $seat)
-                                                    {{ $seat->number_of_row . chr($seat->number_of_col + 64) }}
+                                                        {{ $seat->number_of_row . chr($seat->number_of_col + 64) }}
                                                     @endforeach
                                                 </div>
 
                                                 <div class="col-md-4 text-white">
                                                     Cinema Room: @foreach ($auditorium as $item)
-                                                    {{ $item->name }}
+                                                        {{ $item->name }}
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -99,16 +100,16 @@
                                                 {{-- <div class="h6">Price</div> --}}
                                             </div>
                                             <div class="d-flex justify-content-between pb-2">
-                                                <div class="h6"> 
+                                                <div class="h6">
                                                     @foreach ($seatTypes as $seatType)
-                                                    {{ $seatType->name . ' x ' . $seatType->id}}
+                                                        {{ $seatType->name . ' x ' . $seatType->id}}
                                                     @endforeach
 
                                                 </div>
                                                 {{-- <div class="h6">$100</div> --}}
                                                 <div class="h6">
                                                     @foreach ($seatTypes as $seatType)
-                                                    {{ $seatType->totalPrice}}
+                                                        {{ $seatType->totalPrice}}
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -140,20 +141,22 @@
                                                 <input type="hidden" name="totalMoney" value="{{$totalMoney}}">
                                                 <input type="hidden" name="movie" value="{{$movie}}">
                                                 @foreach ($seats as $seat)
-                                                    <input type="hidden" name="seat[]" value="{{$seat->id}}"> 
+                                                    <input type="hidden" name="seat[]" value="{{$seat->id}}">
                                                 @endforeach
                                                 @foreach ($screening as $item)
-                                                    <input type="hidden" name="screening" value="{{$item->id}}"> 
+                                                    <input type="hidden" name="screening" value="{{$item->id}}">
                                                 @endforeach
                                                 @foreach ($movie as $item)
-                                                    <input type="hidden" name="movie" value="{{$item->id}}"> 
+                                                    <input type="hidden" name="movie" value="{{$item->id}}">
                                                 @endforeach
+
                                                 <button type="submit" name="redirect" class="btn-dark btn btn-block w-100">Pay Now</button>
-                                              </form>
-                                              {{--//Movie, Screening, Customer(id , phone number), seat--}}
-                                              @foreach ($movie as $item)
-                                              <a href="{{route('choosingScreening',$item->id)}}" class="btn-dark btn btn-block w-100"> Return </a>
-                                              @endforeach
+                                            </form>
+                                            @foreach ($movie as $item)
+                                                <a href="{{route('choosingScreening',$item->id)}}" class="btn-dark btn btn-block w-100"> Return </a>
+                                            @endforeach
+                                            {{--//Movie, Screening, Customer(id , phone number), seat--}}
+
                                         </div>
                                     </div>
                                 </div>

@@ -6,10 +6,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Customers</h1>
+                    <h1>Tất cả khách hàng</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('customer.create')}}" class="bi bi-plus-circle btn btn-primary">New Customers</a>
+                    <a href="{{route('customer.create')}}" class="bi bi-plus-circle btn btn-primary"> Thêm khách hàng mới</a>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="card-tools">
                             <div class="input-group input-group" style="width: 250px;">
-                                <input type="text" name="keyword" class="form-control float-right" placeholder="Search">
+                                <input type="text" name="keyword" class="form-control float-right" placeholder="Tìm kiếm">
 
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-default">
@@ -46,10 +46,10 @@
                         <thead>
                         <tr class="text-center">
                             <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Họ & Tên</th>
+                            <th scope="col">Mô tả</th>
+                            <th scope="col">Trạng thái</th>
+                            <th scope="col">Hành động</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -60,7 +60,7 @@
                                     <td>{{$customer->first_name}} {{$customer -> last_name}}</td>
                                     <td>
                                         <details>
-                                            <summary>Details</summary>
+                                            <summary>Chi tiết</summary>
                                             <p class="border border-primary rounded-2 py-2 p-2 "><b>Email: </b> {{$customer->email}}</p>
                                             <p class="border border-primary rounded-2 py-2 p-2"><b>Phone: </b> {{$customer->phone_number}}</p>
                                             <p class="border border-primary rounded-2 py-2 p-2"><b>Address: </b> {{$customer->address}}</p>
@@ -116,7 +116,7 @@
             var url = '{{ route('customer.destroy', 'ID') }}';
             var newUrl = url.replace("ID", id);
 
-            if (confirm("Are you sure you want to delete !!")) {
+            if (confirm("Bạn có chắc rằng muốn xóa khách hàng này !!")) {
                 $.ajax({
                     url: newUrl,
                     type: 'delete',

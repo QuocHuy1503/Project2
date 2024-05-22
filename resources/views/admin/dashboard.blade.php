@@ -18,7 +18,7 @@
         <!-- Default box -->
         <div class="container-fluid">
             <div class="row">
-                {{-- <div class="col-lg-4 col-6">
+                <div class="col-lg-4 col-6">
                     <div class="small-box card">
                         <div class="inner">
                             <h3>150</h3>
@@ -58,7 +58,7 @@
                         <a href="javascript:void(0);" class="small-box-footer">&nbsp;</a>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
         <!-- /.card -->
     </section>
@@ -76,19 +76,17 @@
     <script>
         window.onload = function () {
             var chart1 = new CanvasJS.Chart("chartContainer1",{
-                // title :{
-                //     text: "Live Income"
-                // },
+                title :{
+                    text: "Live Income"
+                },
                 data: [{
                     type: "line",
                     dataPoints : <?php echo json_encode($firstChartData, JSON_NUMERIC_CHECK); ?>
                 }]
             });
-            var chart2 = new CanvasJS.Chart("chartContainer2",{     
-                // title :{
-                //     text: "Live Data"
-                // },     
-                data: [{
+            var chart2 = new CanvasJS.Chart("chartContainer2",{     title :{
+                    text: "Live Data"
+                },     data: [{
                     type: "column",
                     dataPoints : <?php echo json_encode($secondChartData, JSON_NUMERIC_CHECK); ?>
                 }]
@@ -103,7 +101,7 @@
         <!-- Default box -->
         <div class="container-fluid">
             <div class="row">
-              {{--  <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-around">
@@ -124,9 +122,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" height="15" width="15" viewBox="0 0 512 512"> <path d="M0 224c0 17.7 14.3 32 32 32s32-14.3 32-32c0-53 43-96 96-96H320v32c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l64-64c12.5-12.5 12.5-32.8 0-45.3l-64-64c-9.2-9.2-22.9-11.9-34.9-6.9S320 19.1 320 32V64H160C71.6 64 0 135.6 0 224zm512 64c0-17.7-14.3-32-32-32s-32 14.3-32 32c0 53-43 96-96 96H192V352c0-12.9-7.8-24.6-19.8-29.6s-25.7-2.2-34.9 6.9l-64 64c-12.5 12.5-12.5 32.8 0 45.3l64 64c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V448H352c88.4 0 160-71.6 160-160z"/></svg> Update Now
                             </div>
                         </div>
-                    </div>--}}
+                    </div>
                 </div>
-                <div class="col-lg-12 col-md-6` col-sm-6">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="d-flex justify-content-around">
@@ -222,43 +220,6 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover table-bordered text-nowrap">
-                            <thead>
-                            <tr class="text-center">
-                                <th scope="col">ID</th>
-                                {{-- <th scope="col">Name</th> --}}
-                                <th scope="col">Movie Title</th>
-                                <th scope="col">Seat Sold</th>
-                                {{--<th scope="col">Action</th>--}}
-                            </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($popularMovies as $movie)
-                                <tr class="text-center">
-                                    <td>{{$movie->id}}</td>
-                                    {{-- <td>{{$screenings->name}}</td> --}}
-                                    <td>{{$movie ->title}}</td>
-                                    <td>{{$movie->seats_sold}}</td>
-                                   {{-- <td>
-                                        <a href="{{route('screening.create', $movie->id)}}">
-                                            <svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-                                            </svg>
-                                        </a>
-                                    </td>--}}
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    {{--<div class="card-footer clearfix">
-                        {{$movie->onEachSide(3)->links()}}
-                    </div>--}}
-                </div>
-                </div>
             </div>
             <!-- /.card -->
         </div>

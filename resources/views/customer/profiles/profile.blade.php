@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Profile</title>
+        <title>Hồ sơ</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
@@ -17,24 +17,24 @@
                 @include('admin.message')
             </div>
             <div class="fs-5">
-                My profile
+                Hồ sơ
             </div>
             <div>
-                Manage profile information to secure your account
+                Quản lý thông tin hồ sơ để bảo mật tài khoản của bạn
             </div>
             <hr>
             <div>
                 <form action="" name="profileForm" id="profileForm"
                       class="row text-white g-3">
                     <div class="col-md-6">
-                        <label for="first_name" class="form-label">First name</label>
+                        <label for="first_name" class="form-label">Họ</label>
                         <input type="text" class="form-control text-white bg-dark border-0" id="first_name"
                                name="first_name"
                                value="{{$customer->first_name}}">
                         <p></p>
                     </div>
                     <div class="col-md-6">
-                        <label for="last_name" class="form-label">Last name</label>
+                        <label for="last_name" class="form-label">Tên</label>
                         <input type="text" class="form-control text-white bg-dark border-0" id="last_name"
                                name="last_name"
                                value="{{$customer->last_name}}">
@@ -49,7 +49,7 @@
                         <p></p>
                     </div>
                     <div class="col-md-6">
-                        <label for="phone_number" class="form-label">Phone number</label>
+                        <label for="phone_number" class="form-label">Số điện thoại</label>
                         <input type="number" class="form-control text-white bg-dark border-0" id="phone_number"
                                name="phone_number"
                                value="{{$customer->phone_number}}">
@@ -76,15 +76,15 @@
 {{--                        </div>--}}
 {{--                    </div>--}}
                     <div class="col-md-2 mt-2">
-                        <label for="gender" class="form-label">Gender</label>
+                        <label for="gender" class="form-label">Giới tính</label>
                         <select name="gender" id="gender" class="btn btn-dark bi bi-caret-down">
-                            <option {{($customer->gender == 1) ? 'selected' : ''}} value="1" >Male</option>
-                            <option {{($customer->gender == 0) ? 'selected' : ''}} value="0" >Female</option>
+                            <option {{($customer->gender == 1) ? 'selected' : ''}} value="1" >Nam</option>
+                            <option {{($customer->gender == 0) ? 'selected' : ''}} value="0" >Nữ</option>
                         </select>
                     </div>
 
                     <div class="col-md-6 mt-3">
-                        <label for="address" class="form-label">Address</label>
+                        <label for="address" class="form-label">Địa chỉ</label>
                         <input type="text" class="form-control text-white bg-dark border-0" id="address"
                                name="address"
                                value="{{$customer->address}}">
@@ -92,7 +92,7 @@
                     </div>
 
                     <div class="col-12 mt-3 text-center">
-                        <button type="submit" class="btn btn-primary rounded-5 px-4">Save</button>
+                        <button type="submit" class="btn btn-primary rounded-5 px-4">Lưu</button>
                     </div>
                 </form>
             </div>

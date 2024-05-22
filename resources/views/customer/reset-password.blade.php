@@ -1,7 +1,7 @@
 @extends('layouts.customer-nav')
 @section('content')
     <head>
-        <title>Reset Password</title>
+        <title>Đặt lại mật khẩu</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
@@ -11,8 +11,8 @@
         <div class="container">
             <div>
                 <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
-                    <li class="bi bi-slash-lg text-white">Reset Password</li>
+                    <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Trang chủ</a></li>
+                    <li class="bi bi-slash-lg text-white">Đặt lại mật khẩu</li>
                 </ol>
             </div>
         </div>
@@ -29,20 +29,20 @@
                     {{ Session::get('error') }}
                 </div>
             @endif
-            <h2>Reset Password</h2>
+            <h2>Đặt lại mật khẩu</h2>
             <form action="{{ route('customer.processResetPassword') }}" method="post">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
                 <div class="user-box">
                     <input type="password" name="new_password" class="form-control @error('new_password') is-invalid @enderror" value="">
-                    <label for="password">New Password</label>
+                    <label for="password">Mật khẩu mới</label>
                     @error('new_password')
                     <p class="invalid-feedback">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="user-box">
                     <input type="password" name="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" value="">
-                    <label for="password">Confirm Password</label>
+                    <label for="password">Xác nhận mật khẩu</label>
                     @error('confirm_password')
                     <p class="invalid-feedback">{{ $message }}</p>
                     @enderror
@@ -52,11 +52,11 @@
                     <span></span>
                     <span></span>
                     <span></span>
-                    Update Password
+                    Cập nhật mật khẩu
                 </button>
             </form>
             <div class="text-center">
-                <a href="{{ route('customer.login') }}" class="nav-link text-danger">Click Here to Login</a>
+                <a href="{{ route('customer.login') }}" class="nav-link text-danger">Nhấn vào đây để đăng nhập</a>
             </div>
         </div>
     </div>

@@ -4,10 +4,10 @@
         <div class="container-fluid my-2">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Seat Type</h1>
+                    <h1>Sửa thông tin loại ghế</h1>
                 </div>
                 <div class="col-sm-6 text-right">
-                    <a href="{{route('seatType.index')}}" class="btn btn-primary">Back</a>
+                    <a href="{{route('seatType.index')}}" class="btn btn-primary">Trở lại</a>
                 </div>
             </div>
         </div>
@@ -23,15 +23,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="name">Name</label>
+                                    <label for="name">Tên loại ghế</label>
                                     <input value="{{$seatType->name}}" type="text" name="name" id="name" class="form-control" placeholder="Name">
                                     <p></p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="price">Price</label>
-                                    <input value="{{$seatType->price}}" type="number" min="80" max="120" name="price" id="price" class="form-control" placeholder="price">
+                                    <label for="price">Giá</label>
+                                    <input value="{{$seatType->price}}" type="number" min="10" max="120" name="price" id="price" class="form-control" placeholder="price">
                                     <p></p>
                                 </div>
                             </div>
@@ -39,8 +39,8 @@
                     </div>
                 </div>
                 <div class="pb-5 pt-3">
-                    <button class="btn btn-primary" type="submit">Update</button>
-                    <a href="{{route('seatType.index')}}" class="btn btn-outline-dark ml-3">Cancel</a>
+                    <button class="btn btn-primary" type="submit">Cập nhật</button>
+                    <a href="{{route('seatType.index')}}" class="btn btn-outline-dark ml-3">Hủy</a>
                 </div>
             </form>
         </div>

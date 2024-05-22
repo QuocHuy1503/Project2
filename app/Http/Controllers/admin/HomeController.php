@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         Auth::guard('admin')->user();
-        
+
         $amount = DB::table('reservations')
             ->select(DB::raw('DATE(date) AS reservation_date'), DB::raw('COUNT(*) AS reservations_count'))
             ->groupBy('reservation_date')
@@ -41,7 +41,7 @@ class HomeController extends Controller
         foreach ($seatTypeData as $seatType) {
             $secondChartData[] = [
                 'label' => $seatType->name . ' (Price: $' . $seatType->price . ')',
-                'y' => $seatType->howMuch 
+                'y' => $seatType->howMuch
             ];
         }
 
@@ -57,19 +57,11 @@ class HomeController extends Controller
             }
             TempImage::where('id', $tempImage->id)->delete();
         }
-        $popularMovies = DB::table('movies as m')
-            ->select('m.title','m.id', DB::raw('count(sr.id) AS seats_sold'))
-            ->join('screenings as s', 'm.id', '=', 's.movie_id')
-            ->join('seat_reserved as sr', 'sr.screening_id', '=', 's.id')
-            ->where('s.screening_start', '>=', now())
-            ->groupBy('m.id')
-            ->orderBy('seats_sold', 'desc')
-            ->get();
+
 
         return view('admin.dashboard', [
             'firstChartData' => $firstChartData,
-            'secondChartData' => $secondChartData, // Pass the processed data for charts
-            'popularMovies' => $popularMovies,
+            'secondChartData' => $secondChartData // Pass the processed data for charts
         ]);
         //echo 'welcome'.$admin->name.' <a href="'.route('admin.logout').'">Logout</a>';
     }

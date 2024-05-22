@@ -38,10 +38,10 @@ class GenreController extends Controller
             $genre->status = $request->status;
             $genre->save();
 
-            $request->session()->flash('success', 'Genre added successfully');
+            $request->session()->flash('success', 'Đã thêm thể loại thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Genre added successfully'
+                'message' => 'Đã thêm thể loại thành công'
             ]);
 
         }else{
@@ -56,7 +56,7 @@ class GenreController extends Controller
     {
         $genre = Genre::find($genreId);
         if (empty($genre)){
-            $request->session()->flash('error', 'Genre not found');
+            $request->session()->flash('error', 'Không tìm thấy thể loại');
             return redirect()->route('genre.index');
         }
         $data['genre'] = $genre;
@@ -67,18 +67,18 @@ class GenreController extends Controller
     {
         $genre = Genre::find($genreId);
         if (empty($genre)){
-            $request->session()->flash('error', 'Genre not found');
+            $request->session()->flash('error', 'Không tìm thấy thể loại');
 
             return response()->json([
                'status' => false,
                'notFound' => true,
-                'message' => 'Genre not found'
+                'message' => 'Không tìm thấy thể loại'
             ]);
         }
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'description' => 'required',
+//            'description' => 'required',
         ]);
         if ($validator->passes()){
             $genre->name = $request->name;
@@ -86,10 +86,10 @@ class GenreController extends Controller
             $genre->status = $request->status;
             $genre->save();
 
-            $request->session()->flash('success', 'Genre updated successfully');
+            $request->session()->flash('success', 'Đã cập nhật thông tin thể loại thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Genre updated successfully'
+                'message' => 'Đã cập nhật thông tin thể loại thành công'
             ]);
 
         }else{
@@ -104,18 +104,18 @@ class GenreController extends Controller
     {
         $genre = Genre::find($genreId);
         if (empty($genre)){
-            $request->session()->flash('error', 'Genre not found');
+            $request->session()->flash('error', 'Không tìm thấy thể loại');
             return response()->json([
                 'status' => true,
-                'message' => 'Genre not found'
+                'message' => 'Không tìm thấy thể loại'
             ]);
         }
 
         $genre->delete();
-        $request->session()->flash('success', 'Genre deleted successfully');
+        $request->session()->flash('success', 'Đã xóa thể loại thành công');
         return response()->json([
            'status' => true,
-           'message' => 'Genre deleted successfully'
+           'message' => 'Đã xóa thể loại thành công'
         ]);
     }
 }

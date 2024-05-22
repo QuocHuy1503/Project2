@@ -10,8 +10,8 @@ class Customer extends Model implements \Illuminate\Contracts\Auth\Authenticatab
 {
     use Authenticatable;
     use HasFactory;
-    public $timestamps = false;
     public $table = 'customers';
     protected $fillable = ['first_name', 'last_name', 'email', 'password', 'phone_number', 'address', 'status', 'birthday', 'gender', 'created_at', 'updated_at'];
+
 
 }

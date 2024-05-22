@@ -13,7 +13,7 @@ class ScreeningController extends Controller
 {
     public function index(Request $request){
         $screenings = Screening::latest();
-            if (!empty($request->get('keyword'))){
+        if (!empty($request->get('keyword'))){
             $screenings = $screenings->where('name', 'like', '%'.$request->get('keyword').'%' ) -> movie -> auditorium;
         }
         $screenings = $screenings -> paginate(10);
@@ -27,14 +27,9 @@ class ScreeningController extends Controller
         return view('admin.screening_manager.create',['screenings' => $screenings , 'movies' => $movies, 'auditoriums' => $auditorium]);
     }
 
-    public function create2(Request $request){
-        $screenings = Screening::latest();
-        $movies = $request -> movies;
-        $auditorium = Auditorium::all();
-    }
     public function store(Request $request)
     {
-    
+
         $validator = Validator::make($request->all(), [
            'movie_id' => 'required',
            'auditorium_id' => 'required',
@@ -48,10 +43,10 @@ class ScreeningController extends Controller
             $screening-> screening_start = $request->screening_start;
             $screening-> screening_end = $request->screening_end;
             $screening->save();
-            $request->session()->flash('success', 'Screening added successfully');
+            $request->session()->flash('success', 'Đã thêm đợt chiếu thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Screening added successfully'
+                'message' => 'Đã thêm đợt chiếu thành công'
             ]);
 
         }else{
@@ -70,12 +65,12 @@ class ScreeningController extends Controller
     {
         $screening = Screening::find($screeningId);
         if (empty($screening)){
-            $request->session()->flash('error', 'Screening not found');
+            $request->session()->flash('error', 'Không tìm thấy đợt chiếu nào');
 
             return response()->json([
                'status' => false,
                'notFound' => true,
-               'message' => 'Screening not found'
+               'message' => 'Không tìm thấy đợt chiếu nào'
             ]);
         }
 
@@ -92,10 +87,10 @@ class ScreeningController extends Controller
             $screening-> screening_end = $request->screening_end;
             $screening->save();
 
-            $request->session()->flash('success', 'Screening updated successfully');
+            $request->session()->flash('success', 'Đã cập nhật đợt chiếu thành công');
             return response()->json([
                 'status' => true,
-                'message' => 'Screening updated successfully'
+                'message' => 'Đã cập nhật đợt chiếu thành công'
             ]);
 
         }else{
@@ -109,18 +104,18 @@ class ScreeningController extends Controller
     {
         $screening = Screening::find($screeningId);
         if (empty($screening)) {
-            $request->session()->flash('error', 'Screening not found');
+            $request->session()->flash('error', 'Không tìm thấy đợt chiếu nào');
             return response()->json([
-                'status' => false,
-                'message' => 'Screening not found'
+                'status' => true,
+                'message' => 'Không tìm thấy đợt chiếu nào'
             ]);
         }
 
         $screening->delete();
-        $request->session()->flash('success', 'Screening deleted successfully');
+        $request->session()->flash('success', 'Đã xóa đợt chiếu thành công');
         return response()->json([
             'status' => true,
-            'message' => 'Screening deleted successfully'
+            'message' => 'Đã xóa đợt chiếu thành công'
         ]);
     }
 }

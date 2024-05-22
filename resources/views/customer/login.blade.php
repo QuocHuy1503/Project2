@@ -1,7 +1,7 @@
 @extends('layouts.customer-nav')
 @section('content')
     <head>
-        <title>Login</title>
+        <title>Đăng nhập</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
     </head>
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
@@ -11,8 +11,8 @@
             <div class="container">
                 <div>
                     <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Home</a></li>
-                        <li class="bi bi-slash-lg text-white">Login</li>
+                        <li class="breadcrumb-item"><a class="text-white nav-link" href="{{ route('home') }}">Trang chủ</a></li>
+                        <li class="bi bi-slash-lg text-white">Đăng nhập</li>
                     </ol>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                             {{ Session::get('error') }}
                         </div>
                     @endif
-                    <h2>Login</h2>
+                    <h2>Đăng nhập</h2>
                     <form action="{{ route('customer.loginProcess') }}" method="post">
                         @csrf
                         <div class="user-box">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="user-box">
                             <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password">
-                            <label for="password">Password</label>
+                            <label for="password">Mật khẩu</label>
                             @error('password')
                                  <p class="invalid-feedback">{{ $message }}</p>
                             @enderror
@@ -51,14 +51,14 @@
                             <span></span>
                             <span></span>
                             <span></span>
-                            Submit
+                            Đăng nhập
                         </button>
                         <div class="d-flex justify-content-between row mt-3">
                             <div class="col-md-5">
-                               <a class="nav-link link-danger" href="{{route('customer.forgotPassword')}}">Forgot password</a>
+                               <a class="nav-link link-danger" href="{{route('customer.forgotPassword')}}">Quên mật khẩu</a>
                             </div>
                             <div class="col-md-7 text-white">
-                                 Don't have an account? Join us <a class="nav-link link-danger" href="{{route('customer.register')}}">here</a>
+                                 Bạn chưa có tài khoản? Join us <a class="nav-link link-danger" href="{{route('customer.register')}}">ở đây</a>
                             </div>
                         </div>
                     </form>

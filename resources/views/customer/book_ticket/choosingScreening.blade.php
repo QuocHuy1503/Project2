@@ -1,3 +1,4 @@
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 @extends('layouts.customer-nav')
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
@@ -22,7 +23,6 @@
                 ></div>
                 <div class="progress-step" data-title=""></div>
                 <div class="progress-step" data-title=""></div>
-                <div class="progress-step" data-title=""></div>
             </div>
             <!-- Steps -->
             <div class="form-step form-step-active">
@@ -34,11 +34,12 @@
                                 @csrf
                                 @method('POST')
                                 <div class="col-md-12">
+                    
                                     @if($screening->count() > 0)
                                         @foreach ($screening as $item)
                                             @if ($item->screening_end > \Carbon\Carbon::now('Asia/Ho_Chi_Minh'))
                                                 {{-- <input type="hidden" name="screening_id" value="{{$item ->id}}"> --}}
-                                                <input type="hidden" name="auditorium_id" value="{{$item->auditorium_id}}">
+                                                <input type="" class="visually-hidden auditorium_id" value="{{$item->auditorium_id}}">
                                                 <input type="hidden" name="movie_id" value="{{$item->movie_id}}">
                                                 <input type="radio" class="btn-check" name="screening_id" id="success-outlined-{{$item->id}}" autocomplete="off" value="{{$item ->id}}">
 {{--                                                <label class="btn btn-outline-success col-sm-4" for="success-outlined-{{$item->id}}">--}}
@@ -52,18 +53,23 @@
                                                     <div class="text-white">Time: {{\Carbon\Carbon::parse($item->screening_start)->format('H:i')}}</div>
                                                     <span class="text-white">Auditorium:</span> {{$item->auditorium->name}}
                                                 </label>
-                                                <div class="ds">
-                                                    <button type="submit" class=" btn btn-primary w-10">Primary</button>
-                                                </div>
-                                            @endif
 
+                                            @endif
                                         @endforeach
 
-                                            {{-- End Screening --}}
-{{--                                    @else--}}
-{{--                                        <div>--}}
-{{--                                            <p class="fs-3 text-center">There are no screenings</p>--}}
-{{--                                        </div>--}}
+                            
+                                        <div>
+                                            <button type="submit" id="submit-btn" value="" name="auditorium_id" class=" btn btn-primary w-10">Primary</button>
+                                        </div>
+                                            <script>
+                                                let inputs = $('.auditorium_id');
+                                                let radios = $('input[type="radio"]');
+                                                for(let i = 0; i < radios.length; i++) {
+                                                    $(radios[i]).on( "click", function() {
+                                                        $("#submit-btn").val($(inputs[i]).val())
+                                                    });  
+                                                }
+                                            </script>
                                     @endif
 
                                 </div>

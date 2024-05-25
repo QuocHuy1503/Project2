@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\customer;
 
-use App\Http\Controllers\Controller;
-use App\Models\Auditorium;
-use App\Models\Customer;
-use App\Models\Movie;
-use App\Models\Reservation;
-use App\Models\Screening;
+use Carbon\Carbon;
 use App\Models\Seat;
-use App\Models\SeatReserved;
+use App\Models\Movie;
+use App\Models\Customer;
 use App\Models\SeatType;
-use Illuminate\Http\Request;
+use App\Models\Screening;
+use App\Models\Auditorium;
+use App\Models\Reservation;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
+use App\Models\SeatReserved;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends Controller
@@ -22,11 +23,15 @@ class BookingController extends Controller
 
     public function choosingScreening($id, Request $request){
         $movie_id = Movie::find($id)->id;
+        // dd($movie_id);
         if (empty($movie_id)){
             $request->session()->flash('error', 'Movie not found');
             return redirect()->route('movie');
         }
-        $screening = Screening::all()->where('movie_id','=',$request->movie_id);
+        $screening = Screening::where('movie_id', '=' , $id)
+        ->where('screening_start', '>', Carbon::now())
+        ->get();
+        dd($screening);
         return view('customer.book_ticket.choosingScreening',[
             'screening' => $screening,
             'movie_id' => $movie_id,
@@ -34,6 +39,7 @@ class BookingController extends Controller
     }
 
     public function postScreening(Request $request){
+    
         $movie = $request -> movie_id;
         $screening = $request -> screening_id;
         $auditorium = $request -> auditorium_id;
@@ -51,11 +57,14 @@ class BookingController extends Controller
             $request->session()->flash('error', 'Movie not found');
             return redirect()->route('movie');
         }
-        $screening = Screening::all()->where('movie_id','=',$request->movie_id);
+        $screening = Screening::where('movie_id','=',$request->movie_id)->where('id','=',$request->screening_id)->get();
+        // dd($screening);
         $screeningId = $request->screening_id;
         $auditorium = $request->auditorium_id;
+        // dd($auditorium);
         $reservedSeats = SeatReserved::where('screening_id', $screeningId)->get();
-        $seats  = Seat::where('auditorium_id','=', $auditorium )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
+        $seats  = Seat::where('auditorium_id','=', $request->auditorium_id )->orderBy('number_of_col','asc')->orderBy('id','asc')->get();
+        // dd($seats);
         return view('customer.book_ticket.choosingSeat',[
             'movie' => $movieId,
             'movie_id' => $request->movie_id,
@@ -149,8 +158,8 @@ class BookingController extends Controller
 
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://127.0.0.1:8000/test";
-        $vnp_TmnCode = "6IJUBOIH";//Mã website tại VNPAY
-        $vnp_HashSecret = "NTWDAASDAOTUICDMDVBVJMAFTPTXNACU"; //Chuỗi bí mật
+        $vnp_TmnCode = "UBPHFQVJ";//Mã website tại VNPAY
+        $vnp_HashSecret = "9M77SGSFRTA582OLUPX5Y9X3SGCA71UI"; //Chuỗi bí mật
         $customer = Auth::guard('customer')->user()->id;
         $contact = Auth::guard('customer')->user()->phone_number;
         $validator = Validator::make($request->all(), [
@@ -261,7 +270,7 @@ class BookingController extends Controller
                 'screening_id' => $data['screening'],
             ]);
         }
-
-        return view('customer.home');
+        $customer = Customer::where('id', Auth::guard('customer')->user()->id)->first();
+        return view('customer.profiles.profile',['customer',$customer]);
     }
 }

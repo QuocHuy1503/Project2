@@ -30,8 +30,8 @@
             <div id="vertical-scroller">
                 @if($wishlists->isNotEmpty())
                     @foreach($wishlists as $wishlist)
-                        <div class="d-sm-flex justify-content-between mt-lg-4 mb-4 pb-3 pb-sm-2 border-bottom me-2">
-                            <div class="d-block d-sm-flex align-items-start text-center text-sm-start">
+                        <div class="d-sm-flex justify-content-between mt-lg-4 mb-4 pb-3 pb-sm-2 border-bottom me-2 ">
+                            <div class="d-block d-sm-flex align-items-start text-center text-sm-start mt-5">
                                 <a class="d-block flex-shrink-0 mx-auto me-sm-4" href="{{ route('movie-details', $wishlist->movie) }}" style="width: 7rem;">
                                     @if(!empty($wishlist->movie->image))
                                         <img src="{{ asset('uploads/movie/'.$wishlist->movie->image) }}" class="img-thumbnail" alt="Movie">
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center">
+                            <div class="pt-2 ps-sm-3 mx-auto mx-sm-0 text-center mt-5">
                                 <button onclick="removeMovie({{ $wishlist->movie_id }});" class="btn btn-outline-danger btn-sm" type="button">
                                     <i class="fas fa-trash-alt me-2"></i>Xóa
                                 </button>
@@ -69,7 +69,7 @@
                         </div>
                     @endforeach
                 @else
-                    <div class="fs-3">Danh sách phim yêu thích của bạn đang trống !!</div>
+                    <div class="fs-3 mt-5">Danh sách phim yêu thích của bạn đang trống !!</div>
                 @endif
             </div>
         </div>

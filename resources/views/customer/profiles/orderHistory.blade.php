@@ -2,7 +2,7 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Thay đổi mật khẩu</title>
+        <title>Lịch sử đặt hàng</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
@@ -15,15 +15,15 @@
         <div class="border w-80 rounded-end p-3 h-100 text-white" style="background-color: #191c33">
             <div>
                 <div class="fs-5">
-                    Orders history
+                    Lịch sử đặt vé
                 </div>
                 <div>
-                    Manage your order details
+                    Xem những đợt chiếu mà bạn đã đặt vé
                 </div>
                 <hr>
             </div>
             <div class="d-flex w-100 h-100 flex-column">
-                @foreach($orders as $order)
+                @foreach($reservations as $reservation)
                     <div class="w-100 h-30 d-flex justify-content-between align-items-center border rounded  mb-3 p-3">
                         <div class="h-100 w-75 d-flex flex-column justify-content-center">
                             <div class="fw-bold fst-italic">
@@ -46,24 +46,34 @@
                                 @endswitch --}}
                             </div>
                             <div>
-                                Order number: {{$order->id}}
+                                Thời gian chiếu phim : {{$reservation->screening_start}}
+                                
                             </div>
-                            
                             <div>
-                                Payment method: Pay on delivery
+                                Ở phòng chiếu: {{$reservation->name}}
+                            </div>
+                            <div>
+                               Số ghế đã đặt: {{$reservation->totalSeats}} 
+                            </div>
+                            <div>
+                                {{-- Tổng tiền: {{$data['totalMoney']}} --}}
+                                Tổng tiền: {{$reservation->payment_amount}}$
+                            </div>
+                            <div>
+                                {{-- {{dd($order)}} --}}
                             </div>
                         </div>
                         <div class="h-100 w-25 d-flex align-items-center justify-content-end">
-                            {{-- <a href="{{route('orderDetail', $order)}}" class="btn btn-primary">
-                                View order
-                            </a> --}}
+                            <a href="{{route('orderDetail', $reservation->id)}}" class="btn btn-primary">
+                                Xem chi tiết
+                            </a>
                         </div>
                     </div>
                 @endforeach
                 <div>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">
-                        {{$orders->onEachSide(2)->links()}}
+                        {{$reservations->onEachSide(2)->links()}}
                     </div>
                 </div>
 

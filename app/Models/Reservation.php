@@ -11,9 +11,12 @@ class Reservation extends Model
         'screening_id',
         'seat_id',
         'reservation_contact',
-        'date',
+        'payment_date',
+        'payment_amount',
         'status',
         'customer_id',
+        'user_id',
+        'pay_id',
         'created_at',
         'updated_at'
     ];

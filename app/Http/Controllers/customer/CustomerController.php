@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Mail\ResetPasswordEmail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\SeatReserved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -342,47 +343,58 @@ class CustomerController extends Controller
 //
     public function showOrderHistory()
     {
-        //id cua customer dang dang nhap
+
         $id = Auth::guard('customer')->user()->id;
-        //lay ban ghi
+
         $customer = Customer::find($id);
-        $orders = DB::table('customers')
-        ->join('reservations', 'customers.id', '=', 'reservations.customer_id')
-        ->groupBy('screening_id')->paginate(2);
-// dd($orders);
+
+
+        $reservations = Reservation::select('screening_start',DB::raw('count(seat_id) as totalSeats'),'reservations.id','name','payment_amount')
+        ->join('screenings','screenings.id','=','reservations.screening_id')
+        ->join('auditoriums','auditoriums.id','=','screenings.auditorium_id')
+        ->where('customer_id',$id)
+        ->groupBy('screenings.id')
+        ->paginate(2);
+
+
+        
+        // dd($reservations);
         return view('customer.profiles.orderHistory', [
             'customer' => $customer,
-            'orders' => $orders,
+            'reservations' => $reservations,
+
         ]);
     }
 
-    public function orderDetail(Order $order)
+    public function orderDetail(Reservation $reservation)
     {
-        //id cua customer dang dang nhap
         $id = Auth::guard('customer')->user()->id;
-        //lay ban ghi
+        $bookedSeats = DB::table('reservations')
+        ->select('seat_reserved.seat_id', 'seats.number_of_col', 'seats.number_of_row')
+        ->join('seat_reserved', 'reservations.id', '=', 'seat_reserved.reservation_id')
+        ->join('seats', 'seats.id', '=', 'seat_reserved.seat_id')
+        ->where('customer_id', $id)
+        ->get();
+        dd($reservation);
         $customer = Customer::find($id);
-        $orderId = $order->id;
-        $orderDetails = DB::table('orders_details')
-            ->where('order_id', '=', $orderId)
-            ->join('products', 'orders_details.product_id', '=', 'products.id')
-            ->get();
+        // $orderId = $order->id;
+        // $orderDetails = DB::table('orders_details')
+        //     ->where('order_id', '=', $orderId)
+        //     ->join('products', 'orders_details.product_id', '=', 'products.id')
+        //     ->get();
 
-        $orderAmount = 0;
-        $orderItems = 0;
-        foreach ($orderDetails as $detail) {
-            $orderItems += $detail->sold_quantity;
-            $orderAmount += $detail->sold_price * $detail->sold_quantity;
-        }
-        $orderTotal = $orderAmount + 10;
+        // $orderAmount = 0;
+        // $orderItems = 0;
+        // foreach ($orderDetails as $detail) {
+        //     $orderItems += $detail->sold_quantity;
+        //     $orderAmount += $detail->sold_price * $detail->sold_quantity;
+        // }
+        // $orderTotal = $orderAmount + 10;
 
-        return view('customers.profiles.orderDetail', [
-            'order' => $order,
-            'order_details' => $orderDetails,
-            'order_item' => $orderItems,
-            'order_amount' => $orderAmount,
-            'order_total' => $orderTotal,
+        return view('customer.profiles.orderDetail', [
+            'reservation' => $reservation,
             'customer' => $customer,
+            'bookedSeats' => $bookedSeats
         ]);
     }
 //

@@ -31,7 +31,6 @@ class BookingController extends Controller
         $screening = Screening::where('movie_id', '=' , $id)
         ->where('screening_start', '>', Carbon::now())
         ->get();
-        dd($screening);
         return view('customer.book_ticket.choosingScreening',[
             'screening' => $screening,
             'movie_id' => $movie_id,
@@ -169,6 +168,7 @@ class BookingController extends Controller
             'totalMoney' => 'required'
         ]);
         $bookingData = [
+            'totalMoney' => $request->totalMoney,
             'customer' => $customer,
             'contact' => $contact,
             'movie' => $request->movie,
@@ -254,15 +254,20 @@ class BookingController extends Controller
         // $screening = $data['screening'];
         // $customer = $data
         // dd($movie);
+        // dd($data);
+        $user = Auth::guard('admin')->user()->id;
         foreach($data['seats'] as $seat){
             $reservation = Reservation::create([
                 'movie' => $data['movie'],
                 'screening_id' => $data['screening'],
                 'customer_id' => $data['customer'],
                 'status' => 1,
-                'date' => now(),
+                'payment_date' => now(),
+                'payment_amount' => $data['totalMoney'],
                 'seat_id' => $seat,
                 'reservation_contact' => $data['contact'],
+                'user_id' => $user,
+                'pay_id' => 1,
             ]);
             SeatReserved::create([
                 'seat_id' => $seat,
@@ -271,6 +276,6 @@ class BookingController extends Controller
             ]);
         }
         $customer = Customer::where('id', Auth::guard('customer')->user()->id)->first();
-        return view('customer.profiles.profile',['customer',$customer]);
+        return view('customer.profiles.profile',compact('customer'));
     }
 }

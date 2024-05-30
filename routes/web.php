@@ -89,18 +89,23 @@ Route::group(['prefix' => 'account'], function () {
     });
 
     Route::group(['middleware' => 'customer.auth'] , function (){
+        Route::get('/logout', [\App\Http\Controllers\customer\CustomerController::class, 'logout'])->name('customer.logout');
+
         Route::get('/profile', [\App\Http\Controllers\customer\CustomerController::class, 'profile'])->name('profile');
         Route::post('/update-profile', [\App\Http\Controllers\customer\CustomerController::class, 'update_profile'])->name('updateProfile');
+
         Route::get('/my-wishlist', [\App\Http\Controllers\customer\CustomerController::class, 'wishlist'])->name('wishlist');
         Route::post('/remove-movie-from-wishlist', [\App\Http\Controllers\customer\CustomerController::class, 'removeMovieFromWishList'])->name('removeMovieFromWishlist');
+
         Route::get('/change-password', [\App\Http\Controllers\customer\CustomerController::class, 'showChangePassword'])->name('customer.change_password');
         Route::post('/process-change-password', [\App\Http\Controllers\customer\CustomerController::class, 'changePassword'])->name('customer.process_change_password');
+
         Route::get('/orders_history', [App\Http\Controllers\customer\CustomerController::class, 'showOrderHistory'])->name('orderHistory');
-        Route::get('/logout', [\App\Http\Controllers\customer\CustomerController::class, 'logout'])->name('customer.logout');
+        Route::get('/order_detail/{reservation}', [App\Http\Controllers\customer\CustomerController::class, 'orderDetail'])->name('orderDetail');
+
         Route::get('choosingSeat/{movie_id}',[BookingController::class,'choosingSeat'])->name('choosingSeat');
         Route::post('postSeat/{movie_id}',[BookingController::class,'postSeat'])->name('bookingStore');
         Route::get('/checkout/{movie_id}', [BookingController::class, 'checkout'])->name('customer.checkout');
-
         Route::post('/vnpay_payment',[BookingController::class,'vnpay_payment'])->name('vnpay_payment');
     });
 });

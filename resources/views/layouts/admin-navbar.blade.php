@@ -49,9 +49,9 @@
                         <h4 class="h4 mb-0"><strong>{{Auth::guard('admin')->user()->name}}</strong></h4>
                         <div class="mb-3">{{Auth::guard('admin')->user()->email}}</div>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('admin.profile') }}" class="dropdown-item {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
+                    {{-- <a href="{{ route('admin.profile') }}" class="dropdown-item {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
                         <i class="fas fa-user mr-2"></i> Tài khoản
-                    </a>
+                    </a> --}}
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-user-cog mr-2"></i> Cài đặt
@@ -192,9 +192,9 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg pl-5">
                             <div class="d-flex col-12">
-                                <a href="{{ route('admin.profile') }}" class="dropdown-item col-6 text-dark {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
+                                {{-- <a href="{{ route('admin.profile') }}" class="dropdown-item col-6 text-dark {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
                                     <i class="fas fa-user mr-2"></i> Tài khoản
-                                </a>
+                                </a> --}}
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item col-6 text-dark">
                                     <i class="fas fa-user-cog mr-2"></i> Cài đặt

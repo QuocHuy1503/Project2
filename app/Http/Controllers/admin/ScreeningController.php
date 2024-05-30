@@ -7,16 +7,29 @@ use App\Models\Screening;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Auditorium;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 
 class ScreeningController extends Controller
 {
+    private function checkForAuditoriumConflict($auditoriumId, $screeningStart, $screeningEnd)
+    {
+        $existingScreening = Screening::where('auditorium_id', $auditoriumId)
+            ->where('screening_start', '<=', $screeningEnd)
+            ->where('screening_end', '>=', $screeningStart)
+            ->first();
+
+        if ($existingScreening) {
+            throw new \Exception('Auditorium is already booked for this time slot.');
+        }
+    }
     public function index(Request $request){
-        $screenings = Screening::latest();
+        $screenings = Screening::latest()->orderBy('id','desc')-> paginate(5);
         if (!empty($request->get('keyword'))){
             $screenings = $screenings->where('name', 'like', '%'.$request->get('keyword').'%' ) -> movie -> auditorium;
         }
-        $screenings = $screenings -> paginate(10);
+        // dd($screenings);
+        // $screenings = $screenings ;
         return view('admin.screening_manager.index', ['screenings' => $screenings]);
     }
     public function create()
@@ -29,25 +42,31 @@ class ScreeningController extends Controller
 
     public function store(Request $request)
     {
-
+        // $maxiumMinute = Movie::where('id','=',$request->movie_id)->pluck('duration_min');
         $validator = Validator::make($request->all(), [
            'movie_id' => 'required',
            'auditorium_id' => 'required',
            'screening_start' => 'required',
-           'screening_end' => 'required|after:screening_start'
+           'screening_end' => 'required|after:screening_start',
         ]);
         if ($validator->passes()){
-            $screening = new Screening();
-            $screening-> movie_id = $request->movie_id;
-            $screening-> auditorium_id = $request->auditorium_id;
-            $screening-> screening_start = $request->screening_start;
-            $screening-> screening_end = $request->screening_end;
-            $screening->save();
-            $request->session()->flash('success', 'Đã thêm đợt chiếu thành công');
-            return response()->json([
-                'status' => true,
-                'message' => 'Đã thêm đợt chiếu thành công'
-            ]);
+            try{
+                $this->checkForAuditoriumConflict($request->auditorium_id, $request->screening_start, $request->screening_end);
+                    $screening = new Screening();
+                    $screening-> movie_id = $request->movie_id;
+                    $screening-> auditorium_id = $request->auditorium_id;
+                    $screening-> screening_start = $request->screening_start;
+                    $screening-> screening_end = $request->screening_end;
+                    $screening->save();
+                    $request->session()->flash('success', 'Đã thêm đợt chiếu thành công');
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Đã thêm đợt chiếu thành công'
+                ]);
+            }catch(Exception $e){
+                $request->session()->flash('error','Có đợt chiếu rồi');
+            }
+            
 
         }else{
             return response()->json([
@@ -73,7 +92,7 @@ class ScreeningController extends Controller
                'message' => 'Không tìm thấy đợt chiếu nào'
             ]);
         }
-
+        
         $validator = Validator::make($request->all(), [
             'movie_id' => 'required',
             'auditorium_id' => 'required',

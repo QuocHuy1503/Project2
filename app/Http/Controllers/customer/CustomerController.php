@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\customer;
 
+use Carbon\Carbon;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Order;
@@ -11,11 +12,11 @@ use App\Models\MovieGenre;
 use App\Models\Reservation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use App\Models\SeatReserved;
 use Illuminate\Http\Request;
 use App\Mail\ResetPasswordEmail;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\SeatReserved;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -130,6 +131,7 @@ class CustomerController extends Controller
 
     public function profile()
     {
+       
         $customer = Customer::where('id', Auth::guard('customer')->user()->id)->first();
         return view('customer.profiles.profile', [
             'customer' => $customer
@@ -341,29 +343,28 @@ class CustomerController extends Controller
 //        return Redirect::route('profile');
 //    }
 //
-    public function showOrderHistory()
-    {
-
-        $id = Auth::guard('customer')->user()->id;
-
-        $customer = Customer::find($id);
-
-
-        $reservations = Reservation::select('screening_start',DB::raw('count(seat_id) as totalSeats'),'reservations.id','name','payment_amount')
-        ->join('screenings','screenings.id','=','reservations.screening_id')
-        ->join('auditoriums','auditoriums.id','=','screenings.auditorium_id')
-        ->where('customer_id',$id)
-        ->groupBy('screenings.id')
-        ->paginate(2);
-
-
+    public function showOrderHistory(Movie $movie)
+    { 
         
-        // dd($reservations);
-        return view('customer.profiles.orderHistory', [
-            'customer' => $customer,
-            'reservations' => $reservations,
-
-        ]);
+        $changeStatusTickets = Reservation::select('reservations.*')->where('screening_end','<',Carbon::now())
+        ->join('screenings', 'reservations.screening_id', 'screenings.id')->get();
+        foreach($changeStatusTickets as $item){
+            $item -> status = 2;
+            $item -> save();
+        }
+        
+        $seats = DB::table('seats')->get();
+        $id = Auth::guard('customer')->user()->id;
+        $orders = Reservation::where('customer_id', $id)
+        ->where('screening_end','>',Carbon::now())
+        ->join('screenings', 'reservations.screening_id', 'screenings.id')
+        ->join('seats', 'reservations.seat_id', 'seats.id')->with('screening')->get();
+        $data = [];
+        $data['seats'] = $seats;
+        $data['movie'] = $movie;
+        $data['customer'] = Customer::find($id);
+        $data['orders'] = $orders;
+        return view('customer.profiles.orderHistory', $data);
     }
 
     public function orderDetail(Reservation $reservation)

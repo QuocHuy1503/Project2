@@ -25,7 +25,7 @@ class MovieController extends Controller
         if (!empty($request->get('keyword'))){
             $movies = $movies->where('title', 'like', '%'.$request->get('keyword').'%');
         }
-        $movies = $movies->paginate(5);
+        $movies = $movies->paginate(3);
         $genres = Genre::all();
         $movieGenres = MovieGenre::all();
         $casts = Cast::all();
@@ -62,18 +62,6 @@ class MovieController extends Controller
             'genres'=> $genres,
             'casts' => $casts
         ]);
-//        $movieId = $movie->id;
-//        $movieGenres =DB::table('movie_genres')
-//            ->where('movie_id', '=', $movieId)
-//            ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
-//            ->get();
-//        $age = Age::where('id', '=', $movie->age_id)->first();
-//
-//        return view('admin.movie_manager.movie_details', [
-//            'movie' => $movie,
-//            'age' => $age,
-//            'movieGenres' => $movieGenres,
-//        ]);
     }
 
     public function create()
@@ -113,7 +101,9 @@ class MovieController extends Controller
             $movie->description = $request->description;
             $movie->is_featured = $request->is_featured;
             $movie->language = $request->language;
-            $movie->duration = $request->duration;
+            $minutes= $request->duration;
+            $hours = intdiv($minutes, 60).':'. ($minutes % 60);
+            $movie->duration = $hours;
             $movie->release_date = $request->release_date;
             $movie->age_id = $request->age_id;
             $movie->status = $request->status ;

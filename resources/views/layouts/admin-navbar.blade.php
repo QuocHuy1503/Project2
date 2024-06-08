@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{asset('admin-assets/plugins/dropzone/min/dropzone.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin-assets/plugins/summernote/summernote.min.css')}}">
     <!-- Theme style -->
+    <link rel="shortcut icon" href="{{asset('admin-assets/img/paradise-theatre-logo.png')}}"/>
     <link rel="stylesheet" href="{{asset('admin-assets/css/adminlte.min.css')}}">
     <link rel="stylesheet" href="{{asset('admin-assets/css/custom.css')}}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -49,9 +50,9 @@
                         <h4 class="h4 mb-0"><strong>{{Auth::guard('admin')->user()->name}}</strong></h4>
                         <div class="mb-3">{{Auth::guard('admin')->user()->email}}</div>
                     <div class="dropdown-divider"></div>
-                    {{-- <a href="{{ route('admin.profile') }}" class="dropdown-item {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
+                    <a href="{{ route('admin.profile') }}" class="dropdown-item {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
                         <i class="fas fa-user mr-2"></i> Tài khoản
-                    </a> --}}
+                    </a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                         <i class="fas fa-user-cog mr-2"></i> Cài đặt
@@ -70,7 +71,7 @@
     </nav>
     <!-- /.navbar -->
 
-    <aside class="main-sidebar sidebar-dark-primary elevation-5" style="background-color: #00001c">
+    <aside class="main-sidebar sidebar-dark-primary elevation-5 " style="background-color: #00001c; height: 100%">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="{{asset('admin-assets/img/paradise-theatre-logo.png')}}" alt="AdminLTE Logo"
@@ -91,7 +92,7 @@
                             <p>Tổng quát</p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="#" class="nav-link d-flex" aria-current="page">
                             <i class="nav-icon fas bi-window"></i>
                             <button class="accordion-button collapsed ml-2 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
@@ -101,14 +102,14 @@
                             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
                                 <div class="accordion-body">
                                     <div class="navbar-nav ml-5">
-{{--                                        <a href="{{route('admin.dashboard')}}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'bi bi-arrow-right bg-danger' : '' }}" class="nav-item nav-link">Employee</a>--}}
+                                       <a href="{{route('admin.dashboard')}}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'bi bi-arrow-right bg-danger' : '' }}" class="nav-item nav-link">Employee</a>
                                         <a href="" class="nav-item nav-link">Speakers</a>
                                         <a href="" class="nav-item nav-link">Watches</a>
                                     </div>
                                 </div>
                             </div>
 
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
                         <a href="{{route('genre.index')}}" class="nav-link {{ request()->routeIs('genre.index', 'genre.create', 'genre.edit') ? 'bg-danger' : '' }}">
                             <svg class="h-6 nav-icon w-6 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -173,18 +174,18 @@
                     </li>
                 </ul>
             </nav>
-            <div class="fixed-botto">
+            {{-- <div class="fixed-botto">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link p-3 pr-3 col-md-12 d-flex" data-toggle="dropdown" href="#">
                             <div class="col-4"><img src="{{asset('admin-assets/img/avatar5.png')}}" class='img-circle elevation-2' width="40" height="40" alt=""></div>
-                            <div class="pl-3 col-8">
+                            <div class="pl-3 col-12">
                                 <span  class="col-12 fs-5">{{ Auth::guard('admin')->user()->name }}</span>
                                 <span class="col-12">
                                     @if( Auth::guard('admin')->user()->role == 1 )
                                         <div class="pl-2 text-success">Quản trị viên</div>
                                     @else
-                                        <div>Employee</div>
+                                        <div class="pl-2 text-success">Nhân viên</div>
                                     @endif
                                 </span>
                             </div>
@@ -192,9 +193,9 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg pl-5">
                             <div class="d-flex col-12">
-                                {{-- <a href="{{ route('admin.profile') }}" class="dropdown-item col-6 text-dark {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
+                                <a href="{{ route('admin.profile') }}" class="dropdown-item col-6 text-dark {{ request()->routeIs('admin.profile') ? 'bg-danger rounded-4' : '' }}">
                                     <i class="fas fa-user mr-2"></i> Tài khoản
-                                </a> --}}
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item col-6 text-dark">
                                     <i class="fas fa-user-cog mr-2"></i> Cài đặt
@@ -211,7 +212,7 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
             <!-- /.sidebar-menu -->
         </div>
 
@@ -219,14 +220,13 @@
     </aside>
     <!-- Main Sidebar Container -->
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrappers">
         <!-- Content Header (Page header) -->
-        @yield('content')
+            @yield('content')
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <footer class="main-footer">
-
+    <footer class="main-footer footer">
         <strong>Copyright &copy; Paradise Theatre by Phuc & Huy</strong>
     </footer>
 

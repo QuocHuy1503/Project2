@@ -104,7 +104,7 @@ Route::group(['prefix' => 'account'], function () {
         Route::get('/order_detail/{reservation}', [App\Http\Controllers\customer\CustomerController::class, 'orderDetail'])->name('orderDetail');
 
         Route::get('choosingSeat/{movie_id}',[BookingController::class,'choosingSeat'])->name('choosingSeat');
-        Route::post('postSeat/{movie_id}',[BookingController::class,'postSeat'])->name('bookingStore');
+        Route::post('postSeat/{movie_id}',[BookingController::class,'postSeat'])->name('postSeat');
         Route::get('/checkout/{movie_id}', [BookingController::class, 'checkout'])->name('customer.checkout');
         Route::post('/vnpay_payment',[BookingController::class,'vnpay_payment'])->name('vnpay_payment');
     });
@@ -122,7 +122,7 @@ Route::group(['prefix' => 'admin'], function (){
     Route::group(['middleware' => 'admin.auth'], function() {
         Route::get('/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
         Route::get('/logout', [HomeController::class, 'logout'])->name('admin.logout');
-
+        Route::get('/profile', [\App\Http\Controllers\admin\AdminController::class, 'profile'])->name('admin.profile');
         Route::get('/change-password', [AdminLoginController::class, 'showChangePasswordForm'])->name('change_password');
         Route::post('/process-change-password', [AdminLoginController::class, 'processChangePassword'])->name('process_change_password');
 

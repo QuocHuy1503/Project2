@@ -43,32 +43,28 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-6 col-md-4">
                     <div class="small-box card">
                         <div class="inner">
-                            <h3 style="font-size: 1.5rem">Top 5 phim không thịnh hành</h3>
+                            <h3 style="font-size: 1.5rem">Những khung giờ phổ biến</h3>
                             <div class="d-flex justify-between">
                                 <table class="table table-hover table-bordered text-nowrap">
                                     <thead>
                                         <tr class="text-center">
-                                            <th scope="col">Tên phim</th>
+                                            <th scope="col">Thời gian chiếu phim phổ biến</th>
                                             <th scope="col">Số ghế bán được</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($topFiveLeastPopularMovies as $item)
+                                            @foreach ($popularBookingHours as $item)
                                             <tr class="text-center">
-                                                <td>{{$item->title}}</td>
-                                                <td>{{$item->reservation_count}}</td>
+                                                <td>{{$item->booking_hour}} h</td>
+                                                <td>{{$item->booking_count}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                             </div>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
                         </div>
                     </div>
                 </div>
@@ -111,32 +107,7 @@
         <!-- Default box -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-6 col-md-4">
-                    <div class="small-box card">
-                        <div class="inner">
-                            <h3 style="font-size: 1.5rem">Những khung giờ phổ biến</h3>
-                            <div class="d-flex justify-between">
-                                <table class="table table-hover table-bordered text-nowrap">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th scope="col">Thời gian chiếu phim phổ biến</th>
-                                            <th scope="col">Số ghế bán được</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($popularBookingHours as $item)
-                                            <tr class="text-center">
-                                                <td>{{$item->booking_hour}} h</td>
-                                                <td>{{$item->booking_count}}</td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-12 col-md-6 col-sm-6">
                     <div class="card">
                         <div class="card-body p-0">
                             <div class="d-flex justify-content-around">
@@ -149,18 +120,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-lg-12 col-md-6 col-sm6">
                     <div class="card">
-                        <div class="card-header d-flex flex-column align-content-between">
-                            <div>
-                                <h5 class="card-title">Users Behavior</h5>
-                            </div>
-                            <div>
-                                <p class="card-category">24 Hours performance</p>
-                            </div>
-                        </div>
                         <div class="card-body ">
-                            <div id="chartContainer2" style="height: 370px; width: 100%;">
+                            <div id="chartContainer2" style="height: 150px; width: 100%;">
                             </div>
                         </div>
                         {{--   <div class="card-footer ">
@@ -173,6 +136,66 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="small-box card">
+                        <div class="inner">
+                            <h3 style="font-size: 1rem">Thu nhập hôm nay</h3>
+                            @foreach ($revenueTodays as $item) 
+                                @if ($item->revenueToday === null)
+                                   <h1>{{0}}</h1>
+                                @else
+                                <h1> {{$item->revenueToday}}.000đ</h1>
+                                @endif
+
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="small-box card">
+                        <div class="inner">
+                            <h3 style="font-size: 1rem">Thu nhập từ bảy ngày trước</h3>
+                            @foreach ($revenueLastSevenDays as $item) 
+                                @if ($item->revenueLastSevenDays === null)
+                                   <h1>{{0}}</h1>
+                                @else
+                                <h1> {{$item->revenueLastSevenDays}}.000đ</h1>
+                                @endif
+
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="small-box card">
+                        <div class="inner">
+                            <h3 style="font-size: 1rem">Thu nhập trong tháng này</h3>
+                            @foreach ($revenueThisMonth as $item) 
+                                @if ($item->revenueThisMonth === null)
+                                   <h1>{{0}}</h1>
+                                @else
+                                <h1> {{$item->revenueThisMonth}}.000đ</h1>
+                                @endif
+
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="small-box card">
+                        <div class="inner">
+                            <h3 style="font-size: 1rem">Thu nhập trong tháng trước</h3>
+                            @foreach ($revenueLastMonth as $item) 
+                                @if ($item->revenueLastMonth === null)
+                                   <h1>{{0}}</h1>
+                                @else
+                                <h1> {{$item->revenueLastMonth}}.000đ</h1>
+                                @endif
+
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

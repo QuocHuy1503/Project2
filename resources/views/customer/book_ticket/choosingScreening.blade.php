@@ -3,14 +3,14 @@
 @section('content')
     @vite(["resources/sass/app.scss", "resources/js/app.js"])
     <head>
-        <title>Choose Date</title>
+        <title>Đặt vé - Paradise Theatre</title>
         <link rel="stylesheet" href="{{asset('frontend/css/main.css')}}">
         <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
     </head>
     <body style="background-color: #00001c;">
     <hr class="text-white">
 
-    <div class="text-white container mt-5"><a href="{{ route('movie') }}" class="nav-link bi bi-arrow-left ">Back</a></div>
+    <div class="text-white container mt-5"><a href="{{ route('movie') }}" class="nav-link bi bi-arrow-left ">Trở lại trang phim</a></div>
     <section class="mt-5">
         <div class="form w-75">
             <!-- Progress bar -->
@@ -26,7 +26,7 @@
             </div>
             <!-- Steps -->
             <div class="form-step form-step-active">
-                <h3 class="text-center text-white ">Stage 1: Choose time</h3>
+                <h3 class="text-center text-white ">Bước 1: Chọn khung giờ chiếu</h3>
                 <div class="container">
                     <div class="row text-white">
                         <div class="col-md-12 text-center">
@@ -34,7 +34,6 @@
                                 @csrf
                                 @method('POST')
                                 <div class="col-md-12">
-                    
                                     @if($screening->count() > 0)
                                         @foreach ($screening as $item)
                                             @if ($item->screening_end > \Carbon\Carbon::now('Asia/Ho_Chi_Minh'))
@@ -49,27 +48,31 @@
 {{--                                                </label>--}}
 
                                                 <label class="btn btn-outline-success col-sm-3 m-2" for="success-outlined-{{$item->id}}">
-                                                    <div class="text-white">Date: {{\Carbon\Carbon::parse($item->screening_start)->format('d-m-Y')}}</div>
-                                                    <div class="text-white">Time: {{\Carbon\Carbon::parse($item->screening_start)->format('H:i')}}</div>
-                                                    <span class="text-white">Auditorium:</span> {{$item->auditorium->name}}
+                                                    <div class="text-white">Ngày chiếu: {{\Carbon\Carbon::parse($item->screening_start)->format('d-m-Y')}}</div>
+                                                    <div class="text-white">Giờ chiếu: {{\Carbon\Carbon::parse($item->screening_start)->format('H:i')}}</div>
+                                                    <span class="text-white">Phòng chiếu:</span> {{$item->auditorium->name}}
                                                 </label>
 
                                             @endif
-                                        @endforeach
 
-                            
-                                        <div>
-                                            <button type="submit" id="submit-btn" value="" name="auditorium_id" class=" btn btn-primary w-10">Primary</button>
-                                        </div>
+                                        @endforeach
+                                            <div>
+                                                <button type="submit" id="submit-btn" value="" name="auditorium_id" class=" btn btn-primary w-10">Đặt ghế 👉</button>
+                                            </div>
                                             <script>
                                                 let inputs = $('.auditorium_id');
                                                 let radios = $('input[type="radio"]');
                                                 for(let i = 0; i < radios.length; i++) {
                                                     $(radios[i]).on( "click", function() {
                                                         $("#submit-btn").val($(inputs[i]).val())
-                                                    });  
+                                                    });
                                                 }
                                             </script>
+                                            {{-- End Screening --}}
+{{--                                    @else--}}
+{{--                                        <div>--}}
+{{--                                            <p class="fs-3 text-center">There are no screenings</p>--}}
+{{--                                        </div>--}}
                                     @endif
 
                                 </div>

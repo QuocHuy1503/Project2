@@ -763,9 +763,9 @@ video {
 
 #vertical-scroller {
     position: absolute;
-    top: 23%;
+    top: 30%;
     width: 61%;
-    height: 65%;
+    height: 75%;
     overflow-x: hidden;
 }
 

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\admin;
 
+use Exception;
 use App\Models\Movie;
 use App\Models\Screening;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Auditorium;
-use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class ScreeningController extends Controller
@@ -23,6 +24,19 @@ class ScreeningController extends Controller
             throw new \Exception('Auditorium is already booked for this time slot.');
         }
     }
+
+    public function MovieDurationFitsScreening($screeningEnd,$screeningStart,$movieId){
+        $movieDuration = DB::table('movies')
+        ->select('duration')
+        ->where('id', $movieId)
+        ->first()
+        ->duration;
+        $screeningDuration = strtotime($screeningEnd) - strtotime($screeningStart);
+        if ($screeningDuration < $movieDuration) {
+            throw new \Exception('Movie duration exceeds screening time.');
+        }
+    }
+
     public function index(Request $request){
         $screenings = Screening::latest()->orderBy('id','desc')-> paginate(5);
         if (!empty($request->get('keyword'))){
@@ -48,6 +62,7 @@ class ScreeningController extends Controller
            'auditorium_id' => 'required',
            'screening_start' => 'required',
            'screening_end' => 'required|after:screening_start',
+           
         ]);
         if ($validator->passes()){
             try{

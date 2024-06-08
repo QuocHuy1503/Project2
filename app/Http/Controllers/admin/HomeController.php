@@ -84,28 +84,51 @@ class HomeController extends Controller
         // ->limit(1)
         // ->get();
 
-        // $sevenDaysIncomes = Reservation::select(DB::raw('DATE(payment_date) as payment_date'),DB::raw('SUM(payment_amount) AS daily_income'))
-        // ->groupBy(DB::raw('DATE(payment_date)'))
-        // ->orderBy('payment_date')
-        // ->limit(6)
-        // ->get();
 
         $popularBookingHours = Reservation::select(DB::raw('HOUR(screening_start) as booking_hour'), DB::raw('COUNT(*) AS booking_count'))
         ->join('screenings', 'reservations.screening_id', '=', 'screenings.id')
         ->groupBy('booking_hour')
         ->orderBy('booking_count', 'desc')
         ->get();
+        $startOfMonth = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $currentDate = Carbon::now()->format('Y-m-d');
+        $lastSevenDays = Carbon::now()->subDays(7)->format('Y-m-d');
 
-        // dd($sevenDaysIncomes);
+        $lastMonthStartDate = Carbon::now()->subMonth()->startOfMonth()->format('Y-m-d');
+        $lastMonthEndDate = Carbon::now()->subMonth()->endOfMonth()->format('Y-m-d');
+
+        $revenueTodays = Reservation::where('payment_date', '=', $currentDate)
+        -> join('seats', 'reservations.seat_id', '=', 'seats.id')
+        -> join('seat_types', 'seats.type_id', '=', 'seat_types.id')
+        -> select(DB::raw('sum(price) as revenueToday'))->get();
+
+        $revenueLastSevenDays = Reservation::where('payment_date', '>=', $lastSevenDays)
+            -> join('seats', 'reservations.seat_id', '=', 'seats.id')
+            -> join('seat_types', 'seats.type_id', '=', 'seat_types.id')
+            -> select(DB::raw('sum(price) as revenueLastSevenDays'))->get();
+
+        $revenueThisMonth = Reservation::where('payment_date', '>=', $startOfMonth)
+            -> where('payment_date', '<=', $currentDate)
+            -> join('seats', 'reservations.seat_id', '=', 'seats.id')
+            -> join('seat_types', 'seats.type_id', '=', 'seat_types.id')
+            -> select(DB::raw('sum(price) as revenueThisMonth'))->get();
+
+        $revenueLastMonth = Reservation::where('payment_date', '>=', $lastMonthStartDate)
+            -> where('payment_date', '<=', $lastMonthEndDate)
+            -> join('seats', 'reservations.seat_id', '=', 'seats.id')
+            -> join('seat_types', 'seats.type_id', '=', 'seat_types.id')
+            -> select(DB::raw('sum(price) as revenueLastMonth'))->get();
+        // dd($revenueLastMonth);
         return view('admin.dashboard', [
             'firstChartData' => $firstChartData,
             'secondChartData' => $secondChartData, // Pass the processed data for charts
             'topFiveMostPopularMovies'=> $topFiveMostPopularMovies,
             'topFiveLeastPopularMovies' => $topFiveLeastPopularMovies,
             'popularBookingHours' => $popularBookingHours,
-            // 'todayIncomes' => $todayIncomes,
-            // 'totalIncomes' => $totalIncomes,
-            // 'sevenDaysIncomes' => $sevenDaysIncomes,
+            'revenueThisMonth' => $revenueThisMonth,
+            'revenueLastMonth' => $revenueLastMonth,
+            'revenueTodays' => $revenueTodays,
+            'revenueLastSevenDays' => $revenueLastSevenDays
         ]);
         //echo 'welcome'.$admin->name.' <a href="'.route('admin.logout').'">Logout</a>';
     }

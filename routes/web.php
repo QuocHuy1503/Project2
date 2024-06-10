@@ -125,7 +125,8 @@ Route::group(['prefix' => 'admin'], function (){
         Route::get('/profile', [\App\Http\Controllers\admin\AdminController::class, 'profile'])->name('admin.profile');
         Route::get('/change-password', [AdminLoginController::class, 'showChangePasswordForm'])->name('change_password');
         Route::post('/process-change-password', [AdminLoginController::class, 'processChangePassword'])->name('process_change_password');
-
+        Route::post('/upload-temp-image', [TempImagesController::class, 'createImgUser'])->name('user.temp-images.create');
+        Route::post('/update', [\App\Http\Controllers\admin\AdminController::class, 'update'])->name('user.update');
         // GENRE ROUTE
         Route::prefix('/genre')->group(function () {
 

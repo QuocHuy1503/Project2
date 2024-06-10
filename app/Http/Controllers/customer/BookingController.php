@@ -76,17 +76,8 @@ class BookingController extends Controller
     }
 
     public function postSeat(Request $request){
-        // $id = Auth::guard('customer')->user()->id;
-        // $customer = Customer::find($id);
-        // $movie = Movie::find($request->movie_id);
-        // $validator = Validator::make($request->all(), [
-        //     'movie' => 'required',
-        //     'screening_id' => 'required',
-        //     'customer_id' => 'required',
-        //     'seat_id' => 'required'
-        // ]);
-        // if($validator->passes()){   
-        $screening = $request->screening_id;
+
+
         $totalSeats = [];
         foreach($request->seat_id as $seat){
             $totalSeats[] = $seat;
@@ -95,7 +86,7 @@ class BookingController extends Controller
         $array = Arr::add($array, 'seat_id', $request->seat_id);
         $array = Arr::add($array, 'movie_id', $request->movie_id);
         return redirect(route('customer.checkout',[
-            'screening' => $request->screeningId,
+            'screening' => $request->screening_id,
             'seat_id' => $request->seat_id,
             'auditorium' => $request->auditorium_id,
             'movie_id' => $request->movie_id,
@@ -105,7 +96,6 @@ class BookingController extends Controller
 
     public function checkout($id, Request $request)
     {
-
         // Cần lấy screening movie seat auditorium
         // và cái quan trọng nhất là lấy tổng tiền của tổng ghế
         $movieId = Movie::find($id);
@@ -143,30 +133,29 @@ class BookingController extends Controller
             ->whereIn('seats.id', $totalSeats)
             ->groupBy('seat_types.name')
             ->get();
+
+        // dd($request);
         return view('customer.book_ticket.checkout',[
+            'movie_id' => $request->movie_id,
             'movie' => $movie,
             'totalMoney' => $totalMoney,
             'screening' => $screening,
             'auditorium' => $auditorium,
+            'screening' => $screening,
             'seats'=> $seats,
             'seatTypes' => $whatTypesOfSeats,
         ]);
     }
 
     public function vnpay_payment(Request $request){
-
+        // dd($request);
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = "http://127.0.0.1:8000/test";
         $vnp_TmnCode = "UBPHFQVJ";//Mã website tại VNPAY
         $vnp_HashSecret = "9M77SGSFRTA582OLUPX5Y9X3SGCA71UI"; //Chuỗi bí mật
         $customer = Auth::guard('customer')->user()->id;
         $contact = Auth::guard('customer')->user()->phone_number;
-        $validator = Validator::make($request->all(), [
-            'seat' => 'required',
-            'movie' => 'required',
-            'screening' => 'required',
-            'totalMoney' => 'required'
-        ]);
+
         $bookingData = [
             'totalMoney' => $request->totalMoney,
             'customer' => $customer,
@@ -175,7 +164,7 @@ class BookingController extends Controller
             'screening' => $request->screening,
             'seats' => $request->seat,
         ];
-        if($validator->passes()){
+
             $vnp_TxnRef = random_int(1,1000000000);
             $vnp_OrderInfo = 'Thanh toán hóa đơn';
             $vnp_OrderType = 'Paradise Cinema';
@@ -243,18 +232,12 @@ class BookingController extends Controller
             }
             // vui lòng tham khảo thêm tại code demo
 
-        }
+        
     }
 
     public function finishCheckOut(){
 
-        // dd(session()->get('bookingData'));
         $data = session('bookingData');
-        // $movie = $data['movie'];
-        // $screening = $data['screening'];
-        // $customer = $data
-        // dd($movie);
-        // dd($data);
         $user = Auth::guard('admin')->user()->id;
         foreach($data['seats'] as $seat){
             $reservation = Reservation::create([
@@ -266,7 +249,7 @@ class BookingController extends Controller
                 'payment_amount' => $data['totalMoney'],
                 'seat_id' => $seat,
                 'reservation_contact' => $data['contact'],
-                'user_id' => $user,
+                'user_id' => 1,
                 'pay_id' => 1,
             ]);
             SeatReserved::create([

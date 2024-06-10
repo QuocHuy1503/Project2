@@ -7,7 +7,7 @@
     </head>
     <body style="background-color: #00001c">
     <hr class="text-white">
-    <div class="container d-flex align-items-center mt-5 h-100 overflow-hidden">
+    <div class="container d-flex align-items-center mt-5 h-80 overflow-hidden">
         <div class="border w-20 rounded-start p-3 h-100 text-white" style="background-color: #191c33">
             @include('layouts/profile_menu')
         </div>
@@ -27,7 +27,7 @@
             </section>
             <hr>
 
-            <div id="vertical-scroller" style="width: 68.9%">
+            <div id="vertical-scroller">
                     <style id="INLINE_PEN_STYLESHEET_ID">
 
                         .main-content {
@@ -255,12 +255,10 @@
                         }
                     </style>
                 @foreach($orders as $order)
-                
                 <div class="main-content text-dark">
 
                     <div class="ticket">
                         <div class="ticket__main">
-
                                 <div class="header">Paradise Theatre</div>
                                 <div class="info passenger">
                                     <div class="info__item">Tên phim</div>
@@ -286,10 +284,6 @@
                                         {{ \Carbon\Carbon::parse($order->screening->screening_end)->format('H:i A') }}
                                     </div>
                                 </div>
-                                <div class="info carriage">
-                                    <div class="info__item">car</div>
-                                    <div class="info__detail">4</div>
-                                </div>
                                 <div class="info seat">
                                     <div class="info__item">Seat</div>
                                     <div class="info__detail"></div>
@@ -305,32 +299,7 @@
                                     <div class="barcode__scan"></div>
                                     <div class="barcode__id">001256733</div>
                                 </div>
-                            </div>
-                            <div class="ticket__side">
-                                <div class="logo">
-                                    <p>Paradise Theatre</p>
-                                </div>
-                                <div class="info side-arrive">
-                                    <div class="info__item">Người đặt</div>
-                                    <div class="info__detail">Hogsmeade</div>
-                                </div>
-                                <div class="info side-depart">
-                                    <div class="info__item">Phòng chiếu</div>
-                                    <div class="info__detail">King's Cross</div>
-                                </div>
-                                <div class="info side-date">
-                                    <div class="info__item">Ngày đặt</div>
-                                    <div class="info__detail">1 Sep 2018</div>
-                                </div>
-                                <div class="info side-time">
-                                    <div class="info__item">Thờigianchiếu</div>
-                                    <div class="info__detail">11:00AM</div>
-                                </div>
-                                <div class="barcode">
-                                    <div class="barcode__scan"></div>
-                                    <div class="barcode__id">001256733</div>
-                                </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
                 @endforeach

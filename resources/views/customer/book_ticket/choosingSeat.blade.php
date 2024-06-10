@@ -49,14 +49,7 @@
                                  border-top-right-radius: 10px;"></div>
                                 <small>Ghế thường</small>
                             </li>
-{{--                            <li>--}}
-{{--                                <div class="" style="background-color: #6feaf6; height: 12px;--}}
-{{--                                 width: 15px;--}}
-{{--                                 margin: 3px;--}}
-{{--                                 border-top-left-radius: 10px;--}}
-{{--                                 border-top-right-radius: 10px;"></div>--}}
-{{--                                <small>Selected</small>--}}
-{{--                            </li>--}}
+
                             <li>
                                 <div class="" style="background-color: yellow; height: 12px;
                                  width: 15px;

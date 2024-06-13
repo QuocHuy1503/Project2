@@ -138,12 +138,6 @@ class MovieController extends Controller
                 $dPath = public_path().'/uploads/movie/'.$newImageName;
                 File::copy($sPath, $dPath);
 
-                // Generate Image Thumbnail
-//                $dPath = public_path().'/uploads/movie/thumb/'.$newImageName;
-//                $img = Image::make($sPath);
-//                $img->resize(450, 600);
-//                $img->save($dPath);
-
                 $movie->image = $newImageName;
                 $movie->save();
             }
@@ -225,28 +219,6 @@ class MovieController extends Controller
             $movieGenres = MovieGenre::
             join('movies', 'movie_genres.movie_id', 'movies.id')->orderBy('movie_genres.genre_id', 'DESC')->where('movies.status', 1)
                 ->get();
-//            if (!empty($request->get('genre'))){
-//                $genresArray = explode(',', $request->get('genre'));
-//                $movieGenres = $movies->whereIn('genre_id', $genresArray)->join('movie_genres', 'movie_genres.movie_id', 'movies.id')->where('movies.status', 1);
-//            }
-//            foreach($request->genre_id as $value){
-//                $i=0;
-//                $movieGenre = [
-//                    'movie_id'=> Movie::where('id', '=',Movie::max('id'))->first()->id,
-//                    'genre_id'=>  $value ?? '',
-//                ];
-//                MovieGenre::create($movieGenre);
-//            }
-//            foreach($request->cast_id as $value){
-//                $i=0;
-//                $movieCast = [
-//                    'movie_id'=> Movie::where('id', '=',Movie::max('id'))->first()->id,
-//                    'cast_id'=>  $value ?? '',
-//                ];
-//                MovieCast::create($movieCast);
-//            }
-
-            //             Save Image Here
             if (!empty($request->image_id)) {
                 $tempImage = TempImage::find($request->image_id);
                 $extArray = explode('.', $tempImage->name);
@@ -256,13 +228,6 @@ class MovieController extends Controller
                 $sPath = public_path().'/temp/'.$tempImage->name;
                 $dPath = public_path().'/uploads/movie/'.$newImageName;
                 File::copy($sPath, $dPath);
-
-                // Generate Image Thumbnail
-//                $dPath = public_path().'/uploads/movie/thumb/'.$newImageName;
-//                $img = Image::make($sPath);
-//                $img->resize(450, 600);
-//                $img->save($dPath);
-
                 $movie->image = $newImageName;
                 $movie->save();
 

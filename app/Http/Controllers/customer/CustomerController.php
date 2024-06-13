@@ -364,6 +364,7 @@ class CustomerController extends Controller
         $data['movie'] = $movie;
         $data['customer'] = Customer::find($id);
         $data['orders'] = $orders;
+        
         return view('customer.profiles.orderHistory', $data);
     }
 
@@ -376,20 +377,7 @@ class CustomerController extends Controller
         ->join('seats', 'seats.id', '=', 'seat_reserved.seat_id')
         ->where('customer_id', $id)
         ->get();
-        dd($reservation);
         $customer = Customer::find($id);
-        // $orderId = $order->id;
-        // $orderDetails = DB::table('orders_details')
-        //     ->where('order_id', '=', $orderId)
-        //     ->join('products', 'orders_details.product_id', '=', 'products.id')
-        //     ->get();
-
-        // $orderAmount = 0;
-        // $orderItems = 0;
-        // foreach ($orderDetails as $detail) {
-        //     $orderItems += $detail->sold_quantity;
-        //     $orderAmount += $detail->sold_price * $detail->sold_quantity;
-        // }
         // $orderTotal = $orderAmount + 10;
 
         return view('customer.profiles.orderDetail', [
